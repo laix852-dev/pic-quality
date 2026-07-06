@@ -129,14 +129,16 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   <h1>AIGC PIC 质检看板</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <button class="month-btn active" id="btn-june">6月</button>
-      <button class="month-btn" id="btn-july">7月</button>
+      <span style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.2);color:#fff">6月</span>
+      <span style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.5)">|</span>
+      <span style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.5)">7月</span>
+      <span style="padding:5px 8px;font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center">↓ 下滑查看</span>
     </div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
 </div>
 
-<div id="june-content" style="display:block">
+<!-- JUNE START -->
 <div class="tabs" id="tabBar">
   <button class="tab active" data-week="w1"><span class="sub">W1</span>6.1 - 6.5</button>
   <button class="tab" data-week="w2"><span class="sub">W2</span>6.8 - 6.12</button>
@@ -667,9 +669,10 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 </div>
 
 
-</div><!-- end june-content -->
+<!-- JUNE END -->
 
-<div id="july-content" style="display:none">
+<div style="margin:20px 0;padding:8px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:10px;font-size:14px;font-weight:600">📅 七月数据（7.1-7.3 · 持续更新中）</div>
+<!-- JULY START -->
 <div class="tabs" id="julyTabBar" style="margin-top:0">
   <button class="tab active" data-july-week="w1"><span class="sub">W1</span>7.1 - 7.3</button>
   <button class="tab" data-july-week="monthly" style="opacity:0.5;cursor:not-allowed" title="更多数据上线后可用"><span class="sub">📊 月报</span>待更新</button>
@@ -762,7 +765,7 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
       if (!wk) return;
       var allBtns = document.querySelectorAll('#julyTabBar .tab');
       for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('active');
-      var allTabs = document.querySelectorAll('#july-content > .content-tab');
+      var allTabs = document.querySelectorAll('#julyTabBar ~ .content-tab');
       for (var k = 0; k < allTabs.length; k++) allTabs[k].classList.remove('active');
       this.classList.add('active');
       var t = document.getElementById('july-tab-' + wk);
@@ -771,7 +774,7 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   }
 })();
 </script>
-</div><!-- end july-content -->
+<!-- JULY END -->
 
 <div class="footer-note">
   数据来源：AIGC PIC 质检汇总-6月 · SFT 全组 25 人 · 统计截止 2026-06-29 · 申诉通过率 = 标注员申诉成功被通过的比例，↓越低 PIC 判断越准确
@@ -838,26 +841,6 @@ new Chart(document.getElementById('appealTrend'), {
 });
 
 // Month switching
-document.getElementById('btn-june').addEventListener('click', function(){ showMonth('june'); });
-document.getElementById('btn-july').addEventListener('click', function(){ showMonth('july'); });
-
-function showMonth(m) {
-  var jb = document.getElementById('btn-june');
-  var jy = document.getElementById('btn-july');
-  var jc = document.getElementById('june-content');
-  var jyc = document.getElementById('july-content');
-  if (m === 'june') {
-    jb.className = 'month-btn active';
-    jy.className = 'month-btn';
-    jc.style.display = 'block';
-    jyc.style.display = 'none';
-  } else {
-    jb.className = 'month-btn';
-    jy.className = 'month-btn active';
-    jc.style.display = 'none';
-    jyc.style.display = 'block';
-  }
-}
 
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', function() {
