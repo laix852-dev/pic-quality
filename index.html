@@ -750,26 +750,10 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 </div>
 <!-- end july w1 -->
 
-<div class="content-tab" id="july-tab-monthly"></div>
+<div class="content-tab" id="july-tab-monthly" style="display:none"></div>
 
 <script>
-// July tab switching
-(function() {
-  var btns = document.querySelectorAll('#julyTabBar .tab');
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('click', function() {
-      var wk = this.getAttribute('data-july-week');
-      if (!wk) return;
-      var allBtns = document.querySelectorAll('#julyTabBar .tab');
-      for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('active');
-      var allTabs = document.querySelectorAll('#julyTabBar ~ .content-tab');
-      for (var k = 0; k < allTabs.length; k++) allTabs[k].classList.remove('active');
-      this.classList.add('active');
-      var t = document.getElementById('july-tab-' + wk);
-      if (t) t.classList.add('active');
-    });
-  }
-})();
+// July tab switching (active when >1 tab exists)
 </script>
 </div>
 
