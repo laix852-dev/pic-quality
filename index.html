@@ -129,8 +129,8 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   <h1>AIGC PIC 质检看板</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <button class="month-btn active" id="btn-june" onclick="switchMonth('june')">6月</button>
-      <button class="month-btn" id="btn-july" onclick="switchMonth('july')">7月</button>
+      <button class="month-btn active" id="btn-june" onclick="showMonth('june')">6月</button>
+      <button class="month-btn" id="btn-july" onclick="showMonth('july')">7月</button>
     </div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
@@ -753,7 +753,23 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 <div class="content-tab" id="july-tab-monthly"></div>
 
 <script>
-// July tab switching runs when July is first activated via switchMonth
+// July tab switching
+(function() {
+  var btns = document.querySelectorAll('#julyTabBar .tab');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function() {
+      var wk = this.getAttribute('data-july-week');
+      if (!wk) return;
+      var allBtns = document.querySelectorAll('#julyTabBar .tab');
+      for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('active');
+      var allTabs = document.querySelectorAll('#july-content > .content-tab');
+      for (var k = 0; k < allTabs.length; k++) allTabs[k].classList.remove('active');
+      this.classList.add('active');
+      var t = document.getElementById('july-tab-' + wk);
+      if (t) t.classList.add('active');
+    });
+  }
+})();
 </script>
 </div><!-- end july-content -->
 
@@ -822,25 +838,23 @@ new Chart(document.getElementById('appealTrend'), {
 });
 
 // Month switching
-window.switchMonth = function(m) {
-  document.getElementById('btn-june').className = m==='june' ? 'month-btn active' : 'month-btn';
-  document.getElementById('btn-july').className = m==='july' ? 'month-btn active' : 'month-btn';
-  document.getElementById('june-content').style.display = m==='june' ? 'block' : 'none';
-  document.getElementById('july-content').style.display = m==='july' ? 'block' : 'none';
-  if (m==='july') {
-    document.querySelectorAll('#julyTabBar .tab').forEach(function(btn) {
-      btn.onclick = function() {
-        var wk = this.getAttribute('data-july-week');
-        if (!wk) return;
-        document.querySelectorAll('#julyTabBar .tab').forEach(function(b) { b.classList.remove('active'); });
-        document.querySelectorAll('#july-content > .content-tab').forEach(function(c) { c.classList.remove('active'); });
-        this.classList.add('active');
-        var t = document.getElementById('july-tab-' + wk);
-        if (t) t.classList.add('active');
-      };
-    });
+function showMonth(m) {
+  var jb = document.getElementById('btn-june');
+  var jy = document.getElementById('btn-july');
+  var jc = document.getElementById('june-content');
+  var jyc = document.getElementById('july-content');
+  if (m === 'june') {
+    jb.className = 'month-btn active';
+    jy.className = 'month-btn';
+    jc.style.display = 'block';
+    jyc.style.display = 'none';
+  } else {
+    jb.className = 'month-btn';
+    jy.className = 'month-btn active';
+    jc.style.display = 'none';
+    jyc.style.display = 'block';
   }
-};
+}
 
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', function() {
