@@ -129,14 +129,15 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   <h1>AIGC PIC 质检看板</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <button class="month-btn active" id="mbtn-6" onclick="switchTab('6')">6月</button>
-      <button class="month-btn" id="mbtn-7" onclick="switchTab('7')">7月</button>
+      <a href="#june" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.2);color:#fff;text-decoration:none">6月</a>
+      <a href="#july" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none">7月</a>
     </div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
 </div>
 
-<div id="wrap-6" style="display:block">
+<a name="june"></a>
+<div id="wrap-6">
 <div class="tabs" id="tabBar">
   <button class="tab active" data-week="w1"><span class="sub">W1</span>6.1 - 6.5</button>
   <button class="tab" data-week="w2"><span class="sub">W2</span>6.8 - 6.12</button>
@@ -669,14 +670,14 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 
 </div>
 
-<div id="wrap-7" style="display:none">
+<a name="july"></a>
+<div id="wrap-7">
 <div class="tabs" id="julyTabBar" style="margin-top:0">
   <button class="tab active" data-july-week="w1"><span class="sub">W1</span>7.1 - 7.3</button>
   <button class="tab" data-july-week="monthly" style="opacity:0.5;cursor:not-allowed" title="更多数据上线后可用"><span class="sub">📊 月报</span>待更新</button>
 </div>
 
-<div class="content-tab active" id="july-tab-w1" style="background:#fff">
-  <div style="background:#f6ffed;padding:8px 16px;border-radius:6px;margin-bottom:14px;font-size:12px;color:#389e0d">✅ 七月数据已加载 · 2,066条 · 94.82% 准确率</div>
+<div class="content-tab active" id="july-tab-w1">
   <div class="stats-row">
     <div class="stat-card info"><div class="label">抽检总量</div><div class="value">2,066</div><div class="sub">6 个模块 · 3个工作日</div></div>
     <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">107</div><div class="sub">次品率 5.18%</div></div>
@@ -751,23 +752,30 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 </div>
 <!-- end july w1 -->
 
-<div class="content-tab" id="july-tab-monthly" style="display:none"></div>
+<div class="content-tab" id="july-tab-monthly"></div>
 
 <script>
-// July tab switching (active when >1 tab exists)
+// July tab switching
+(function() {
+  var btns = document.querySelectorAll('#julyTabBar .tab');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function() {
+      var wk = this.getAttribute('data-july-week');
+      if (!wk) return;
+      var allBtns = document.querySelectorAll('#julyTabBar .tab');
+      for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('active');
+      var allTabs = document.querySelectorAll('#julyTabBar ~ .content-tab');
+      for (var k = 0; k < allTabs.length; k++) allTabs[k].classList.remove('active');
+      this.classList.add('active');
+      var t = document.getElementById('july-tab-' + wk);
+      if (t) t.classList.add('active');
+    });
+  }
+})();
 </script>
 </div>
 
 
-<script>
-function switchTab(m) {
-  document.getElementById('wrap-6').style.display = (m==='6') ? 'block' : 'none';
-  document.getElementById('wrap-7').style.display = (m==='7') ? 'block' : 'none';
-  document.getElementById('mbtn-6').className = (m==='6') ? 'month-btn active' : 'month-btn';
-  document.getElementById('mbtn-7').className = (m==='7') ? 'month-btn active' : 'month-btn';
-  console.log('switchTab:', m, 'wrap-6:', document.getElementById('wrap-6').style.display, 'wrap-7:', document.getElementById('wrap-7').style.display);
-}
-</script>
 <div class="footer-note">
   数据来源：AIGC PIC 质检汇总-6月 · SFT 全组 25 人 · 统计截止 2026-06-29 · 申诉通过率 = 标注员申诉成功被通过的比例，↓越低 PIC 判断越准确
 </div>
