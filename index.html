@@ -129,8 +129,8 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   <h1>AIGC PIC 质检看板</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <button class="month-btn active" data-month="6" onclick="document.querySelectorAll('[data-month]').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('june-content').style.display='block';document.getElementById('july-content').style.display='none'">6月</button>
-      <button class="month-btn" data-month="7" onclick="document.querySelectorAll('[data-month]').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('july-content').style.display='block';document.getElementById('june-content').style.display='none'">7月</button>
+      <button class="month-btn active" id="btn-june" onclick="switchMonth('june')">6月</button>
+      <button class="month-btn" id="btn-july" onclick="switchMonth('july')">7月</button>
     </div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
@@ -831,6 +831,14 @@ new Chart(document.getElementById('appealTrend'), {
     scales: { y: { max: 65, ticks: { callback: v => v+'%' }, grid: { color: '#f0f0f0' }, title: { display: true, text: '↓越低越好', font: { size: 10 } } }, x: { grid: { display: false } } }
   }
 });
+
+// Month switching
+function switchMonth(m) {
+  document.getElementById('btn-june').classList.toggle('active', m==='june');
+  document.getElementById('btn-july').classList.toggle('active', m==='july');
+  document.getElementById('june-content').style.display = m==='june' ? 'block' : 'none';
+  document.getElementById('july-content').style.display = m==='july' ? 'block' : 'none';
+}
 
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', function() {
