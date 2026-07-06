@@ -753,18 +753,7 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 <div class="content-tab" id="july-tab-monthly"></div>
 
 <script>
-// July tab switching
-document.querySelectorAll('#julyTabBar .tab').forEach(btn => {
-  btn.addEventListener('click', function() {
-    var week = this.dataset.julyWeek;
-    if (!week) return;
-    document.querySelectorAll('#julyTabBar .tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('#july-content > .content-tab').forEach(c => c.classList.remove('active'));
-    this.classList.add('active');
-    var target = document.getElementById('july-tab-' + week);
-    if (target) target.classList.add('active');
-  });
-});
+// July tab switching runs when July is first activated via switchMonth
 </script>
 </div><!-- end july-content -->
 
@@ -833,12 +822,25 @@ new Chart(document.getElementById('appealTrend'), {
 });
 
 // Month switching
-function switchMonth(m) {
-  document.getElementById('btn-june').classList.toggle('active', m==='june');
-  document.getElementById('btn-july').classList.toggle('active', m==='july');
+window.switchMonth = function(m) {
+  document.getElementById('btn-june').className = m==='june' ? 'month-btn active' : 'month-btn';
+  document.getElementById('btn-july').className = m==='july' ? 'month-btn active' : 'month-btn';
   document.getElementById('june-content').style.display = m==='june' ? 'block' : 'none';
   document.getElementById('july-content').style.display = m==='july' ? 'block' : 'none';
-}
+  if (m==='july') {
+    document.querySelectorAll('#julyTabBar .tab').forEach(function(btn) {
+      btn.onclick = function() {
+        var wk = this.getAttribute('data-july-week');
+        if (!wk) return;
+        document.querySelectorAll('#julyTabBar .tab').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('#july-content > .content-tab').forEach(function(c) { c.classList.remove('active'); });
+        this.classList.add('active');
+        var t = document.getElementById('july-tab-' + wk);
+        if (t) t.classList.add('active');
+      };
+    });
+  }
+};
 
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', function() {
