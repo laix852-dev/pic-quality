@@ -129,8 +129,8 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
   <h1>AIGC PIC 质检看板</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <button class="month-btn active" id="btn-june" onclick="showMonth('june')">6月</button>
-      <button class="month-btn" id="btn-july" onclick="showMonth('july')">7月</button>
+      <button class="month-btn active" id="btn-june">6月</button>
+      <button class="month-btn" id="btn-july">7月</button>
     </div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
@@ -838,6 +838,9 @@ new Chart(document.getElementById('appealTrend'), {
 });
 
 // Month switching
+document.getElementById('btn-june').addEventListener('click', function(){ showMonth('june'); });
+document.getElementById('btn-july').addEventListener('click', function(){ showMonth('july'); });
+
 function showMonth(m) {
   var jb = document.getElementById('btn-june');
   var jy = document.getElementById('btn-july');
