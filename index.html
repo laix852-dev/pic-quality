@@ -108,8 +108,6 @@ tr:hover td { background: #fafbff; }
 .rank-full td:nth-child(6) { font-weight: 600; }
 
 .note-small { font-size: 11px; color: #8c8c9a; margin-top: 6px; font-style: italic; }
-
-
 </style>
 </head>
 <body>
@@ -128,17 +126,20 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 <div id="main-content" style="display:none">
 
 <div class="header">
-  <h1>AIGC PIC 质检看板</h1>
+  <h1>AIGC PIC 质检看板 · 六月</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <a href="#june" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.2);color:#fff;text-decoration:none">6月</a>
-      <a href="#july" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none">7月</a>
+      <span style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.2);color:#fff">6月</span>
+      <a href="./july.html" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none">7月 →</a>
     </div>
+    <div class="meta">2026年6月 · 统计截止 6.30</div>
+  </div>
+</div>
     <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
 </div>
 
-<div id="june">
+<!-- JUNE START -->
 <div class="tabs" id="tabBar">
   <button class="tab active" data-week="w1"><span class="sub">W1</span>6.1 - 6.5</button>
   <button class="tab" data-week="w2"><span class="sub">W2</span>6.8 - 6.12</button>
@@ -669,113 +670,12 @@ function checkPwd(){var p=document.getElementById('pwd-input').value;if(p==='888
 </div>
 
 
-</div>
+<!-- JUNE END -->
 
-<div id="july">
-<div class="tabs" id="julyTabBar" style="margin-top:0">
-  <button class="tab active" data-july-week="w1"><span class="sub">W1</span>7.1 - 7.3</button>
-  <button class="tab" data-july-week="monthly" style="opacity:0.5;cursor:not-allowed" title="更多数据上线后可用"><span class="sub">📊 月报</span>待更新</button>
-</div>
+<div style="margin:20px 0;padding:8px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:10px;font-size:14px;font-weight:600">📅 七月数据（7.1-7.3 · 持续更新中）</div>
+<!-- JULY START -->
 
-<div class="content-tab active" id="july-tab-w1">
-  <div class="stats-row">
-    <div class="stat-card info"><div class="label">抽检总量</div><div class="value">2,066</div><div class="sub">6 个模块 · 3个工作日</div></div>
-    <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">107</div><div class="sub">次品率 5.18%</div></div>
-    <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.82%</div><div class="sub">SFT 94.71% · 开局良好</div></div>
-    <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">0/0 · 暂无申诉</div></div>
-    <div class="stat-card purple"><div class="label">SFT HC 人数</div><div class="value">28</div><div class="sub">新增多人 · 样本尚小</div></div>
-  </div>
-
-  <div class="grid-2">
-    <div class="panel">
-      <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
-      <div class="panel-body no-padding"><table>
-        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
-        <tbody>
-          <tr><td>tag分层</td><td>50</td><td>0</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#52c41a"></div></div><span class="pct-text">100.0%</span></div></td></tr>
-          <tr><td>预训练</td><td>349</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.6%;background:#52c41a"></div></div><span class="pct-text">98.57%</span></div></td></tr>
-          <tr><td>Caption</td><td>90</td><td>3</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
-          <tr><td style="font-weight:700">SFT后训练</td><td>775</td><td>43</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.7%;background:#fa8c16"></div></div><span class="pct-text">94.71%</span></div></td></tr>
-          <tr><td>AI合理性</td><td>782</td><td>53</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#fa8c16"></div></div><span class="pct-text">93.35%</span></div></td></tr>
-          <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text">90.00%</span></div></td></tr>
-        </tbody>
-      </table></div>
-    </div>
-    <div class="panel">
-      <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>六月 vs 七月 SFT 对比</div>
-      <div class="panel-body">
-        <div style="display:flex;justify-content:space-around;text-align:center;padding:20px 0">
-          <div><div style="font-size:11px;color:#8c8c9a">六月 SFT 准确率</div><div style="font-size:36px;font-weight:700;color:#fa8c16">93.04%</div><div style="font-size:11px;color:#8c8c9a">19,686 条</div></div>
-          <div style="font-size:28px;color:#52c41a;line-height:100px">→</div>
-          <div><div style="font-size:11px;color:#8c8c9a">七月 SFT 准确率</div><div style="font-size:36px;font-weight:700;color:#52c41a">94.71%</div><div style="font-size:11px;color:#8c8c9a">775 条（3天）</div></div>
-        </div>
-        <div style="text-align:center;font-size:12px;color:#52c41a">▲ +1.67pp 开局改善</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="panel">
-      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT · 含零次品）</div>
-      <div class="panel-body no-padding"><table>
-        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-        <tbody>
-          <tr><td><span class="rank-badge rank-1">1</span></td><td>张玉如</td><td>33</td><td>0</td><td class="highlight up">100.0%</td></tr>
-          <tr><td><span class="rank-badge rank-2">2</span></td><td>高旭琴</td><td>26</td><td>0</td><td class="highlight up">100.0%</td></tr>
-          <tr><td><span class="rank-badge rank-3">3</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-    <div class="panel">
-      <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT · 样本小）</div>
-      <div class="panel-body no-padding"><table>
-        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>曹未婷</td><td>13</td><td>4</td><td class="highlight down">69.23%</td></tr>
-          <tr><td>2</td><td>张明敏</td><td>19</td><td>4</td><td class="highlight down">78.95%</td></tr>
-          <tr><td>3</td><td>万知宜</td><td>29</td><td>4</td><td class="highlight down">86.21%</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-    <div class="panel">
-      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>关键变化</div>
-      <div class="panel-body" style="font-size:12.5px;line-height:1.8">
-        • 9 人 SFT 零次品（100%）<br>
-        • <strong>高旭琴</strong> 延续六月榜首<br>
-        • <strong>贾建丽</strong> 93.33% 显著改善<br>
-        • 新面孔：郭五星 100%、冯美玲 96.88%<br>
-        • 曹未婷、张明敏首次 SFT 偏低<br>
-        • <strong style="color:#fa8c16">⚠ 样本仅3天，趋势待观察</strong>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end july w1 -->
-
-<div class="content-tab" id="july-tab-monthly"></div>
-
-<script>
-// July tab switching
-(function() {
-  var btns = document.querySelectorAll('#julyTabBar .tab');
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('click', function() {
-      var wk = this.getAttribute('data-july-week');
-      if (!wk) return;
-      var allBtns = document.querySelectorAll('#julyTabBar .tab');
-      for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove('active');
-      var allTabs = document.querySelectorAll('#julyTabBar ~ .content-tab');
-      for (var k = 0; k < allTabs.length; k++) allTabs[k].classList.remove('active');
-      this.classList.add('active');
-      var t = document.getElementById('july-tab-' + wk);
-      if (t) t.classList.add('active');
-    });
-  }
-})();
-</script>
-</div>
-
-
+<div class="footer-note">6月数据 · 来源: PIC质检汇总-6月 · <a href="./july.html" style="color:#667eea">七月看板 →</a></div>
 <div class="footer-note">
   数据来源：AIGC PIC 质检汇总-6月 · SFT 全组 25 人 · 统计截止 2026-06-29 · 申诉通过率 = 标注员申诉成功被通过的比例，↓越低 PIC 判断越准确
 </div>
