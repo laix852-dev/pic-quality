@@ -12,7 +12,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
-.header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
 .nav-btn { padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
 .nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
 .nav-btn.inactive { color: rgba(255,255,255,0.7); }
@@ -72,16 +71,16 @@ tr:hover td { background: #fafbff; }
       <a href="./" class="nav-btn inactive">6月</a>
       <a href="./july.html" class="nav-btn active">7月</a>
     </div>
-    <div class="meta">2026年7月 · 7.1 - 7.3</div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年7月 · 7.1 - 7.7（5个工作日）</div>
   </div>
 </div>
 
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">2,066</div><div class="sub">6 个模块 · 3个工作日</div></div>
-  <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">107</div><div class="sub">次品率 5.18%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.82%</div><div class="sub">SFT 94.71%</div></div>
-  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">暂无申诉</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">28人</div><div class="sub">9人零次品</div></div>
+  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,344</div><div class="sub">6 个模块 · 5个工作日</div></div>
+  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">355</div><div class="sub">次品率 5.60%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.40%</div><div class="sub">SFT 93.75%</div></div>
+  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">暂无申诉数据</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">28人</div><div class="sub">3人零次品</div></div>
 </div>
 
 <div class="grid-2">
@@ -90,11 +89,11 @@ tr:hover td { background: #fafbff; }
     <div class="panel-body no-padding"><table>
       <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>tag分层</td><td>50</td><td>0</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#52c41a"></div></div><span class="pct-text">100.0%</span></div></td></tr>
-        <tr><td>预训练</td><td>349</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.6%;background:#52c41a"></div></div><span class="pct-text">98.57%</span></div></td></tr>
-        <tr><td>Caption</td><td>90</td><td>3</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
-        <tr><td style="font-weight:700">SFT后训练</td><td>775</td><td>43</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.7%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">94.71%</span></div></td></tr>
-        <tr><td>AI合理性</td><td>782</td><td>53</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.35%</span></div></td></tr>
+        <tr><td>tag分层</td><td>130</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99.2%;background:#52c41a"></div></div><span class="pct-text">99.23%</span></div></td></tr>
+        <tr><td>预训练</td><td>825</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.1%;background:#52c41a"></div></div><span class="pct-text">98.06%</span></div></td></tr>
+        <tr><td>Caption</td><td>216</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.37%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>4,271</td><td>267</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.75%</span></div></td></tr>
+        <tr><td>AI合理性</td><td>882</td><td>59</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.3%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.31%</span></div></td></tr>
         <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">90.00%</span></div></td></tr>
       </tbody>
     </table></div>
@@ -105,48 +104,51 @@ tr:hover td { background: #fafbff; }
       <div style="display:flex;justify-content:space-around;text-align:center;padding:20px 0">
         <div><div style="font-size:11px;color:#8c8c9a">六月 SFT 准确率</div><div style="font-size:36px;font-weight:700;color:#fa8c16">93.04%</div><div style="font-size:11px;color:#8c8c9a">19,686 条</div></div>
         <div style="font-size:28px;color:#52c41a;line-height:100px">→</div>
-        <div><div style="font-size:11px;color:#8c8c9a">七月 SFT 准确率</div><div style="font-size:36px;font-weight:700;color:#52c41a">94.71%</div><div style="font-size:11px;color:#8c8c9a">775 条（3天）</div></div>
+        <div><div style="font-size:11px;color:#8c8c9a">七月 SFT 准确率</div><div style="font-size:36px;font-weight:700;color:#52c41a">93.75%</div><div style="font-size:11px;color:#8c8c9a">4,271 条（5天）</div></div>
       </div>
-      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +1.67pp 开局改善</div>
+      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +0.71pp（7.6-7.7新增3,496条拉低了涨幅）</div>
     </div>
   </div>
 </div>
 
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT · 含零次品）</div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT）</div>
     <div class="panel-body no-padding"><table>
       <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>张玉如</td><td>33</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>高旭琴</td><td>26</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>刘佳</td><td>23</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>高旭琴</td><td>27</td><td>0</td><td class="highlight up">100.0%</td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT · 样本小）</div>
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT）</div>
     <div class="panel-body no-padding"><table>
       <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>曹未婷</td><td>13</td><td>4</td><td class="highlight down">69.23%</td></tr>
-        <tr><td>2</td><td>张明敏</td><td>19</td><td>4</td><td class="highlight down">78.95%</td></tr>
-        <tr><td>3</td><td>万知宜</td><td>29</td><td>4</td><td class="highlight down">86.21%</td></tr>
+        <tr><td>1</td><td>赵小龙</td><td>89</td><td>12</td><td class="highlight down">86.52%</td></tr>
+        <tr><td>2</td><td>曹未婷</td><td>216</td><td>29</td><td class="highlight down">86.57%</td></tr>
+        <tr><td>3</td><td>寇馨月</td><td>20</td><td>2</td><td class="highlight down">90.00%</td></tr>
       </tbody>
     </table></div>
   </div>
 </div>
 
 <div class="panel" style="margin-bottom:14px">
-  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>七月关键观察</div>
+  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>七月关键观察（更新至7.7）</div>
   <div class="panel-body" style="font-size:13px;line-height:2">
-    • 9 人 SFT 零次品（100%），<strong>高旭琴</strong>延续六月榜首 &nbsp; • <strong>贾建丽</strong>从87.58%回升至93.33% &nbsp; • 新加入HC：郭五星100%、冯美玲96.88%、马彩琴94.12%<br>
-    • 曹未婷、张明敏首次SFT偏低（69.23%、78.95%）需关注 &nbsp; • 预训练98.57%创新高 &nbsp; • <strong style="color:#fa8c16">⚠ 仅3个工作日数据，趋势待更多数据确认</strong>
+    • 整体准确率 94.40%，SFT 93.75%，较六月（93.04%）提升 0.71pp。<br>
+    • <strong>高旭琴</strong>延续六月榜首，SFT保持零次品（27条）。<strong>贾建丽</strong>93.96%，较六月87.58%改善6.38pp。<br>
+    • <strong>曹未婷</strong>抽检量增到216条，次品29条（86.57%），需重点关注。<strong>赵小龙</strong>86.52%同样偏低。<br>
+    • 7.6-7.7 新增3,496条数据，SFT样本量从775跃升至4,271，趋势更有参考价值。<br>
+    • 预训练 98.06% 持续表现优秀。<strong style="color:#fa8c16">⚠ 申诉数据尚未录入。</strong>
   </div>
 </div>
 
 <div class="footer-note">
-  七月数据 · 统计截止 2026-07-03 · <a href="./">← 返回六月看板</a>
+  七月数据 · 统计截止 2026-07-07 · <a href="./">← 返回六月看板</a>
 </div>
 
 </body>
