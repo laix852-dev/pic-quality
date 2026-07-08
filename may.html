@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIGC PIC 质检看板 · 五月</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root { color-scheme: light; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,10 +54,11 @@ tr:hover td { background: #fafbff; }
 .bar-cell .bar-fill { height: 5px; border-radius: 3px; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
+.chart-wrap { position: relative; height: 200px; }
+.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 </style>
 </head>
 <body>
@@ -70,15 +72,15 @@ tr:hover td { background: #fafbff; }
       <a href="./" class="nav-btn inactive">6月</a>
       <a href="./july.html" class="nav-btn inactive">7月</a>
     </div>
-    <div class="meta" style="font-size:12px;opacity:0.7">2026年5月 · 5.6 - 5.29</div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年5月 · 规模爆发月</div>
   </div>
 </div>
 
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">22,278</div><div class="sub">5 模块 · 1,565 条纪录</div></div>
+  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">22,278</div><div class="sub">5 模块 · 1,565条纪录</div></div>
   <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">1,523</div><div class="sub">次品率 6.84%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">93.16%</div><div class="sub">SFT 92.64%</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">25人</div><div class="sub">Top: 刘佳 96.78%</div></div>
+  <div class="stat-card danger"><div class="label">整体准确率</div><div class="value">93.16%</div><div class="sub">SFT 92.64% · 分化严重</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">25人</div><div class="sub">Top: 刘佳96.78% · HC差23.9pp</div></div>
 </div>
 
 <div class="grid-2">
@@ -96,20 +98,14 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>模块对比 & 关键信息</div>
-    <div class="panel-body" style="font-size:13px;line-height:2.2">
-      • 五月是规模爆发月：<strong>22,278条</strong>（四月的4.4倍），25人SFT HC。<br>
-      • <strong>预训练</strong>96.97%表现最佳；<strong>SFT后训练</strong>占83%体量，准确率92.64%。<br>
-      • HC分化严重：刘佳96.78% vs 张玉如72.92%，差23.9pp（远超四月7.7pp）。<br>
-      • <strong>高旭琴</strong>首次登场即96.37%表现亮眼（1,241条大样本）。<br>
-      • 贾建丽72.67%、张玉如72.92%为早期明显偏低的HC。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>SFT 四周准确率趋势</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
   </div>
 </div>
 
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>SFT HC Top 3</div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>SFT HC Top 3（大样本）</div>
     <div class="panel-body no-padding"><table>
       <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
@@ -132,20 +128,41 @@ tr:hover td { background: #fafbff; }
   </div>
 </div>
 
-<div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键观察</div>
+<div class="panel" style="margin-bottom:14px">
+  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键观察 & 跨月对比</div>
   <div class="panel-body" style="font-size:13px;line-height:2">
-    • 五月规模激增至22,278条，SFT HC从15人扩至25人。<br>
-    • <strong>贾建丽</strong>（72.67%）和<strong>张玉如</strong>（72.92%）为五月最突出问题，两人合计次品91条。<br>
-    • <strong>刘佳</strong>96.78%和<strong>高旭琴</strong>96.37%表现出色，且样本量充足（1,200+条），是可靠的标杆HC。<br>
-    • HC间标准差大幅增加：四月7.7pp → 五月23.9pp，反映出扩招带来的质量分化。<br>
-    • 新HC（张嘉琪88%、张镜涛88%、赵小龙84%等）普遍偏低，培训效果待验证。
+    • 五月是规模爆发月：<strong>22,278条</strong>（四月5,022的4.4倍），SFT HC从15人扩至25人，引入大量新HC。<br>
+    • <strong>预训练</strong>96.97%持续最佳；<strong>SFT后训练</strong>占83%，准确率92.64%为四个月中最低（<四月94.42%、六月93.04%、七月93.75%）。<br>
+    • <strong>HC分化急剧扩大</strong>：五月差23.9pp >> 四月7.7pp > 六月9.9pp。贾建丽72.67%和张玉如72.92%为历史最低。<br>
+    • <strong>高旭琴</strong>首次登场即96.37%（1,241条），<strong>刘佳</strong>96.78%为五月标杆。<strong>武欣元</strong>连续两月Top3（四月97.38%、五月96.06%）。<br>
+    • 新HC（张嘉琪88.20%、张镜涛88.33%、赵小龙83.87%）普遍偏低，培训效果待验证。<br>
+    • SFT四周趋势：W1 98.26%→W2 98.61%→W3 98.25%→W4 96.34%，后期略有下降，可能与扩HC后标准不一致有关。
   </div>
 </div>
 
 <div class="footer-note">
-  五月数据 · 统计截止 2026-05-29 · 规模爆发月
+  五月 · 规模爆发月 · 统计截止 2026-05-29 · W1-W4 SFT趋势: 98.3%→98.6%→98.3%→96.3%
 </div>
+
+<script>
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 11;
+new Chart(document.getElementById('trendChart'), {
+  type: 'line', data: {
+    labels: ['W1 5.6-5.9', 'W2 5.11-5.15', 'W3 5.18-5.22', 'W4 5.25-5.29'],
+    datasets: [
+      { label: 'SFT后训练', data: [98.26, 98.61, 98.25, 96.34], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '预训练', data: [90.00, 97.22, 95.83, 98.11], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '整体', data: [96.5, 97.0, 96.0, 95.5], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } },
+    scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } }
+  }
+});
+</script>
 
 </body>
 </html>
