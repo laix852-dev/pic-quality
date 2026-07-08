@@ -121,23 +121,7 @@ tr:hover td { background: #fafbff; }
 <button id="login-btn" style="width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">确 认</button>
 <p id="pe" style="color:#f5222d;font-size:12px;margin-top:10px;display:none">密码错误，请重试</p>
 </div></div>
-<script>
-(function(){
-  var ov=document.getElementById("login-overlay");
-  if(localStorage.getItem("pa")==="1"){ov.style.display="none";return}
-  document.getElementById("login-btn").onclick=function(){
-    if(document.getElementById("pi").value==="888888"){
-      localStorage.setItem("pa","1");
-      ov.style.display="none";
-    }else{
-      document.getElementById("pe").style.display="block";
-    }
-  };
-  document.getElementById("pi").onkeydown=function(e){
-    if(e.key==="Enter")document.getElementById("login-btn").click();
-  };
-})();
-</script>
+
 
 
 <div class="header">
@@ -270,5 +254,16 @@ tr:hover td { background: #fafbff; }
 <script>Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif";Chart.defaults.font.size=11;
 new Chart(document.getElementById("trend"),{type:"line",data:{labels:["W1 4.20-4.24","W2 4.27-4.30"],datasets:[{label:"SFT后训练",data:[91.94,94.42],borderColor:"#667eea",tension:0.4,fill:false,pointRadius:5},{label:"预训练",data:[92.26,94.11],borderColor:"#52c41a",tension:0.4,fill:false,pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{usePointStyle:true}}},scales:{y:{min:82,max:100,ticks:{callback:v=>v+"%"}},x:{grid:{display:false}}}}});
 document.querySelectorAll("#tb .tab").forEach(b=>{b.addEventListener("click",function(){document.querySelectorAll("#tb .tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll("#aw1,#aw2,#am").forEach(x=>x.classList.remove("active"));this.classList.add("active");document.getElementById("a"+this.dataset.w).classList.add("active")})});
-</script></body></html>
+</script>
+<script>
+(function(){
+  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
+  document.getElementById("login-btn").addEventListener("click",function(){
+    if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
+    else{document.getElementById("pe").style.display="block"}
+  });
+  document.getElementById("pi").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("login-btn").click()});
+})();
+</script>
+</body></html>
 </html>
