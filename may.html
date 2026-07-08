@@ -120,11 +120,12 @@ tr:hover td { background: #fafbff; }
 </div></div>
 <script>
 (function(){
-  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
+  var ov=document.getElementById("login-overlay");
+  if(localStorage.getItem("pa")==="1"){ov.style.display="none";return}
   document.getElementById("login-btn").onclick=function(){
     if(document.getElementById("pi").value==="888888"){
       localStorage.setItem("pa","1");
-      document.getElementById("login-overlay").style.display="none";
+      ov.style.display="none";
     }else{
       document.getElementById("pe").style.display="block";
     }
@@ -134,6 +135,7 @@ tr:hover td { background: #fafbff; }
   };
 })();
 </script>
+
 
 <div class="header">
   <h1>AIGC PIC 质检看板 · 五月</h1>
