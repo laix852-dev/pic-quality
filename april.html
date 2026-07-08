@@ -119,208 +119,129 @@ tr:hover td { background: #fafbff; }
     <div style="display:flex;gap:3px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
       <a href="./april.html" class="nav-btn active">4月</a><a href="./may.html" class="nav-btn inactive">5月</a><a href="./" class="nav-btn inactive">6月</a><a href="./july.html" class="nav-btn inactive">7月</a>
     </div>
-    <div class="meta" style="font-size:12px;opacity:0.7">2026年4月 · 项目启动月 · 4.20-4.30</div>
-  </div>
-</div>
-<div class="tabs" id="tabs">
-  <button class="tab active" data-w="w1">W1 · 4.20-4.24</button>
-  <button class="tab" data-w="w2">W2 · 4.27-4.30</button>
-  <button class="tab" data-w="monthly">整月分析</button>
-</div>
-
-<!-- W1 -->
-<div class="content-tab active" id="tw1">
+<div class="tabs" id="tb"><button class="tab active" data-w="w1">W1 · 4.20-4.24</button><button class="tab" data-w="w2">W2 · 4.27-4.30</button><button class="tab" data-w="m">整月分析</button></div>
+<div class="content-tab active" id="aw1">
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">3,498</div><div class="sub">4 模块 · 项目首周</div></div>
-  <div class="stat-card warn"><div class="label">次品率</div><div class="value">8.70%</div><div class="sub">304次品</div></div>
-  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.94%</div><div class="sub">2,519/203 · 磨合期</div></div>
-  <div class="stat-card info"><div class="label">HC</div><div class="value">17人</div><div class="sub">新团队首周</div></div>
+<div class="stat-card info"><div class="label">W1 抽检总量</div><div class="value">3,498</div><div class="sub">4 模块 · 项目首周</div></div>
+<div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">304</div><div class="sub">8.69% · 磨合期</div></div>
+<div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.94%</div><div class="sub">2,519/203 · 全月最低</div></div>
+<div class="stat-card good"><div class="label">预训练</div><div class="value">92.26%</div><div class="sub">698/54</div></div>
+<div class="stat-card purple"><div class="label">SFT HC</div><div class="value">17人</div><div class="sub">新团队首周磨合</div></div>
 </div>
 <div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>预训练</td><td>698</td><td>54</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.3%;background:#fa8c16"></div></div><span class="pct-text">92.26%</span></div></td></tr>
-        <tr><td style="font-weight:700">SFT后训练</td><td>2,519</td><td>203</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.9%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.94%</span></div></td></tr>
-        <tr><td>tag分层</td><td>119</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:85.7%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">85.71%</span></div></td></tr>
-        <tr><td>Caption</td><td>162</td><td>29</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:82.1%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">82.10%</span></div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 关键观察</div>
-    <div class="panel-body" style="font-size:13px;line-height:2">
-      • 项目首周，整体处于磨合期，SFT准确率92.0%偏低。<br>
-      • <strong>武文凤</strong>80.17%全组最低（121/24条），但属项目初期可理解。<br>
-      • <strong>刘欣炎</strong>85.25%（122/20条）同样偏低。<br>
-      • <strong>李悦</strong>96.93%（163/6条）和<strong>寇馨月</strong>95.95%开局优秀。<br>
-      • Caption和tag分层样本少但准确率极低（82%/86%），需重点关注。
-    </div>
-  </div>
-</div>
-<div class="grid-3">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>李悦</td><td>163</td><td>6</td><td class="highlight up">96.93%</td></tr>
-        <tr><td>寇馨月</td><td>148</td><td>7</td><td class="highlight up">95.95%</td></tr>
-        <tr><td>杨慧</td><td>157</td><td>7</td><td class="highlight up">96.18%</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>武文凤</td><td>121</td><td>24</td><td class="highlight down">80.17%</td></tr>
-        <tr><td>刘欣炎</td><td>122</td><td>20</td><td class="highlight down">85.25%</td></tr>
-        <tr><td>任婷钰</td><td>131</td><td>14</td><td class="highlight down">90.84%</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W1 建议</div>
-    <div class="panel-body" style="font-size:12px;line-height:1.8">
-      <strong>1. 武文凤专项辅导</strong>：80.2%异常低，安排1-on-1回训。<br>
-      <strong>2. Caption/tag分层标准对齐</strong>：两模块准确率均<86%，需做SOP判定边界校准。<br>
-      <strong>3. 建立每周复盘机制</strong>：首周暴露问题多属正常磨合。
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- W2 -->
-<div class="content-tab" id="tw2">
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div><div class="panel-body no-padding"><table><thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead><tbody>
+<tr><td>预训练</td><td>698</td><td>54</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.3%;background:#fa8c16"></div></div><span class="pct-text">92.26%</span></div></td></tr>
+<tr style="font-weight:700"><td>SFT后训练</td><td>2,519</td><td>203</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.9%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.94%</span></div></td></tr>
+<tr><td>tag分层</td><td>119</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:85.7%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">85.71%</span></div></td></tr>
+<tr><td>Caption</td><td>162</td><td>29</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:82.1%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">82.10%</span></div></td></tr>
+</tbody></table></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC 表现（17人 · 首周）</div><div class="panel-body no-padding"><table><thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead><tbody>
+<tr><td>1</td><td>李悦</td><td>163</td><td>6</td><td class="highlight up">96.93%</td></tr>
+<tr><td>2</td><td>杨慧</td><td>157</td><td>7</td><td class="highlight up">96.18%</td></tr>
+<tr><td>3</td><td>寇馨月</td><td>148</td><td>7</td><td class="highlight up">95.95%</td></tr>
+<tr><td>4</td><td>武欣元</td><td>160</td><td>9</td><td class="highlight up">95.63%</td></tr>
+<tr><td>5</td><td>付忠文</td><td>153</td><td>13</td><td class="highlight">94.77%</td></tr>
+<tr><td>6</td><td>范乐</td><td>153</td><td>9</td><td class="highlight">94.77%</td></tr>
+<tr><td>7</td><td>高敏</td><td>172</td><td>11</td><td class="highlight">94.19%</td></tr>
+<tr><td>8</td><td>赵鑫</td><td>149</td><td>11</td><td class="highlight">93.96%</td></tr>
+<tr><td>9</td><td>刘佳</td><td>141</td><td>10</td><td class="highlight">92.91%</td></tr>
+<tr><td>10</td><td>任婷钰</td><td>131</td><td>14</td><td class="highlight">90.84%</td></tr>
+<tr class="anomaly-row"><td>11</td><td>刘欣炎</td><td>122</td><td>20</td><td class="highlight down">85.25%</td></tr>
+<tr class="anomaly-row"><td>12</td><td>武文凤</td><td>121</td><td>24</td><td class="highlight down">80.17%</td></tr>
+</tbody></table></div></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W1 建议措施</div><div class="panel-body no-padding"><table class="suggestion-table"><thead><tr><th>#</th><th>措施</th><th>依据</th><th>负责人</th><th>截止</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>武文凤、刘欣炎专项辅导</strong>：80.2%和85.3%为全组最低，安排1-on-1回训。武W2改善至95.1%(+14.9pp)说明辅导有效</td><td class="muted">武121/24(80.2%)，刘122/20(85.3%)</td><td>yidun03</td><td>4/27</td></tr>
+<tr><td>2</td><td><strong>Caption & tag分层SOP对齐</strong>：两模块均<86%，建立明确判定边界和常见案例集</td><td class="muted">Caption 82.1%, tag分层85.7%</td><td>yidun03</td><td>4/27</td></tr>
+<tr><td>3</td><td><strong>建立周复盘机制</strong>：首周磨合问题属正常，建立每周HC数据复盘追踪改善趋势</td><td class="muted">W1→W2改善2.5pp验证有效性</td><td>yidun03</td><td>持续</td></tr>
+</tbody></table></div></div></div>
+<div class="content-tab" id="aw2">
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">5,022</div><div class="sub">5模块 · 新增视频质量</div></div>
-  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">↓2.7pp vs W1</div></div>
-  <div class="stat-card good"><div class="label">SFT 准确率</div><div class="value">94.42%</div><div class="sub">4,172/233 · ↑2.5pp</div></div>
-  <div class="stat-card info"><div class="label">HC</div><div class="value">15人</div><div class="sub">团队趋于稳定</div></div>
+<div class="stat-card info"><div class="label">W2 抽检总量</div><div class="value">5,022</div><div class="sub">5模块 · 新增视频质量</div></div>
+<div class="stat-card good"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">↓2.7pp vs W1</div></div>
+<div class="stat-card good"><div class="label">SFT 准确率</div><div class="value">94.42%</div><div class="sub">4,172/233 · ↑2.5pp</div></div>
+<div class="stat-card good"><div class="label">预训练</div><div class="value">94.11%</div><div class="sub">577/34</div></div>
+<div class="stat-card purple"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">团队趋于稳定</div></div>
 </div>
 <div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td style="font-weight:700">SFT后训练</td><td>4,172</td><td>233</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.42%</span></div></td></tr>
-        <tr><td>预训练</td><td>577</td><td>34</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.1%;background:#52c41a"></div></div><span class="pct-text">94.11%</span></div></td></tr>
-        <tr><td>tag分层</td><td>97</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90.7%;background:#fa8c16"></div></div><span class="pct-text">90.72%</span></div></td></tr>
-        <tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text">88.59%</span></div></td></tr>
-        <tr><td>视频质量</td><td>27</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:70.4%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">70.37%</span></div></td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 关键观察 & 建议</div>
-    <div class="panel-body" style="font-size:13px;line-height:2">
-      • <strong>武文凤</strong>80.2%→95.1%（+14.9pp）改善最显著。<strong>刘欣炎</strong>85.3%→95.0%（+9.7pp）同样大幅提升。<br>
-      • <strong>杨旭晶</strong>98.72%（276条）整月表现最优。<br>
-      • <strong>李佩娟</strong>91.03%和<strong>李悦</strong>92.63%持续偏低需关注。<br>
-      • 视频质量首次加入，仅27条样本太小不具统计意义。<br>
-      • <strong>建议</strong>：将武文凤的改善方法总结为辅导案例推广。
-    </div>
-  </div>
-</div>
-<div class="grid-3">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>杨旭晶</td><td>78</td><td>1</td><td class="highlight up">98.72%</td></tr>
-        <tr><td>武欣元</td><td>267</td><td>10</td><td class="highlight up">97.38%</td></tr>
-        <tr><td>寇馨月</td><td>269</td><td>9</td><td class="highlight up">97.03%</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>李佩娟</td><td>301</td><td>27</td><td class="highlight down">91.03%</td></tr>
-        <tr><td>李悦</td><td>285</td><td>22</td><td class="highlight down">92.63%</td></tr>
-        <tr><td>赵鑫</td><td>280</td><td>22</td><td class="highlight down">92.86%</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W2 建议</div>
-    <div class="panel-body" style="font-size:12px;line-height:1.8">
-      <strong>1. 李佩娟持续辅导</strong>：301条/91%偏低。<br>
-      <strong>2. 总结武文凤改善方法</strong>：+14.9pp可作为辅导案例。<br>
-      <strong>3. 视频质量首周标准建立</strong>：仅27条，需明确判定基准。
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- 整月 -->
-<div class="content-tab" id="tmonthly">
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div><div class="panel-body no-padding"><table><thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead><tbody>
+<tr style="font-weight:700"><td>SFT后训练</td><td>4,172</td><td>233</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.42%</span></div></td></tr>
+<tr><td>预训练</td><td>577</td><td>34</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.1%;background:#52c41a"></div></div><span class="pct-text">94.11%</span></div></td></tr>
+<tr><td>tag分层</td><td>97</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90.7%;background:#fa8c16"></div></div><span class="pct-text">90.72%</span></div></td></tr>
+<tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text">88.59%</span></div></td></tr>
+<tr><td>视频质量</td><td>27</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:70.4%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">70.37%</span></div></td></tr>
+</tbody></table></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC 表现（15人 · W1→W2对比）</div><div class="panel-body no-padding"><table><thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>W2</th><th>W1→W2</th></tr></thead><tbody>
+<tr><td>1</td><td>杨旭晶</td><td>78</td><td>1</td><td class="highlight up">98.72%</td><td>新加入</td></tr>
+<tr><td>2</td><td>武欣元</td><td>267</td><td>10</td><td class="highlight up">97.38%</td><td>class="up">+1.8pp</td></tr>
+<tr><td>3</td><td>寇馨月</td><td>269</td><td>9</td><td class="highlight up">97.03%</td><td>class="up">+1.1pp</td></tr>
+<tr><td>4</td><td>付忠文</td><td>277</td><td>11</td><td class="highlight up">96.75%</td><td>class="up">+2.0pp</td></tr>
+<tr><td>5</td><td>高敏</td><td>318</td><td>14</td><td class="highlight up">96.23%</td><td>class="up">+2.0pp</td></tr>
+<tr><td>6</td><td>范乐</td><td>290</td><td>11</td><td class="highlight up">96.21%</td><td>class="up">+1.4pp</td></tr>
+<tr><td>7</td><td>刘佳</td><td>275</td><td>11</td><td class="highlight up">96.00%</td><td>class="up">+3.1pp</td></tr>
+<tr><td>8</td><td>武文凤</td><td>284</td><td>14</td><td class="highlight up">95.07%</td><td>class="up">+14.9pp</td></tr>
+<tr><td>9</td><td>刘欣炎</td><td>322</td><td>16</td><td class="highlight up">95.03%</td><td>class="up">+9.8pp</td></tr>
+<tr><td>10</td><td>任婷钰</td><td>302</td><td>23</td><td class="highlight ">94.04%</td><td>class="up">+3.2pp</td></tr>
+<tr><td>11</td><td>杨慧</td><td>303</td><td>19</td><td class="highlight ">93.73%</td><td>class="down">-2.5pp</td></tr>
+<tr><td>12</td><td>王瑞瑞</td><td>321</td><td>23</td><td class="highlight ">93.15%</td><td>新加入</td></tr>
+<tr><td>13</td><td>赵鑫</td><td>280</td><td>22</td><td class="highlight ">92.86%</td><td>class="down">-1.1pp</td></tr>
+<tr><td>14</td><td>李悦</td><td>285</td><td>22</td><td class="highlight ">92.63%</td><td>class="down">-4.3pp</td></tr>
+<tr><td>15</td><td>李佩娟</td><td>301</td><td>27</td><td class="highlight down">91.03%</td><td>新加入</td></tr>
+</tbody></table></div></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W2 建议措施</div><div class="panel-body no-padding"><table class="suggestion-table"><thead><tr><th>#</th><th>措施</th><th>依据</th><th>负责人</th><th>截止</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>推广武文凤改善方法</strong>：W1 80.2%→W2 95.1%(+14.9pp)为全员最大改善，总结方法论做辅导案例</td><td class="muted">121条→284条，次品率从19.8%降至4.9%</td><td>yidun03</td><td>5/3</td></tr>
+<tr><td>2</td><td><strong>李悦下滑排查</strong>：W1 96.9%→W2 92.6%(-4.3pp)，从Top1跌至14/15</td><td class="muted">285/22条，次品较W1增加3.7x</td><td>yidun03</td><td>5/3</td></tr>
+<tr><td>3</td><td><strong>视频质量模块标准建立</strong>：首次加入仅27条，需建立明确判定基准</td><td class="muted">曹未婷60%、马彩琴77.8%</td><td>yidun03</td><td>5/3</td></tr>
+</tbody></table></div></div></div>
+<div class="content-tab" id="am">
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">整月抽检</div><div class="value">5,022</div><div class="sub">5模块 · 8工作日</div></div>
-  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">301次品</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">四月最高（>五月93.16%）</div></div>
-  <div class="stat-card info"><div class="label">HC分化</div><div class="value">7.7pp</div><div class="sub">四月中最小（五月23.9pp）</div></div>
+<div class="stat-card info"><div class="label">整月抽检总量</div><div class="value">5,022</div><div class="sub">5模块 · 8工作日</div></div>
+<div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">301</div><div class="sub">5.99%</div></div>
+<div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">SFT 94.42% · 四月最高</div></div>
+<div class="stat-card good"><div class="label">HC 分化</div><div class="value">7.7pp</div><div class="sub">四月中最小（五月23.9pp）</div></div>
+<div class="stat-card purple"><div class="label">项目阶段</div><div class="value">启动月</div><div class="sub">为五月扩张奠基</div></div>
 </div>
 <div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>两周趋势</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="trendA"></canvas></div></div>
-  </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>四月综合结论</div>
-    <div class="panel-body" style="font-size:13px;line-height:2">
-      • 项目启动首月，整体94.01%为四个月中最高。<br>
-      • HC分化仅7.7pp（五月23.9pp、六月9.9pp），说明起步阶段标准统一。<br>
-      • <strong>武欣元、寇馨月</strong>从四月起就是标杆HC，后续月份持续优秀。<br>
-      • <strong>武文凤</strong>W1→W2大幅改善(+14.9pp)预示其波动性特征。<br>
-      • 四月为后续五月规模扩张奠定了HC和标准基础。
-    </div>
-  </div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率（整月）</div><div class="panel-body no-padding"><table><thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead><tbody>
+<tr style="font-weight:700"><td>SFT后训练</td><td>4,172</td><td>233</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.42%</span></div></td></tr>
+<tr><td>预训练</td><td>577</td><td>34</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.1%;background:#52c41a"></div></div><span class="pct-text">94.11%</span></div></td></tr>
+<tr><td>tag分层</td><td>97</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90.7%;background:#fa8c16"></div></div><span class="pct-text">90.72%</span></div></td></tr>
+<tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text">88.59%</span></div></td></tr>
+<tr><td>视频质量</td><td>27</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:70.4%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">70.37%</span></div></td></tr>
+</tbody></table></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#13c2c2"></span>W1→W2 SFT趋势</div><div class="panel-body"><div class="chart-wrap"><canvas id="trend"></canvas></div></div></div>
 </div>
-<div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 四月综合建议 & 跨月关联</div>
-  <div class="panel-body no-padding"><table class="suggestion-table">
-    <thead><tr><th>#</th><th>结论 / 后续关联</th><th>跨月追踪</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td><strong>四月HC分化最小(7.7pp)，标准统一度高</strong>——可作为后续月份标准对齐的参考基线</td><td class="muted">五月扩HC后分化激增至23.9pp</td></tr>
-      <tr><td>2</td><td><strong>武欣元(97.38%)和寇馨月(97.03%)确立标杆</strong>——两人在后续月份持续保持Top表现</td><td class="muted">六月武96.0%、寇95.9%；七月武100%、寇90%</td></tr>
-      <tr><td>3</td><td><strong>武文凤波动性特征初见端倪</strong>——W1 80.2%→W2 95.1%(+14.9pp)，后续月份持续波动</td><td class="muted">五月90.9%、六月90.8%、七月91.0%</td></tr>
-      <tr><td>4</td><td><strong>Caption和视频质量模块样本太小</strong>——四月149条和27条的结论不具备统计显著性，但Caption的偏低趋势持续到后续月份</td><td class="muted">五月94.8%、六月96.5%显著改善</td></tr>
-    </tbody>
-  </table></div>
-</div>
-</div>
-
-<div class="footer-note">四月 · 项目启动月 · 统计截止 2026-04-30</div>
-<script>
-Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
-Chart.defaults.font.size = 11;
-new Chart(document.getElementById('trendA'), {
-  type: 'line', data: {
-    labels: ['W1 4.20-4.24', 'W2 4.27-4.30'],
-    datasets: [
-      { label: 'SFT', data: [91.94, 94.42], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
-      { label: '预训练', data: [92.26, 94.11], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 }
-    ]
-  },
-  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }, scales: { y: { min: 82, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
-});
-document.querySelectorAll('#tabs .tab').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('#tabs .tab').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('#tw1,#tw2,#tmonthly').forEach(c => c.classList.remove('active'));
-    this.classList.add('active');
-    document.getElementById('t'+this.dataset.w).classList.add('active');
-  });
-});
-</script>
-</body>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#52c41a"></span>整月 HC 排名（15人 · 含W1/W2对比）</div><div class="panel-body no-padding"><table><thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th><th>W1</th><th>W2</th><th>变化</th></tr></thead><tbody>
+<tr><td>1</td><td>杨旭晶</td><td>276</td><td>14</td><td class="highlight up">98.72%</td><td>−</td><td>78/1</td><td class="">新</td></tr>
+<tr><td>2</td><td>武欣元</td><td>427</td><td>19</td><td class="highlight up">97.38%</td><td>95.6%</td><td>97.4%</td><td class="up">+1.8</td></tr>
+<tr><td>3</td><td>寇馨月</td><td>417</td><td>16</td><td class="highlight up">97.03%</td><td>96.0%</td><td>97.0%</td><td class="up">+1.0</td></tr>
+<tr><td>4</td><td>付忠文</td><td>430</td><td>24</td><td class="highlight up">96.75%</td><td>94.8%</td><td>96.8%</td><td class="up">+2.0</td></tr>
+<tr><td>5</td><td>高敏</td><td>490</td><td>25</td><td class="highlight up">96.23%</td><td>94.2%</td><td>96.2%</td><td class="up">+2.0</td></tr>
+<tr><td>6</td><td>范乐</td><td>443</td><td>20</td><td class="highlight up">96.21%</td><td>94.8%</td><td>96.2%</td><td class="up">+1.4</td></tr>
+<tr><td>7</td><td>刘佳</td><td>416</td><td>21</td><td class="highlight up">96.00%</td><td>92.9%</td><td>96.0%</td><td class="up">+3.1</td></tr>
+<tr><td>8</td><td>武文凤</td><td>405</td><td>38</td><td class="highlight up">95.07%</td><td>80.2%</td><td>95.1%</td><td class="up">+14.9</td></tr>
+<tr><td>9</td><td>刘欣炎</td><td>444</td><td>36</td><td class="highlight up">95.03%</td><td>85.3%</td><td>95.0%</td><td class="up">+9.7</td></tr>
+<tr><td>10</td><td>任婷钰</td><td>433</td><td>37</td><td class="">94.04%</td><td>90.8%</td><td>94.0%</td><td class="up">+3.2</td></tr>
+<tr><td>11</td><td>杨慧</td><td>460</td><td>26</td><td class="">93.73%</td><td>96.2%</td><td>93.7%</td><td class="down">-2.5</td></tr>
+<tr><td>12</td><td>王瑞瑞</td><td>321</td><td>23</td><td class="">93.15%</td><td>−</td><td>93.2%</td><td class="">新</td></tr>
+<tr><td>13</td><td>赵鑫</td><td>429</td><td>33</td><td class="">92.86%</td><td>94.0%</td><td>92.9%</td><td class="down">-1.1</td></tr>
+<tr><td>14</td><td>李悦</td><td>448</td><td>28</td><td class="">92.63%</td><td>96.9%</td><td>92.6%</td><td class="down">-4.3</td></tr>
+<tr><td>15</td><td>李佩娟</td><td>301</td><td>27</td><td class="highlight down">91.03%</td><td>−</td><td>91.0%</td><td class="">新</td></tr>
+</tbody></table></div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#722ed1"></span>四月关键结论 & 跨月关联</div><div class="panel-body" style="font-size:13px;line-height:2">
+• 项目启动首月，<strong>整体94.01%为四个月中最高</strong>（>五月93.16% >六月93.15%）。<br>
+• <strong>HC分化仅7.7pp为全历史最小</strong>（五月23.9pp、六月9.9pp），起步阶段标准高度统一。<br>
+• <strong>武欣元、寇馨月</strong>从四月起就是标杆，后续月份持续Top5。<br>
+• <strong>武文凤+14.9pp改善</strong>同时预示其波动性特征（σ=5.0pp全HC最大）。<br>
+• <strong>四月为五月15→25人扩张</strong>建立了核心HC团队和SOP标准体系。</div></div>
+<div class="panel"><div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 四月综合建议 & 后续验证</div><div class="panel-body no-padding"><table class="suggestion-table"><thead><tr><th>#</th><th>结论 / 措施</th><th>跨月验证</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>四月7.7pp分化证明标准统一度高</strong>——可作为后续扩HC参考基线。五月扩至25人后分化激增至23.9pp</td><td class="muted">五月扩HC时未充分参考四月经验</td></tr>
+<tr><td>2</td><td><strong>武欣元(97.4%)和寇馨月(97.0%)确立为标杆</strong>——两人后续月份持续Top5，是可依赖的核心HC</td><td class="muted">五月武96.1%、寇95.6%；六月武95.6%、寇95.9%</td></tr>
+<tr><td>3</td><td><strong>武文凤波动性特征首次显现</strong>——W1 80.2%→W2 95.1%(+14.9pp)，σ=5.0pp验证其不稳定</td><td class="muted">五月90.7%、六月90.8%、七月91.0%</td></tr>
+<tr><td>4</td><td><strong>视频质量和Caption样本太小不具统计意义</strong>——27条和149条的结论需谨慎，但Caption偏低趋势在五月改善</td><td class="muted">五月Caption 94.8%，显著提升</td></tr>
+</tbody></table></div></div></div>
+<div class="footer-note">四月 · 项目启动月 · 统计截止 2026-04-30 · HC分化7.7pp为全历史最小</div>
+<script>Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif";Chart.defaults.font.size=11;
+new Chart(document.getElementById("trend"),{type:"line",data:{labels:["W1 4.20-4.24","W2 4.27-4.30"],datasets:[{label:"SFT后训练",data:[91.94,94.42],borderColor:"#667eea",tension:0.4,fill:false,pointRadius:5},{label:"预训练",data:[92.26,94.11],borderColor:"#52c41a",tension:0.4,fill:false,pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{usePointStyle:true}}},scales:{y:{min:82,max:100,ticks:{callback:v=>v+"%"}},x:{grid:{display:false}}}}});
+document.querySelectorAll("#tb .tab").forEach(b=>{b.addEventListener("click",function(){document.querySelectorAll("#tb .tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll("#aw1,#aw2,#am").forEach(x=>x.classList.remove("active"));this.classList.add("active");document.getElementById("a"+this.dataset.w).classList.add("active")})});
+</script></body></html>
 </html>
