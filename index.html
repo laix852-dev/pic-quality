@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIGC PIC 质检看板 · 六月五周维度</title>
+<title>AIGC PIC 质检看板 · 七月</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root { color-scheme: light; }
@@ -13,15 +13,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
 .header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
-.month-btn { padding: 5px 16px; border-radius: 6px; border: none; background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-.month-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
-.month-btn:not([disabled]):hover { background: rgba(255,255,255,0.15); color: #fff; }
-
-.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
-.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
-.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
-.tab .sub { font-size: 10px; opacity: 0.7; display: block; }
+.nav-btn { padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+.nav-btn.inactive { color: rgba(255,255,255,0.7); }
+.nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
 .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
@@ -41,7 +36,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.full { grid-column: 1 / -1; }
 
 .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
 .panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
@@ -59,7 +53,6 @@ tr:hover td { background: #fafbff; }
 .tag-orange { background: #fff7e6; color: #d46b08; }
 .tag-green { background: #f6ffed; color: #389e0d; }
 .tag-blue { background: #e6f4ff; color: #1677ff; }
-.tag-purple { background: #f9f0ff; color: #722ed1; }
 
 .rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
 .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
@@ -73,191 +66,152 @@ tr:hover td { background: #fafbff; }
 
 .chart-wrap { position: relative; height: 220px; }
 .chart-wrap-sm { position: relative; height: 180px; }
-.chart-wrap-xs { position: relative; height: 150px; }
-
-.content-tab { display: none; }
-.content-tab.active { display: block; }
-
-.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.muted { color: #999; font-size: 11px; }
-
-.suggestion-block { margin-top: 14px; }
-.suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
-.suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
-
-.anomaly-row td { background: #fffbe6; }
-.anomaly-row:hover td { background: #fff8c5; }
-.improve-row td { background: #f6ffed; }
-.decline-row td { background: #fff1f0; }
-
-.alert-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
-.alert-box .icon { font-size: 16px; flex-shrink: 0; }
-.alert-box.red { background: #fff1f0; border-color: #ffccc7; }
-.alert-box.green { background: #f6ffed; border-color: #b7eb8f; }
-
-.insight-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.insight-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
-.insight-card .ic-label { font-size: 11px; color: #8c8c9a; margin-bottom: 6px; }
-.insight-card .ic-body { font-size: 13px; line-height: 1.6; }
-
-.rank-full td:first-child { color: #999; font-size: 11px; text-align: center; width: 28px; }
-.rank-full td:nth-child(6) { font-weight: 600; }
-
-.note-small { font-size: 11px; color: #8c8c9a; margin-top: 6px; font-style: italic; }
-</style>
-</head>
-<body><!-- v2026.07.08 -->
-E html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIGC PIC 质检看板 · 六月五周维度</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
-<style>
-:root { color-scheme: light; }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1140px; }
-
-.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
-.header h1 { font-size: 22px; font-weight: 700; }
-.header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
-.month-btn { padding: 5px 16px; border-radius: 6px; border: none; background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-.month-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
-.month-btn:not([disabled]):hover { background: rgba(255,255,255,0.15); color: #fff; }
-
-.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
-.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
-.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
-.tab .sub { font-size: 10px; opacity: 0.7; display: block; }
-
-.stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
-.stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
-.stat-card.info { border-left-color: #1677ff; }
-.stat-card.warn { border-left-color: #fa8c16; }
-.stat-card.good { border-left-color: #52c41a; }
-.stat-card.danger { border-left-color: #f5222d; }
-.stat-card.purple { border-left-color: #722ed1; }
-.stat-card .label { font-size: 11px; color: #8c8c9a; margin-bottom: 4px; }
-.stat-card .value { font-size: 24px; font-weight: 700; }
-.stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
-.stat-card.good .value { color: #52c41a; }
-.stat-card.warn .value { color: #fa8c16; }
-.stat-card.info .value { color: #1677ff; }
-.stat-card.danger .value { color: #f5222d; }
-.stat-card.purple .value { color: #722ed1; }
-
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.full { grid-column: 1 / -1; }
-
-.panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
-.panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-.panel-header .dot { width: 7px; height: 7px; border-radius: 50%; }
-.panel-body { padding: 12px 18px; }
-.panel-body.no-padding { padding: 0; }
-
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-th { background: #fafafa; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #f0f0f0; white-space: nowrap; }
-td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
-tr:hover td { background: #fafbff; }
-
-.tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
-.tag-red { background: #fff1f0; color: #cf1322; }
-.tag-orange { background: #fff7e6; color: #d46b08; }
-.tag-green { background: #f6ffed; color: #389e0d; }
-.tag-blue { background: #e6f4ff; color: #1677ff; }
-.tag-purple { background: #f9f0ff; color: #722ed1; }
-
-.rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
-.rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
-.rank-2 { background: linear-gradient(135deg, #9e9e9e, #424242); }
-.rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); }
-
-.bar-cell { display: flex; align-items: center; gap: 8px; }
-.bar-cell .bar-bg { flex: 1; height: 5px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
-.bar-cell .bar-fill { height: 5px; border-radius: 3px; }
-.bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
-
-.chart-wrap { position: relative; height: 220px; }
-.chart-wrap-sm { position: relative; height: 180px; }
-.chart-wrap-xs { position: relative; height: 150px; }
-
-.content-tab { display: none; }
-.content-tab.active { display: block; }
-
 .footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 
-.highlight { font-weight: 700; }
-.up { color: #52c41a; }
-.down { color: #f5222d; }
-.muted { color: #999; font-size: 11px; }
-
-.suggestion-block { margin-top: 14px; }
 .suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
 .suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
-
-.anomaly-row td { background: #fffbe6; }
-.anomaly-row:hover td { background: #fff8c5; }
-.improve-row td { background: #f6ffed; }
-.decline-row td { background: #fff1f0; }
-
-.alert-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
-.alert-box .icon { font-size: 16px; flex-shrink: 0; }
-.alert-box.red { background: #fff1f0; border-color: #ffccc7; }
-.alert-box.green { background: #f6ffed; border-color: #b7eb8f; }
-
-.insight-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.insight-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
-.insight-card .ic-label { font-size: 11px; color: #8c8c9a; margin-bottom: 6px; }
-.insight-card .ic-body { font-size: 13px; line-height: 1.6; }
-
-.rank-full td:first-child { color: #999; font-size: 11px; text-align: center; width: 28px; }
-.rank-full td:nth-child(6) { font-weight: 600; }
-
-.note-small { font-size: 11px; color: #8c8c9a; margin-top: 6px; font-style: italic; }
 </style>
 </head>
-<body><!-- v2026.07.08 -->
-<div id="login-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);z-index:9999;display:flex;align-items:center;justify-content:center">
-<div style="background:#fff;border-radius:14px;padding:40px 36px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3);min-width:340px">
-<h2 style="margin-bottom:6px;font-size:20px">AIGC PIC 质检看板</h2>
-<p style="color:#8c8c9a;font-size:13px;margin-bottom:24px">请输入访问密码</p>
-<input id="pi" type="password" placeholder="请输入密码" autofocus style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:8px;font-size:16px;text-align:center;outline:none">
-<button id="login-btn" style="width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">确 认</button>
-<p id="pe" style="color:#f5222d;font-size:12px;margin-top:10px;display:none">密码错误，请重试</p>
-</div></div>
+<body>
+
+<div class="header">
+  <h1>AIGC PIC 质检看板 · 七月</h1>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
+      <a href="./" class="nav-btn inactive">6月</a>
+      <a href="./july.html" class="nav-btn active">7月</a>
+    </div>
+    <div class="meta">2026年7月 · 7.1 - 7.7（5个工作日）</div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,344</div><div class="sub">6 个模块 · 5个工作日</div></div>
+  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">355</div><div class="sub">次品率 5.60%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.40%</div><div class="sub">SFT 93.75%</div></div>
+  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">51次申诉 · 暂无结果</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC 人数</div><div class="value">28人</div><div class="sub">3人零次品 · 8人参与SFT</div></div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>tag分层</td><td>130</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99.2%;background:#52c41a"></div></div><span class="pct-text">99.23%</span></div></td></tr>
+        <tr><td>预训练</td><td>825</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.1%;background:#52c41a"></div></div><span class="pct-text">98.06%</span></div></td></tr>
+        <tr><td>Caption</td><td>216</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.37%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>4,271</td><td>267</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.75%</span></div></td></tr>
+        <tr><td>AI合理性</td><td>882</td><td>59</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.3%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.31%</span></div></td></tr>
+        <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">90.00%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型分布</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="defectChart"></canvas></div></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>六月 vs 七月对比</div>
+    <div class="panel-body">
+      <div style="display:flex;justify-content:space-around;text-align:center;padding:20px 0">
+        <div><div style="font-size:11px;color:#8c8c9a">六月 SFT</div><div style="font-size:36px;font-weight:700;color:#fa8c16">93.04%</div><div style="font-size:11px;color:#8c8c9a">19,686条</div></div>
+        <div style="font-size:28px;color:#52c41a;line-height:100px">→</div>
+        <div><div style="font-size:11px;color:#8c8c9a">七月 SFT</div><div style="font-size:36px;font-weight:700;color:#52c41a">93.75%</div><div style="font-size:11px;color:#8c8c9a">4,271条</div></div>
+      </div>
+      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +0.71pp</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#1677ff"></span>错误根因分析</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="analysisChart"></canvas></div></div>
+  </div>
+</div>
+
+<div class="grid-3">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT后训练）</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>刘佳</td><td>23</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>高旭琴</td><td>27</td><td>0</td><td class="highlight up">100.0%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT后训练）</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>赵小龙</td><td>89</td><td>12</td><td class="highlight down">86.52%</td></tr>
+        <tr><td>2</td><td>曹未婷</td><td>216</td><td>29</td><td class="highlight down">86.57%</td></tr>
+        <tr><td>3</td><td>寇馨月</td><td>20</td><td>2</td><td class="highlight down">90.00%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>关键变化 vs 六月</div>
+    <div class="panel-body" style="font-size:12px;line-height:1.8">
+      • <span class="up">▲</span> <strong>贾建丽</strong> 87.58%→93.96% +6.4pp<br>
+      • <span class="up">▲</span> <strong>张玉如</strong> 93.67%→97.92% +4.3pp<br>
+      • <span class="up">▲</span> <strong>付忠文</strong> 93.28%→97.10% +3.8pp<br>
+      • <span class="down">▼</span> <strong>寇馨月</strong> 95.83%→90.00% -5.8pp<br>
+      • <span class="down">▼</span> <strong>赵小龙</strong> 89.86%→86.52% -3.3pp<br>
+      • 8位HC参与SFT质检（vs六月4人）
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 七月重点关注 & 建议措施</div>
+  <div class="panel-body no-padding">
+    <table class="suggestion-table">
+      <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>曹未婷 SFT 首次大规模抽检关注</strong>：216条次品29条（86.57%），是六月视频质量HC首次参与SFT，需确认是否适应新模块标准</td><td class="muted">SFT 28人中倒数第二，抽检量却排前10</td><td>yidun03</td><td>7/10</td></tr>
+        <tr><td>2</td><td><strong>格式/节奏问题占比升至首位</strong>：22.2%（79条），较六月15.7%显著上升。"慢放/快进/跳帧"类误判需做专项标准对齐</td><td class="muted">七月最大次品类型，六月仅排第二</td><td>yidun01</td><td>7/10</td></tr>
+        <tr><td>3</td><td><strong>申诉数据尚未录入，暂无法评估 PIC 一致性</strong>：51次申诉等待结果，建议7/10前催促完成审核</td><td class="muted">六月yidun01申诉通过率44.3%需持续关注</td><td>PIC全员</td><td>7/10</td></tr>
+        <tr><td>4</td><td><strong>新增8位PIC参与SFT质检</strong>（yidun56/42/58/46/48等）：建议做一轮判定标准对齐，避免多PIC标准不一致</td><td class="muted">六月仅4位PIC，七月增至9位</td><td>yidun01</td><td>7/10</td></tr>
+        <tr><td>5</td><td><strong>寇馨月准确率下降需排查</strong>：六月95.83%→七月90.00%，抽检量仅20条（样本小），但仍需关注是不是角色切换导致</td><td class="muted">从SFT HC Top3 跌至 Bottom3</td><td>yidun01</td><td>7/10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer-note">
+  七月数据 · 统计截止 2026-07-07 · <a href="./">← 返回六月看板</a> · 申诉通过率↓越低PIC判断越准确
+</div>
+
 <script>
-try{
-if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none"}
-else{
-document.getElementById("login-btn").onclick=function(){
-if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
-else{document.getElementById("pe").style.display="block"}
-};
-document.getElementById("pi").onkeydown=function(e){if(e.key==="Enter")document.getElementById("login-btn").click()}
-}
-}catch(e){}
-<\/script>
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 11;
 
+new Chart(document.getElementById('defectChart'), {
+  type: 'bar', data: {
+    labels: ['格式/节奏问题', '清晰度判断', '动作/交互判断', '景深判断', '外观/稳定性'],
+    datasets: [{ data: [79, 63, 38, 31, 18], backgroundColor: ['#1677ff','#f5222d','#fa8c16','#52c41a','#722ed1'], borderRadius: 4, barThickness: 18 }]
+  },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } }
+});
 
+new Chart(document.getElementById('analysisChart'), {
+  type: 'doughnut', data: {
+    labels: ['个人仔细度 (74.6%)', '规则理解偏差 (25.0%)', '电脑问题 (0.4%)'],
+    datasets: [{ data: [203, 68, 1], backgroundColor: ['#f5222d','#fa8c16','#d9d9d9'], borderWidth: 0 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { padding: 12, usePointStyle: true } } } }
+});
+</script>
 
-
-
-<script>
-(function(){
-  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
-  document.getElementById("login-btn").addEventListener("click",function(){
-    if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
-    else{document.getElementById("pe").style.display="block"}
-  });
-  document.getElementById("pi").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("login-btn").click()});
-})();
-<\/script>
 </body>
 </html>
