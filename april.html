@@ -2,45 +2,38 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIGC PIC 质检看板 · 四月</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root { color-scheme: light; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1140px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1100px; }
 
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
-.header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
-.month-btn { padding: 5px 16px; border-radius: 6px; border: none; background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-.month-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
-.month-btn:not([disabled]):hover { background: rgba(255,255,255,0.15); color: #fff; }
+.nav-btn { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+.nav-btn.inactive { color: rgba(255,255,255,0.7); }
+.nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
 .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
 .tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
 .tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
-.tab .sub { font-size: 10px; opacity: 0.7; display: block; }
 
-.stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
 .stat-card.info { border-left-color: #1677ff; }
 .stat-card.warn { border-left-color: #fa8c16; }
 .stat-card.good { border-left-color: #52c41a; }
 .stat-card.danger { border-left-color: #f5222d; }
-.stat-card.purple { border-left-color: #722ed1; }
 .stat-card .label { font-size: 11px; color: #8c8c9a; margin-bottom: 4px; }
 .stat-card .value { font-size: 24px; font-weight: 700; }
 .stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
 .stat-card.good .value { color: #52c41a; }
-.stat-card.warn .value { color: #fa8c16; }
-.stat-card.info .value { color: #1677ff; }
-.stat-card.danger .value { color: #f5222d; }
-.stat-card.purple .value { color: #722ed1; }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.full { grid-column: 1 / -1; }
 
 .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
 .panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
@@ -53,13 +46,6 @@ th { background: #fafafa; padding: 8px 10px; text-align: left; font-weight: 600;
 td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
 tr:hover td { background: #fafbff; }
 
-.tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
-.tag-red { background: #fff1f0; color: #cf1322; }
-.tag-orange { background: #fff7e6; color: #d46b08; }
-.tag-green { background: #f6ffed; color: #389e0d; }
-.tag-blue { background: #e6f4ff; color: #1677ff; }
-.tag-purple { background: #f9f0ff; color: #722ed1; }
-
 .rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
 .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
 .rank-2 { background: linear-gradient(135deg, #9e9e9e, #424242); }
@@ -70,81 +56,155 @@ tr:hover td { background: #fafbff; }
 .bar-cell .bar-fill { height: 5px; border-radius: 3px; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
-.chart-wrap { position: relative; height: 220px; }
-.chart-wrap-sm { position: relative; height: 180px; }
-.chart-wrap-xs { position: relative; height: 150px; }
-
+.chart-wrap { position: relative; height: 200px; }
 .content-tab { display: none; }
 .content-tab.active { display: block; }
-
 .footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
-
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.muted { color: #999; font-size: 11px; }
-
-.suggestion-block { margin-top: 14px; }
-.suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
-.suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
-
-.anomaly-row td { background: #fffbe6; }
-.anomaly-row:hover td { background: #fff8c5; }
-.improve-row td { background: #f6ffed; }
-.decline-row td { background: #fff1f0; }
-
-.alert-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
-.alert-box .icon { font-size: 16px; flex-shrink: 0; }
-.alert-box.red { background: #fff1f0; border-color: #ffccc7; }
-.alert-box.green { background: #f6ffed; border-color: #b7eb8f; }
-
-.insight-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.insight-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
-.insight-card .ic-label { font-size: 11px; color: #8c8c9a; margin-bottom: 6px; }
-.insight-card .ic-body { font-size: 13px; line-height: 1.6; }
-
-.rank-full td:first-child { color: #999; font-size: 11px; text-align: center; width: 28px; }
-.rank-full td:nth-child(6) { font-weight: 600; }
-
-.note-small { font-size: 11px; color: #8c8c9a; margin-top: 6px; font-style: italic; }
-
-.suggestion-table td{font-size:12.5px;padding:9px 12px}
-.suggestion-table td:first-child{width:32px;text-align:center;font-weight:700;color:#667eea}
 </style>
 </head>
 <body>
-<div id="login-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);z-index:9999;display:flex;align-items:center;justify-content:center">
-<div style="background:#fff;border-radius:14px;padding:40px 36px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3);min-width:340px">
-<h2 style="margin-bottom:6px;font-size:20px">AIGC PIC 质检看板</h2>
-<p style="color:#8c8c9a;font-size:13px;margin-bottom:24px">请输入访问密码</p>
-<input id="pi" type="password" placeholder="请输入密码" autofocus style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:8px;font-size:16px;text-align:center;outline:none">
-<button id="login-btn" style="width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">确 认</button>
-<p id="pe" style="color:#f5222d;font-size:12px;margin-top:10px;display:none">密码错误，请重试</p>
-</div></div>
+
+<div class="header">
+  <h1>AIGC PIC 质检看板 · 四月</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;gap:3px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
+      <a href="./april.html" class="nav-btn active">4月</a>
+      <a href="./may.html" class="nav-btn inactive">5月</a>
+      <a href="./" class="nav-btn inactive">6月</a>
+      <a href="./july.html" class="nav-btn inactive">7月</a>
+    </div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年4月 · 项目启动月</div>
+  </div>
+</div>
+
+<div class="tabs" id="aprilTabs">
+  <button class="tab active" data-w="w1">W1 · 4.20 - 4.24</button>
+  <button class="tab" data-w="w2">W2 · 4.27 - 4.30</button>
+  <button class="tab" data-w="monthly">整月 · 4月分析</button>
+</div>
+
+<!-- W1 -->
+<div class="content-tab active" id="aw1">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">3,498</div><div class="sub">5 模块</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">8.45%</div><div class="sub">SFT 92.97%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">92.41%</div><div class="sub">项目首周</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">17人</div><div class="sub">参差不齐</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>预训练</td><td>698</td><td>54</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#52c41a"></div></div><span class="pct-text">92.26%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>2,519</td><td>203</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.0%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.94%</span></div></td></tr>
+        <tr><td>tag分层</td><td>119</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:86.6%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">85.71%</span></div></td></tr>
+        <tr><td>Caption</td><td>162</td><td>29</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:82.1%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">82.10%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • 项目首周，整体准确率92.41%，处于磨合期。<br>
+      • <strong>武文凤</strong>80.17%为全组最低，但W2大幅改善至95.07%。<br>
+      • <strong>刘欣炎</strong>85.25%同样偏低，W2改善至95.03%。<br>
+      • Caption和tag分层样本少但准确率偏低（82%/86%）。<br>
+      • <strong>李悦</strong>96.93% W1表现最佳（163/6）。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- W2 -->
+<div class="content-tab" id="aw2">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">5,022</div><div class="sub">5 模块 · 增加视频质量</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">SFT 94.42%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">↑ +1.6pp</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">稳定改善</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">SFT后训练</td><td>4,172</td><td>233</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.42%</span></div></td></tr>
+        <tr><td>预训练</td><td>577</td><td>34</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.1%;background:#52c41a"></div></div><span class="pct-text">94.11%</span></div></td></tr>
+        <tr><td>tag分层</td><td>97</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90.7%;background:#fa8c16"></div></div><span class="pct-text">90.72%</span></div></td></tr>
+        <tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text">88.59%</span></div></td></tr>
+        <tr><td>视频质量</td><td>27</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:70.4%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">70.37%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • SFT准确率从92.0%提升至94.4%（+2.5pp），团队快速进入状态。<br>
+      • <strong>武文凤</strong>80.2%→95.1%（+14.9pp）改善最显著。<br>
+      • <strong>刘欣炎</strong>85.3%→95.0%（+9.8pp）同样大幅提升。<br>
+      • 视频质量首次加入，仅27条，曹未婷60%最低。<br>
+      • 新HC杨旭晶98.72%表现突出（276条）。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 整月 -->
+<div class="content-tab" id="amonthly">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">整月抽检</div><div class="value">5,022</div><div class="sub">5模块 · 691条纪录</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">SFT 94.42%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">四月最高</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">差7.7pp · 分化最小</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>两周趋势</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="trendApril"></canvas></div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>杨旭晶</td><td>276</td><td class="highlight up">98.72%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>武欣元</td><td>427</td><td class="highlight up">97.38%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>寇馨月</td><td>417</td><td class="highlight up">97.03%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+</div>
+
+<div class="footer-note">四月 · 项目启动月 · 统计截止 2026-04-30</div>
 <script>
-try{
-if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none"}
-else{
-document.getElementById("login-btn").onclick=function(){
-if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
-else{document.getElementById("pe").style.display="block"}
-};
-document.getElementById("pi").onkeydown=function(e){if(e.key==="Enter")document.getElementById("login-btn").click()}
-}
-}catch(e){}
-<\/script>
-
-
-
-<script>
-(function(){
-  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
-  document.getElementById("login-btn").addEventListener("click",function(){
-    if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
-    else{document.getElementById("pe").style.display="block"}
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 11;
+new Chart(document.getElementById('trendApril'), {
+  type: 'line', data: {
+    labels: ['W1 4.20-4.24', 'W2 4.27-4.30'],
+    datasets: [
+      { label: 'SFT', data: [91.94, 94.42], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '预训练', data: [92.26, 94.11], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '整体', data: [92.41, 94.01], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }, scales: { y: { min: 80, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
+});
+document.querySelectorAll('#aprilTabs .tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#aprilTabs .tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#aw1,#aw2,#amonthly').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('a'+this.dataset.w).classList.add('active');
   });
-  document.getElementById("pi").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("login-btn").click()});
-})();
-<\/script>
-</body></html>
+});
+</script>
+</body>
 </html>
