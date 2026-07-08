@@ -17,6 +17,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .nav-btn.inactive { color: rgba(255,255,255,0.7); }
 .nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
+.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
+.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
+
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
 .stat-card.info { border-left-color: #1677ff; }
@@ -27,9 +32,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .stat-card .value { font-size: 24px; font-weight: 700; }
 .stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
 .stat-card.good .value { color: #52c41a; }
-.stat-card.warn .value { color: #fa8c16; }
-.stat-card.info .value { color: #1677ff; }
-.stat-card.danger .value { color: #f5222d; }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 
@@ -55,6 +57,8 @@ tr:hover td { background: #fafbff; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
 .chart-wrap { position: relative; height: 200px; }
+.content-tab { display: none; }
+.content-tab.active { display: block; }
 .footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
@@ -76,93 +80,200 @@ tr:hover td { background: #fafbff; }
   </div>
 </div>
 
+<div class="tabs" id="mayTabs">
+  <button class="tab active" data-w="w1">W1 · 5.6-5.9</button>
+  <button class="tab" data-w="w2">W2 · 5.11-5.15</button>
+  <button class="tab" data-w="w3">W3 · 5.18-5.22</button>
+  <button class="tab" data-w="w4">W4 · 5.25-5.29</button>
+  <button class="tab" data-w="monthly">整月分析</button>
+</div>
+
+<!-- W1 -->
+<div class="content-tab active" id="mw1">
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">22,278</div><div class="sub">5 模块 · 1,565条纪录</div></div>
-  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">1,523</div><div class="sub">次品率 6.84%</div></div>
-  <div class="stat-card danger"><div class="label">整体准确率</div><div class="value">93.16%</div><div class="sub">SFT 92.64% · 分化严重</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">25人</div><div class="sub">Top: 刘佳96.78% · HC差23.9pp</div></div>
+  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">5,738</div><div class="sub">5 模块</div></div>
+  <div class="stat-card warn"><div class="label">SFT 准确率</div><div class="value">95.45%</div><div class="sub">4,898/251</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">98.26%</div><div class="sub">开局优秀</div></div>
+  <div class="stat-card info"><div class="label">HC</div><div class="value">~12人</div><div class="sub">老HC为主</div></div>
 </div>
-
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>预训练</td><td>2,412</td><td>73</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.0%;background:#52c41a"></div></div><span class="pct-text">96.97%</span></div></td></tr>
-        <tr><td>Caption</td><td>618</td><td>32</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.8%;background:#52c41a"></div></div><span class="pct-text">94.82%</span></div></td></tr>
-        <tr><td>tag分层</td><td>411</td><td>27</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#fa8c16"></div></div><span class="pct-text">93.43%</span></div></td></tr>
-        <tr><td style="font-weight:700">SFT后训练</td><td>18,519</td><td>1,363</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.6%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">92.64%</span></div></td></tr>
-        <tr><td>视频质量</td><td>318</td><td>28</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.2%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.19%</span></div></td></tr>
+        <tr><td>预训练</td><td>576</td><td>20</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.5%;background:#52c41a"></div></div><span class="pct-text">96.53%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>4,898</td><td>251</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.45%</span></div></td></tr>
+        <tr><td>Caption</td><td>144</td><td>11</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.4%;background:#fa8c16"></div></div><span class="pct-text">92.36%</span></div></td></tr>
+        <tr><td>tag分层</td><td>96</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text">93.75%</span></div></td></tr>
+        <tr><td>视频质量</td><td>24</td><td>5</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:79.2%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">79.17%</span></div></td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>SFT 四周准确率趋势</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • W1以老HC为主（任婷钰、杨慧、寇馨月等），准确率较高。<br>
+      • <strong>寇馨月</strong>98.01%领跑全组（201条），<strong>刘佳</strong>97.89%紧随。<br>
+      • SFT整体95.45%为五月最高周，后续呈下降趋势。<br>
+      • 预训练96.53%稳定开局。
+    </div>
   </div>
 </div>
+</div>
 
+<!-- W2 -->
+<div class="content-tab" id="mw2">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">6,714</div><div class="sub">5 模块</div></div>
+  <div class="stat-card warn"><div class="label">SFT 准确率</div><div class="value">95.50%</div><div class="sub">5,597/276</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">98.61%</div><div class="sub">持续优秀</div></div>
+  <div class="stat-card info"><div class="label">HC</div><div class="value">~12人</div><div class="sub">稳步运作</div></div>
+</div>
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>SFT HC Top 3（大样本）</div>
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>刘佳</td><td>1,211</td><td>42</td><td class="highlight up">96.78%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>高旭琴</td><td>1,241</td><td>54</td><td class="highlight up">96.37%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>武欣元</td><td>1,244</td><td>59</td><td class="highlight up">96.06%</td></tr>
+        <tr><td>预训练</td><td>720</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.6%;background:#52c41a"></div></div><span class="pct-text">97.64%</span></div></td></tr>
+        <tr><td>Caption</td><td>180</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.6%;background:#52c41a"></div></div><span class="pct-text">95.56%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>5,597</td><td>276</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.5%;background:#52c41a"></div></div><span class="pct-text">95.50%</span></div></td></tr>
+        <tr><td>tag分层</td><td>120</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.5%;background:#fa8c16"></div></div><span class="pct-text">92.50%</span></div></td></tr>
+        <tr><td>视频质量</td><td>97</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:89.7%;background:#fa8c16"></div></div><span class="pct-text">89.69%</span></div></td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>SFT HC Bottom 3</div>
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • W2维持高位，SFT 95.50%接近W1水平。<br>
+      • 预训练98.61%为五月最高。<br>
+      • <strong>范乐</strong>97.73%表现突出。<br>
+      • 老HC维持稳定，新HC尚未大规模加入。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- W3 -->
+<div class="content-tab" id="mw3">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W3 抽检</div><div class="value">4,393</div><div class="sub">5 模块</div></div>
+  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.54%</div><div class="sub">3,488/301 · 明显下降</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">98.25%</div><div class="sub">保持稳定</div></div>
+  <div class="stat-card warn"><div class="label">HC</div><div class="value">扩至25人</div><div class="sub">新HC加入</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>贾建丽</td><td>172</td><td>48</td><td class="highlight down">72.67%</td></tr>
-        <tr><td>2</td><td>张玉如</td><td>144</td><td>43</td><td class="highlight down">72.92%</td></tr>
-        <tr><td>3</td><td>高晋阳</td><td>162</td><td>30</td><td class="highlight down">82.10%</td></tr>
+        <tr><td>预训练</td><td>570</td><td>14</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.5%;background:#52c41a"></div></div><span class="pct-text">97.54%</span></div></td></tr>
+        <tr><td>Caption</td><td>144</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.44%</span></div></td></tr>
+        <tr><td>视频质量</td><td>96</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text">93.75%</span></div></td></tr>
+        <tr><td>tag分层</td><td>95</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.7%;background:#fa8c16"></div></div><span class="pct-text">93.68%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>3,488</td><td>301</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.5%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.54%</span></div></td></tr>
       </tbody>
     </table></div>
   </div>
-</div>
-
-<div class="panel" style="margin-bottom:14px">
-  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键观察 & 跨月对比</div>
-  <div class="panel-body" style="font-size:13px;line-height:2">
-    • 五月是规模爆发月：<strong>22,278条</strong>（四月5,022的4.4倍），SFT HC从15人扩至25人，引入大量新HC。<br>
-    • <strong>预训练</strong>96.97%持续最佳；<strong>SFT后训练</strong>占83%，准确率92.64%为四个月中最低（<四月94.42%、六月93.04%、七月93.75%）。<br>
-    • <strong>HC分化急剧扩大</strong>：五月差23.9pp >> 四月7.7pp > 六月9.9pp。贾建丽72.67%和张玉如72.92%为历史最低。<br>
-    • <strong>高旭琴</strong>首次登场即96.37%（1,241条），<strong>刘佳</strong>96.78%为五月标杆。<strong>武欣元</strong>连续两月Top3（四月97.38%、五月96.06%）。<br>
-    • 新HC（张嘉琪88.20%、张镜涛88.33%、赵小龙83.87%）普遍偏低，培训效果待验证。<br>
-    • SFT四周趋势：W1 98.26%→W2 98.61%→W3 98.25%→W4 96.34%，后期略有下降，可能与扩HC后标准不一致有关。
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W3 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • SFT急剧下降至91.54%（-4pp vs W2），<strong>新HC大量加入</strong>是主因。<br>
+      • <strong>贾建丽</strong>首次出现仅37.5%（异常低），<strong>张玉如</strong>同样偏低。<br>
+      • <strong>高敏</strong>从W1 95.6%、W2 95.9%跌至86.1%。<br>
+      • 老HC中<strong>刘佳</strong>96.11%、<strong>武欣元</strong>95.98%仍保持稳定。<br>
+      • 此周为五月质量转折点，扩HC带来的冲击明显。
+    </div>
   </div>
 </div>
-
-<div class="footer-note">
-  五月 · 规模爆发月 · 统计截止 2026-05-29 · W1-W4 SFT趋势: 98.3%→98.6%→98.3%→96.3%
 </div>
 
+<!-- W4 -->
+<div class="content-tab" id="mw4">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W4 抽检</div><div class="value">3,619</div><div class="sub">5 模块</div></div>
+  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.40%</div><div class="sub">2,722/247 · 持续低位</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">96.34%</div><div class="sub">略有下降</div></div>
+  <div class="stat-card warn"><div class="label">HC</div><div class="value">25人</div><div class="sub">分化严重</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>Caption</td><td>150</td><td>5</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
+        <tr><td>预训练</td><td>546</td><td>22</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.0%;background:#52c41a"></div></div><span class="pct-text">95.97%</span></div></td></tr>
+        <tr><td>tag分层</td><td>100</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.0%;background:#fa8c16"></div></div><span class="pct-text">94.00%</span></div></td></tr>
+        <tr><td>视频质量</td><td>101</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.1%;background:#fa8c16"></div></div><span class="pct-text">93.07%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>2,722</td><td>247</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.4%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.40%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W4 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • SFT持续低位91.40%，新HC仍在磨合期。<br>
+      • <strong>贾建丽</strong>74.39%、<strong>张玉如</strong>71.53%为全月最低。<br>
+      • <strong>高旭琴</strong>96.28%首次全周表现即亮眼。<br>
+      • <strong>杨慧</strong>96.30%为老HC中保持最好。<br>
+      • 预训练从W3 97.54%降至95.97%。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 整月 -->
+<div class="content-tab" id="mmonthly">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">整月抽检</div><div class="value">22,278</div><div class="sub">5模块 · 1,565条纪录</div></div>
+  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">92.64%</div><div class="sub">18,519/1,363 · 四月最低</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">96.97%</div><div class="sub">四月中稳定最高</div></div>
+  <div class="stat-card warn"><div class="label">HC 分化</div><div class="value">23.9pp</div><div class="sub">四月中最大差距</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>四周趋势</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="trendMay"></canvas></div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键结论</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • W1→W2稳定高效（~95.5%），W3→W4因扩HC骤降至91.5%。<br>
+      • <strong>HC分化23.9pp</strong>为四个月之最（>四月7.7pp >六月9.9pp）。<br>
+      • <strong>贾建丽</strong>72.67%和<strong>张玉如</strong>72.92%为全历史最低。<br>
+      • <strong>高旭琴</strong>96.37%、<strong>刘佳</strong>96.78%首秀即标杆。<br>
+      • 五月建立了25人HC团队框架，为六月稳定运营打基础。
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="footer-note">五月 · 规模爆发月 · 统计截止 2026-05-29</div>
 <script>
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
 Chart.defaults.font.size = 11;
-new Chart(document.getElementById('trendChart'), {
+new Chart(document.getElementById('trendMay'), {
   type: 'line', data: {
     labels: ['W1 5.6-5.9', 'W2 5.11-5.15', 'W3 5.18-5.22', 'W4 5.25-5.29'],
     datasets: [
-      { label: 'SFT后训练', data: [98.26, 98.61, 98.25, 96.34], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
-      { label: '预训练', data: [90.00, 97.22, 95.83, 98.11], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
-      { label: '整体', data: [96.5, 97.0, 96.0, 95.5], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
+      { label: 'SFT', data: [95.45, 95.50, 91.54, 91.40], borderColor: '#667eea', tension: 0.3, fill: false, pointRadius: 5 },
+      { label: '预训练', data: [96.53, 97.64, 97.54, 95.97], borderColor: '#52c41a', tension: 0.3, fill: false, pointRadius: 5 }
     ]
   },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } },
-    scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } }
-  }
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }, scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
+});
+document.querySelectorAll('#mayTabs .tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#mayTabs .tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#mw1,#mw2,#mw3,#mw4,#mmonthly').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('m'+this.dataset.w).classList.add('active');
+  });
 });
 </script>
-
 </body>
 </html>
