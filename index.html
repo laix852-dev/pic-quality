@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIGC PIC 质检看板 · 七月</title>
+<title>AIGC PIC 质检看板 · 六月五周维度</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root { color-scheme: light; }
@@ -13,10 +13,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
 .header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
-.nav-btn { padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
-.nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
-.nav-btn.inactive { color: rgba(255,255,255,0.7); }
-.nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.month-btn { padding: 5px 16px; border-radius: 6px; border: none; background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+.month-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+.month-btn:not([disabled]):hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
+.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
+.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
+.tab .sub { font-size: 10px; opacity: 0.7; display: block; }
 
 .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
@@ -36,6 +41,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.full { grid-column: 1 / -1; }
 
 .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
 .panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
@@ -53,6 +59,7 @@ tr:hover td { background: #fafbff; }
 .tag-orange { background: #fff7e6; color: #d46b08; }
 .tag-green { background: #f6ffed; color: #389e0d; }
 .tag-blue { background: #e6f4ff; color: #1677ff; }
+.tag-purple { background: #f9f0ff; color: #722ed1; }
 
 .rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
 .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
@@ -66,152 +73,672 @@ tr:hover td { background: #fafbff; }
 
 .chart-wrap { position: relative; height: 220px; }
 .chart-wrap-sm { position: relative; height: 180px; }
+.chart-wrap-xs { position: relative; height: 150px; }
+
+.content-tab { display: none; }
+.content-tab.active { display: block; }
+
+.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
+.muted { color: #999; font-size: 11px; }
 
+.suggestion-block { margin-top: 14px; }
 .suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
 .suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
+
+.anomaly-row td { background: #fffbe6; }
+.anomaly-row:hover td { background: #fff8c5; }
+.improve-row td { background: #f6ffed; }
+.decline-row td { background: #fff1f0; }
+
+.alert-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
+.alert-box .icon { font-size: 16px; flex-shrink: 0; }
+.alert-box.red { background: #fff1f0; border-color: #ffccc7; }
+.alert-box.green { background: #f6ffed; border-color: #b7eb8f; }
+
+.insight-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.insight-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+.insight-card .ic-label { font-size: 11px; color: #8c8c9a; margin-bottom: 6px; }
+.insight-card .ic-body { font-size: 13px; line-height: 1.6; }
+
+.rank-full td:first-child { color: #999; font-size: 11px; text-align: center; width: 28px; }
+.rank-full td:nth-child(6) { font-weight: 600; }
+
+.note-small { font-size: 11px; color: #8c8c9a; margin-top: 6px; font-style: italic; }
 </style>
 </head>
 <body>
 
+
+
+
 <div class="header">
-  <h1>AIGC PIC 质检看板 · 七月</h1>
+  <h1>AIGC PIC 质检看板 · 六月</h1>
   <div style="display:flex;align-items:center;gap:16px">
     <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
-      <a href="./april.html" class="nav-btn inactive">4月</a>
-      <a href="./may.html" class="nav-btn inactive">5月</a>
-      <a href="./" class="nav-btn inactive">6月</a>
-      <a href="./july.html" class="nav-btn inactive">7月</a>
+      <span style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.2);color:#fff">6月</span>
+      <a href="./july.html" style="padding:5px 16px;border-radius:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none">7月 →</a>
     </div>
-    <div class="meta">2026年7月 · 7.1 - 7.7（5个工作日）</div>
+    <div class="meta">2026年6月 · 统计截止 6.30</div>
+  </div>
+</div>
+    <div class="meta">数据更新：2026-06-30 · 来源：PIC质检汇总-6月(含6.29-6.30)</div>
   </div>
 </div>
 
-<div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,344</div><div class="sub">6 个模块 · 5个工作日</div></div>
-  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">355</div><div class="sub">次品率 5.60%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.40%</div><div class="sub">SFT 93.75%</div></div>
-  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">51次申诉 · 暂无结果</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC 人数</div><div class="value">28人</div><div class="sub">3人零次品 · 8人参与SFT</div></div>
+<!-- JUNE START -->
+<div class="tabs" id="tabBar">
+  <button class="tab active" data-week="w1"><span class="sub">W1</span>6.1 - 6.5</button>
+  <button class="tab" data-week="w2"><span class="sub">W2</span>6.8 - 6.12</button>
+  <button class="tab" data-week="w3"><span class="sub">W3</span>6.15 - 6.18</button>
+  <button class="tab" data-week="w4"><span class="sub">W4</span>6.22 - 6.26</button>
+  <button class="tab" data-week="w5"><span class="sub">W5</span>6.29 - 6.30</button>
+  <button class="tab" data-week="monthly"><span class="sub">📊 质检月报</span>6月综合分析</button>
+</div>
+<div style="text-align:right;font-size:11px;color:#8c8c9a;margin-bottom:8px">申诉通过率 = 标注员申诉被通过的比例，↓ 越低 PIC 判断越准确</div>
+
+<!-- ==================== W1 ==================== -->
+<div class="content-tab active" id="tab-w1">
+  <div class="stats-row">
+    <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,227</div><div class="sub">5 个模块</div></div>
+    <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">534</div><div class="sub">次品率 8.58%</div></div>
+    <div class="stat-card danger"><div class="label">整体准确率</div><div class="value">91.43%</div><div class="sub">全月最低周</div></div>
+    <div class="stat-card danger"><div class="label">申诉成功率 ↑偏高</div><div class="value">50.6%</div><div class="sub">45/89 · PIC误判偏多</div></div>
+    <div class="stat-card purple"><div class="label">统计异常</div><div class="value">3人</div><div class="sub">低于 2σ 阈值 86.4%</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>tag分层</td><td>100</td><td>4</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96%;background:#52c41a"></div></div><span class="pct-text">96.00%</span></div></td></tr>
+          <tr><td>预训练</td><td>580</td><td>32</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.5%;background:#52c41a"></div></div><span class="pct-text">95.52%</span></div></td></tr>
+          <tr><td>Caption</td><td>150</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.3%;background:#52c41a"></div></div><span class="pct-text">95.33%</span></div></td></tr>
+          <tr><td>视频质量</td><td>115</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.9%;background:#fa8c16"></div></div><span class="pct-text">93.91%</span></div></td></tr>
+          <tr><td style="font-weight:700">SFT后训练</td><td>5,282</td><td>484</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.6%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">91.59%</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型 Top 5</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="defectW1"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>胡瑞</td><td>227</td><td>8</td><td class="highlight up">97.36%</td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>高旭琴</td><td>237</td><td>9</td><td class="highlight up">96.62%</td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>武欣元</td><td>222</td><td>10</td><td class="highlight up">95.95%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3 · 均低于2σ</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr class="anomaly-row"><td>1</td><td>武文凤</td><td>214</td><td>38</td><td class="highlight down">82.71%</td></tr>
+          <tr class="anomaly-row"><td>2</td><td>贾建丽</td><td>155</td><td>25</td><td class="highlight down">83.87%</td></tr>
+          <tr class="anomaly-row"><td>3</td><td>赵国强</td><td>254</td><td>38</td><td class="highlight down">85.04%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>PIC 申诉（标注员申诉通过率）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>PIC</th><th>申诉</th><th>通过</th><th>↓越低越好</th></tr></thead>
+        <tbody>
+          <tr><td>yidun03</td><td>12</td><td>3</td><td><span class="tag tag-green">25%</span></td></tr>
+          <tr><td>yidun31</td><td>26</td><td>13</td><td><span class="tag tag-green">50%</span></td></tr>
+          <tr><td>yidun01</td><td>51</td><td>29</td><td><span class="tag tag-red">57%</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="note-small" style="padding:8px 12px">⚠️ 标注员申诉通过率高 = PIC 误判多。yidun01 57% 需关注。</div>
+    </div>
+  </div>
+
+  <div class="panel suggestion-block">
+    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W1 重点关注 & 建议措施</div>
+    <div class="panel-body no-padding">
+      <table class="suggestion-table">
+        <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>武文凤紧急辅导</strong>：82.71% 全组最低，次品 38/214，远超均值。安排 1-on-1 质检回训</td><td class="muted">低于2σ阈值（86.4%），次品数是Top1胡瑞的4.75倍</td><td>yidun03</td><td>6/8</td></tr>
+          <tr><td>2</td><td><strong>清晰度判断标准校准</strong>：清晰度误判 18.9% 居首，对"清晰度excellent/normal/bad"边界全组对齐</td><td class="muted">清晰度误判 98 条，"清晰度excellent"高频误标</td><td>yidun03</td><td>6/8</td></tr>
+          <tr><td>3</td><td><strong>yidun01 申诉通过率 57% 偏高</strong>：近六成申诉被通过，说明判定标准与标注员偏差大，建议做一轮判例对齐</td><td class="muted">57% 远超 yidun03（25%）和 yidun31（50%）</td><td>yidun03</td><td>6/12</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+<!-- ==================== W2 ==================== -->
+<div class="content-tab" id="tab-w2">
+  <div class="stats-row">
+    <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,628</div><div class="sub">6 模块 · ↑ 新增水印</div></div>
+    <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">454</div><div class="sub">6.85% ↓1.73pp</div></div>
+    <div class="stat-card warn"><div class="label">整体准确率</div><div class="value">93.15%</div><div class="sub">SFT 92.89% ↑1.30pp</div></div>
+    <div class="stat-card good"><div class="label">申诉成功率 ↓降低</div><div class="value">21.5%</div><div class="sub">14/65 · PIC判断改善</div></div>
+    <div class="stat-card purple"><div class="label">统计异常</div><div class="value">3人</div><div class="sub">低于2σ阈值 86.4%</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>tag分层</td><td>100</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99%;background:#52c41a"></div></div><span class="pct-text">99.00%</span></div></td></tr>
+          <tr><td>Caption</td><td>150</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
+          <tr><td>预训练水印</td><td>330</td><td>13</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.1%;background:#52c41a"></div></div><span class="pct-text">96.06%</span></div></td></tr>
+          <tr><td>预训练</td><td>348</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.7%;background:#52c41a"></div></div><span class="pct-text">95.69%</span></div></td></tr>
+          <tr><td>视频质量</td><td>100</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93%;background:#fa8c16"></div></div><span class="pct-text">93.00%</span></div></td></tr>
+          <tr><td style="font-weight:700">SFT后训练</td><td>5,600</td><td>410</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.9%;background:#fa8c16"></div></div><span class="pct-text">92.89%</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型 Top 5</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="defectW2"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>高旭琴</td><td>243</td><td>8</td><td class="highlight up">96.71%</td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>武文凤</td><td>236</td><td>10</td><td class="highlight up">96.19%</td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>史康祥</td><td>232</td><td>10</td><td class="highlight up">96.12%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr class="anomaly-row"><td>1</td><td>贾建丽</td><td>247</td><td>38</td><td class="highlight down">84.62%</td></tr>
+          <tr class="anomaly-row"><td>2</td><td>杨志鸿</td><td>203</td><td>29</td><td class="highlight down">86.21%</td></tr>
+          <tr><td>3</td><td>赵小龙</td><td>200</td><td>25</td><td class="highlight down">87.50%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>PIC 申诉（标注员申诉通过率）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>PIC</th><th>申诉</th><th>通过</th><th>↓越低越好</th></tr></thead>
+        <tbody>
+          <tr><td>yidun03</td><td>17</td><td>1</td><td><span class="tag tag-green">6%</span></td></tr>
+          <tr><td>yidun31</td><td>17</td><td>3</td><td><span class="tag tag-green">18%</span></td></tr>
+          <tr><td>yidun01</td><td>31</td><td>10</td><td><span class="tag tag-orange">32%</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="note-small" style="padding:8px 12px">✅ yidun03 仅 6%，判断非常准确。yidun01 仍需关注。</div>
+    </div>
+  </div>
+
+  <div class="panel suggestion-block">
+    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W2 重点关注 & 建议措施</div>
+    <div class="panel-body no-padding">
+      <table class="suggestion-table">
+        <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>贾建丽连续两周异常</strong>：W1 83.87% → W2 84.62%，升级为正式辅导计划，每日抽检结果 review</td><td class="muted">唯一连续两周低于2σ，两周合计次品63条</td><td>yidun03</td><td>6/15</td></tr>
+          <tr><td>2</td><td><strong>格式/节奏类跃升至首位</strong>：98条（21.7%），较W1的12.9%激增。检查是否因新增水印模块导致标注规则混淆</td><td class="muted">慢放/快进/跳帧类错误激增</td><td>yidun03</td><td>6/15</td></tr>
+          <tr><td>3</td><td><strong>武文凤 W1→W2 改善显著值得研究</strong>：82.71%→96.19%（+13.5pp），了解其改善方法，评估是否可推广至贾建丽等持续低分 HC</td><td class="muted">W1垫底→W2 Top2，是SFT 25人中单周改善幅度最大</td><td>yidun03</td><td>6/15</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== W3 ==================== -->
+<div class="content-tab" id="tab-w3">
+  <div class="stats-row">
+    <div class="stat-card info"><div class="label">抽检总量</div><div class="value">4,922</div><div class="sub">6 模块</div></div>
+    <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">303</div><div class="sub">6.16% ↓0.69pp</div></div>
+    <div class="stat-card good"><div class="label">整体准确率</div><div class="value">93.84%</div><div class="sub">SFT 93.76% ↑0.87pp</div></div>
+    <div class="stat-card warn"><div class="label">申诉成功率</div><div class="value">31.1%</div><div class="sub">14/45 · 较W2回升</div></div>
+    <div class="stat-card purple"><div class="label">统计异常</div><div class="value">0人</div><div class="sub">无低于2σ异常 ✓</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>tag分层</td><td>80</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.8%;background:#52c41a"></div></div><span class="pct-text">98.75%</span></div></td></tr>
+          <tr><td>Caption</td><td>120</td><td>3</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.5%;background:#52c41a"></div></div><span class="pct-text">97.50%</span></div></td></tr>
+          <tr><td>预训练水印</td><td>260</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.5%;background:#52c41a"></div></div><span class="pct-text">96.54%</span></div></td></tr>
+          <tr><td>预训练</td><td>232</td><td>13</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#fa8c16"></div></div><span class="pct-text">94.40%</span></div></td></tr>
+          <tr><td style="font-weight:700">SFT后训练</td><td>4,150</td><td>272</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text">93.76%</span></div></td></tr>
+          <tr><td>视频质量</td><td>80</td><td>5</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text">93.75%</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型 Top 5</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="defectW3"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>高旭琴</td><td>173</td><td>2</td><td class="highlight up">98.84%</td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>胡瑞</td><td>162</td><td>7</td><td class="highlight up">97.53%</td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>张玉如</td><td>164</td><td>8</td><td class="highlight up">96.34%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>刘欣炎</td><td>184</td><td>21</td><td class="highlight down">88.59%</td></tr>
+          <tr><td>2</td><td>赵国强</td><td>115</td><td>12</td><td class="highlight down">89.57%</td></tr>
+          <tr><td>3</td><td>张镜涛</td><td>170</td><td>17</td><td class="highlight down">90.00%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>PIC 申诉（标注员申诉通过率）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>PIC</th><th>申诉</th><th>通过</th><th>↓越低越好</th></tr></thead>
+        <tbody>
+          <tr><td>yidun03</td><td>16</td><td>3</td><td><span class="tag tag-green">19%</span></td></tr>
+          <tr><td>yidun31</td><td>14</td><td>4</td><td><span class="tag tag-green">29%</span></td></tr>
+          <tr><td>yidun01</td><td>15</td><td>7</td><td><span class="tag tag-red">47%</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="note-small" style="padding:8px 12px">⚠️ yidun01 回升至 47%，需持续关注判定标准一致性。</div>
+    </div>
+  </div>
+
+  <div class="panel suggestion-block">
+    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W3 重点关注 & 建议措施</div>
+    <div class="panel-body no-padding">
+      <table class="suggestion-table">
+        <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>刘欣炎首次进入 Bottom 区</strong>：88.59% 且抽检184条为本周最高之一。前两周均在中游（W1 94.5%, W2 94.2%），排查是否任务量过大</td><td class="muted">准确率陡降 5.6pp，次品21条</td><td>yidun03</td><td>6/22</td></tr>
+          <tr><td>2</td><td><strong>预训练准确率本周下降</strong>：94.40% 为四周最低，王焮钰 92.98% 需关注。检查水印模块分流是否影响样本</td><td class="muted">预训练 W1 95.5%→W3 94.4%，环比降1.3pp</td><td>yidun03</td><td>6/22</td></tr>
+          <tr><td>3</td><td><strong>本周无统计异常，整体向好</strong>：维持现有节奏，贾建丽已回升至 91.43%（+6.8pp），杨志鸿回升至 92%</td><td class="muted">Bottom 3 最低 88.59%，首次无低于2σ值</td><td>PIC全员</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== W4 ==================== -->
+<div class="content-tab" id="tab-w4">
+  <div class="stats-row">
+    <div class="stat-card info"><div class="label">抽检总量</div><div class="value">5,135</div><div class="sub">6模块 · 新增AI合理性</div></div>
+    <div class="stat-card warn"><div class="label">次品数 / 次品率</div><div class="value">301</div><div class="sub">5.86% · 全月最低 ✓</div></div>
+    <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.14%</div><div class="sub">SFT 94.04% · 全月最高 ✓</div></div>
+    <div class="stat-card good"><div class="label">申诉成功率 ↓持续降低</div><div class="value">22.5%</div><div class="sub">9/40 · PIC判断趋准</div></div>
+    <div class="stat-card purple"><div class="label">AI合理性首周</div><div class="value">93.48%</div><div class="sub">751条 · 25人参与</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>Caption</td><td>150</td><td>5</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
+          <tr><td>预训练</td><td>580</td><td>23</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.4%;background:#52c41a"></div></div><span class="pct-text">96.38%</span></div></td></tr>
+          <tr><td>tag分层</td><td>100</td><td>5</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95%;background:#52c41a"></div></div><span class="pct-text">95.00%</span></div></td></tr>
+          <tr><td style="font-weight:700">SFT后训练</td><td>3,454</td><td>211</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94%;background:#fa8c16"></div></div><span class="pct-text">94.04%</span></div></td></tr>
+          <tr><td>AI合理性</td><td>1,598</td><td>123</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.7%;background:#fa8c16"></div></div><span class="pct-text">92.68%</span></div></td></tr>
+          <tr><td>视频质量</td><td>100</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93%;background:#fa8c16"></div></div><span class="pct-text">93.00%</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型 Top 5</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="defectW4"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>寇馨月</td><td>135</td><td>4</td><td class="highlight up">98.52%</td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>胡瑞</td><td>111</td><td>3</td><td class="highlight up">97.30%</td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>高旭琴</td><td>176</td><td>5</td><td class="highlight up">97.16%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr class="decline-row"><td>1</td><td>刘欣炎</td><td>160</td><td>18</td><td class="highlight down">88.75%</td></tr>
+          <tr><td>2</td><td>付忠文</td><td>134</td><td>15</td><td class="highlight down">89.55%</td></tr>
+          <tr><td>3</td><td>贾建丽</td><td>149</td><td>14</td><td class="highlight down">90.60%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>PIC 申诉（标注员申诉通过率）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>PIC</th><th>申诉</th><th>通过</th><th>↓越低越好</th></tr></thead>
+        <tbody>
+          <tr><td>yidun03</td><td>10</td><td>1</td><td><span class="tag tag-green">10%</span></td></tr>
+          <tr><td>yidun31</td><td>12</td><td>3</td><td><span class="tag tag-green">25%</span></td></tr>
+          <tr><td>yidun01</td><td>18</td><td>5</td><td><span class="tag tag-green">28%</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="note-small" style="padding:8px 12px">✅ 所有 PIC 申诉通过率均降至 30% 以下，判断准确性整体提升。</div>
+    </div>
+  </div>
+
+  <div class="panel suggestion-block">
+    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W4 重点关注 & 建议措施</div>
+    <div class="panel-body no-padding">
+      <table class="suggestion-table">
+        <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>刘欣炎连续两周垫底</strong>：W3 88.59%→W4 88.75%，准确定停滞在低位。需排查是能力问题还是任务分配/疲劳导致</td><td class="muted">W1→W4：94.5%→94.2%→88.6%→88.8%，从Top跌至Bottom</td><td>yidun03</td><td>7/3</td></tr>
+          <tr><td>2</td><td><strong>AI合理性首周 HC 标准差 8.1pp</strong>：赵鑫 76.19%、范乐 87.80% 明显偏低，陈俊利等5人达100%。新模块标准理解严重不统一，必须马上做对齐培训</td><td class="muted">25人标准差远超 SFT 的 3.3pp</td><td>yidun31</td><td>7/3</td></tr>
+          <tr><td>3</td><td><strong>整体趋势向好，关注下滑个体</strong>：SFT 准确率 94.04% 创新高，申诉通过率降至 22.5%。但付忠文首次进入 Bottom，需提前介入防滑</td><td class="muted">付忠文 W1 93.2%→W4 89.6%（-3.6pp）</td><td>PIC全员</td><td>7/5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 月报 ==================== -->
+<div class="content-tab" id="tab-monthly">
+  <div class="stats-row">
+    <div class="stat-card info"><div class="label">整月抽检</div><div class="value">25,331</div><div class="sub">7模块 · 19工作日</div></div>
+    <div class="stat-card warn"><div class="label">整月次品率</div><div class="value">6.95%</div><div class="sub">1,734条 · W5新增</div></div>
+    <div class="stat-card good"><div class="label">整月准确率</div><div class="value">93.15%</div><div class="sub">W1→W5: 91.43→94.13%</div></div>
+    <div class="stat-card good"><div class="label">申诉通过率 ↓降低</div><div class="value">34.3%</div><div class="sub">85/244 · W5仅5次</div></div>
+    <div class="stat-card purple"><div class="label">统计异常</div><div class="value">6人次</div><div class="sub">出现低于2σ</div></div>
+  </div>
+
+  <div class="insight-row">
+    <div class="insight-card">
+      <div class="ic-label">📈 整体趋势</div>
+      <div class="ic-body">准确率逐周改善（91.43%→94.14%），次品率从 8.58% 降至 5.86%。<strong>SFT 从 91.59% 提升至 94.04%</strong>。申诉通过率从 50.6% 降至 22.5%，<strong>PIC 判断准确性持续提升</strong>。</div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-label">⚠️ 异常发现</div>
+      <div class="ic-body">6人次出现低于2σ的异常低值：<strong>贾建丽×2</strong>、杨志鸿×2、武文凤×1、赵国强×1。全部集中在前两周，W3/W4 已无异常。</div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-label">🔍 PIC 差异分析</div>
+      <div class="ic-body"><strong>yidun03</strong> 申诉通过率 14.5%，判断最准确稳定；<strong>yidun01</strong> 44.3%，近半数标注员申诉被通过，<strong>判定标准与标注员偏差最大</strong>，需重点对齐。</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>准确率 & 次品率 周趋势</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="trendMonthly"></canvas></div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>申诉通过率周趋势（↓越低 PIC 判断越准）</div>
+      <div class="panel-body"><div class="chart-wrap"><canvas id="appealTrend"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- 异常分析 -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="panel-header"><span class="dot" style="background:#f5222d"></span>⚠️ 统计异常值分析（低于 2σ = 86.4%）</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>姓名</th><th>异常周</th><th>准确率</th><th>抽检量</th><th>次品</th><th>偏离均值</th><th>严重度</th><th>后续表现</th></tr></thead>
       <tbody>
-        <tr><td>tag分层</td><td>130</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99.2%;background:#52c41a"></div></div><span class="pct-text">99.23%</span></div></td></tr>
-        <tr><td>预训练</td><td>825</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.1%;background:#52c41a"></div></div><span class="pct-text">98.06%</span></div></td></tr>
-        <tr><td>Caption</td><td>216</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.37%</span></div></td></tr>
-        <tr><td style="font-weight:700">SFT后训练</td><td>4,271</td><td>267</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.75%</span></div></td></tr>
-        <tr><td>AI合理性</td><td>882</td><td>59</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.3%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.31%</span></div></td></tr>
-        <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">90.00%</span></div></td></tr>
+        <tr class="anomaly-row"><td><strong>武文凤</strong></td><td>W1</td><td class="highlight down">82.71%</td><td>214</td><td>38</td><td class="down">-10.3pp</td><td><span class="tag tag-red">严重</span></td><td class="up">W2 跃升至 Top 2（96.19%），W3/W4 稳定在 91%+</td></tr>
+        <tr class="anomaly-row"><td><strong>贾建丽</strong></td><td>W1, W2</td><td class="highlight down">83.87% / 84.62%</td><td>155 / 247</td><td>25 / 38</td><td class="down">-9.1pp / -8.4pp</td><td><span class="tag tag-red">严重</span></td><td>W3 回升至 91.43%，W4 90.60%，仍低于均值</td></tr>
+        <tr class="anomaly-row"><td><strong>杨志鸿</strong></td><td>W1, W2</td><td class="highlight down">85.29% / 86.21%</td><td>238 / 203</td><td>36 / 29</td><td class="down">-7.7pp / -6.8pp</td><td><span class="tag tag-orange">较严重</span></td><td class="up">W3 92.00%、W4 95.28%，改善最显著</td></tr>
+        <tr class="anomaly-row"><td><strong>赵国强</strong></td><td>W1</td><td class="highlight down">85.04%</td><td>254</td><td>38</td><td class="down">-8.0pp</td><td><span class="tag tag-orange">较严重</span></td><td>W2 91.71%、W4 95.07%，持续改善</td></tr>
+        <tr><td>赵小龙</td><td>W1, W2 (1.5σ)</td><td>87.88% / 87.50%</td><td>198 / 200</td><td>29 / 25</td><td class="down">-5.1pp</td><td><span class="tag tag-orange">关注</span></td><td>W3 91.57%、W4 92.20%，逐步恢复</td></tr>
       </tbody>
     </table></div>
   </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型分布</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="defectChart"></canvas></div></div>
-  </div>
-</div>
 
-<div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>六月 vs 七月对比</div>
-    <div class="panel-body">
-      <div style="display:flex;justify-content:space-around;text-align:center;padding:20px 0">
-        <div><div style="font-size:11px;color:#8c8c9a">六月 SFT</div><div style="font-size:36px;font-weight:700;color:#fa8c16">93.04%</div><div style="font-size:11px;color:#8c8c9a">19,686条</div></div>
-        <div style="font-size:28px;color:#52c41a;line-height:100px">→</div>
-        <div><div style="font-size:11px;color:#8c8c9a">七月 SFT</div><div style="font-size:36px;font-weight:700;color:#52c41a">93.75%</div><div style="font-size:11px;color:#8c8c9a">4,271条</div></div>
+  <!-- HC 稳定性 + PIC 一致性 -->
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#fa8c16"></span>HC 稳定性评估（四周标准差）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>HC</th><th>四周准确率</th><th>σ</th><th>范围</th><th>稳定性</th></tr></thead>
+        <tbody>
+          <tr><td>武文凤</td><td style="font-size:11px">82.7%→96.2%→92.9%→91.9%</td><td class="highlight down">5.0</td><td>13.5pp</td><td><span class="tag tag-red">波动剧烈</span></td></tr>
+          <tr><td>杨志鸿</td><td style="font-size:11px">85.3%→86.2%→92.0%→95.3%</td><td class="highlight down">4.1</td><td>10.0pp</td><td><span class="tag tag-red">波动剧烈</span></td></tr>
+          <tr><td>赵国强</td><td style="font-size:11px">85.0%→91.7%→89.6%→95.1%</td><td class="highlight down">3.6</td><td>10.0pp</td><td><span class="tag tag-orange">波动较大</span></td></tr>
+          <tr><td>贾建丽</td><td style="font-size:11px">83.9%→84.6%→91.4%→90.6%</td><td>3.4</td><td>7.6pp</td><td><span class="tag tag-orange">波动较大</span></td></tr>
+          <tr><td>高旭琴</td><td style="font-size:11px">96.6%→96.7%→98.8%→97.2%</td><td class="up">0.9</td><td>2.2pp</td><td><span class="tag tag-green">非常稳定</span></td></tr>
+          <tr><td>胡瑞</td><td style="font-size:11px">97.4%→94.0%→97.5%→97.3%</td><td class="up">1.4</td><td>3.5pp</td><td><span class="tag tag-green">稳定</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#722ed1"></span>PIC 判定差异分析</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>PIC</th><th>次品</th><th>申诉</th><th>通过</th><th>驳回</th><th>通过率↓</th><th>一致性</th></tr></thead>
+        <tbody>
+          <tr><td>yidun03</td><td>421</td><td>56</td><td>8</td><td>47</td><td class="highlight up">14.3%</td><td><span class="tag tag-green">最佳 · 判断最准确</span></td></tr>
+          <tr><td>yidun31</td><td>661</td><td>70</td><td>24</td><td>45</td><td>34.3%</td><td><span class="tag tag-green">良好</span></td></tr>
+          <tr><td>yidun01</td><td>581</td><td>118</td><td>54</td><td>64</td><td class="highlight down">45.8%</td><td><span class="tag tag-red">待改进 · 近半申诉被通过</span></td></tr>
+          <tr><td>yidun07</td><td>26</td><td>1</td><td>0</td><td>0</td><td>0%</td><td class="muted">样本不足</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 0;font-size:12px;line-height:1.7">
+        <strong>关键发现：</strong><br>
+        • <strong>yidun03</strong> 判定最准确，标注员 55 次申诉仅 8 次被通过（14.5%），说明其质检标准清晰、执行一致<br>
+        • <strong>yidun01</strong> 是主要差异来源，115 次申诉有 51 次被通过（44.3%），判定偏严或标准理解与其他 PIC 不同<br>
+        • 三位 PIC 的"个人仔细度"根因占比相近（62%-70%），差异主要来自判定尺度的松紧<br>
+        • 建议以 yidun03 的判定标准为基准，组织 PIC 交叉校准
       </div>
-      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +0.71pp</div>
     </div>
   </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#1677ff"></span>错误根因分析</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="analysisChart"></canvas></div></div>
-  </div>
-</div>
 
-<div class="grid-3">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT后训练）</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>刘佳</td><td>23</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>高旭琴</td><td>27</td><td>0</td><td class="highlight up">100.0%</td></tr>
-      </tbody>
-    </table></div>
+  <!-- 进步/退步 + 次品类型 -->
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#52c41a"></span>W1→W4 进步 & 退步 Top 3</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th colspan="4" style="text-align:center;background:#f6ffed;color:#389e0d">📈 进步最大</th></tr></thead>
+        <tbody>
+          <tr class="improve-row"><td>赵国强</td><td>85.0% → 95.1%</td><td class="up">+10.0pp</td><td>W1垫底→W4近Top</td></tr>
+          <tr class="improve-row"><td>杨志鸿</td><td>85.3% → 95.3%</td><td class="up">+10.0pp</td><td>W1/W2异常→W4优秀</td></tr>
+          <tr class="improve-row"><td>武文凤</td><td>82.7% → 91.9%</td><td class="up">+9.2pp</td><td>反弹后略有回落</td></tr>
+        </tbody>
+        <thead><tr><th colspan="4" style="text-align:center;background:#fff1f0;color:#cf1322">📉 退步最大</th></tr></thead>
+        <tbody>
+          <tr class="decline-row"><td>刘欣炎</td><td>94.5% → 88.8%</td><td class="down">-5.7pp</td><td>持续下滑 · 需介入</td></tr>
+          <tr class="decline-row"><td>付忠文</td><td>93.2% → 89.6%</td><td class="down">-3.7pp</td><td>W4新入Bottom</td></tr>
+          <tr class="decline-row"><td>万知宜</td><td>94.3% → 91.0%</td><td class="down">-3.3pp</td><td>需关注趋势</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型 & 根因（整月）</div>
+      <div class="panel-body">
+        <div class="chart-wrap"><canvas id="defectMonthly"></canvas></div>
+        <div style="margin-top:10px"><div class="chart-wrap-xs"><canvas id="analysisMonthly"></canvas></div></div>
+      </div>
+    </div>
   </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT后训练）</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>赵小龙</td><td>89</td><td>12</td><td class="highlight down">86.52%</td></tr>
-        <tr><td>2</td><td>曹未婷</td><td>216</td><td>29</td><td class="highlight down">86.57%</td></tr>
-        <tr><td>3</td><td>寇馨月</td><td>20</td><td>2</td><td class="highlight down">90.00%</td></tr>
-      </tbody>
-    </table></div>
+
+  <!-- 模块准确率 + HC 排名 -->
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率（整月）</div>
+      <div class="panel-body no-padding"><table>
+        <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+        <tbody>
+          <tr><td>tag分层</td><td>420</td><td>12</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.1%;background:#52c41a"></div></div><span class="pct-text">97.14%</span></div></td></tr>
+          <tr><td>Caption</td><td>630</td><td>23</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.5%;background:#52c41a"></div></div><span class="pct-text">96.49%</span></div></td></tr>
+          <tr><td>预训练水印</td><td>590</td><td>22</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.3%;background:#52c41a"></div></div><span class="pct-text">96.27%</span></div></td></tr>
+          <tr><td>预训练</td><td>1,972</td><td>86</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.7%;background:#52c41a"></div></div><span class="pct-text">95.69%</span></div></td></tr>
+          <tr><td>AI合理性 🆕</td><td>751</td><td>50</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.5%;background:#fa8c16"></div></div><span class="pct-text">93.48%</span></div></td></tr>
+          <tr><td>视频质量</td><td>435</td><td>26</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.0%;background:#fa8c16"></div></div><span class="pct-text">94.02%</span></div></td></tr>
+          <tr><td style="font-weight:700">SFT后训练</td><td>19,686</td><td>1,442</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.0%;background:#fa8c16"></div></div><span class="pct-text">93.04%</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><span class="dot" style="background:#1677ff"></span>SFT HC 整月排名（25人）</div>
+      <div class="panel-body no-padding" style="max-height:440px;overflow-y:auto"><table class="rank-full">
+        <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th><th>vs均值</th><th>稳定性</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>高旭琴</td><td>864</td><td>25</td><td class="highlight up">97.22%</td><td class="up">+4.1pp</td><td><span class="tag tag-green">非常稳</span></td></tr>
+          <tr><td>2</td><td>胡瑞</td><td>732</td><td>32</td><td class="highlight up">96.31%</td><td class="up">+2.8pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>3</td><td>寇馨月</td><td>729</td><td>34</td><td class="highlight up">95.88%</td><td class="up">+2.4pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>4</td><td>武欣元</td><td>732</td><td>36</td><td>95.63%</td><td class="up">+2.1pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>5</td><td>范乐</td><td>758</td><td>35</td><td>95.51%</td><td class="up">+2.0pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>6</td><td>刘佳</td><td>730</td><td>35</td><td>95.34%</td><td class="up">+1.9pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>7</td><td>史康祥</td><td>768</td><td>41</td><td>94.92%</td><td class="up">+1.4pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>8</td><td>张琳浩</td><td>752</td><td>50</td><td>94.02%</td><td class="up">+0.5pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>9</td><td>张玉如</td><td>742</td><td>52</td><td>93.53%</td><td class="up">+0.0pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>10</td><td>高敏</td><td>793</td><td>57</td><td>93.19%</td><td style="color:#999">-0.3pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>11</td><td>陈俊利</td><td>744</td><td>56</td><td>93.15%</td><td style="color:#999">-0.3pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>12</td><td>万知宜</td><td>767</td><td>56</td><td>93.09%</td><td style="color:#999">-0.4pp</td><td><span class="tag tag-orange">↓退步</span></td></tr>
+          <tr><td>13</td><td>张嘉琪</td><td>613</td><td>45</td><td>92.99%</td><td style="color:#999">-0.5pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>14</td><td>付忠文</td><td>767</td><td>55</td><td>92.96%</td><td style="color:#999">-0.5pp</td><td><span class="tag tag-orange">↓退步</span></td></tr>
+          <tr><td>15</td><td>马琳芳</td><td>711</td><td>52</td><td>92.83%</td><td style="color:#999">-0.7pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>16</td><td>周婧</td><td>749</td><td>61</td><td>92.39%</td><td style="color:#999">-1.1pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>17</td><td>赵鑫</td><td>775</td><td>63</td><td>92.26%</td><td style="color:#999">-1.2pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>18</td><td>刘欣炎</td><td>803</td><td>66</td><td style="color:#fa8c16">91.91%</td><td style="color:#fa8c16">-1.6pp</td><td><span class="tag tag-red">↓退步</span></td></tr>
+          <tr><td>19</td><td>高晋阳</td><td>712</td><td>62</td><td style="color:#fa8c16">91.57%</td><td style="color:#fa8c16">-1.9pp</td><td><span class="tag tag-orange">波动</span></td></tr>
+          <tr><td>20</td><td>张镜涛</td><td>638</td><td>59</td><td style="color:#fa8c16">91.38%</td><td style="color:#fa8c16">-2.1pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>21</td><td>武文凤</td><td>727</td><td>71</td><td style="color:#fa8c16">90.78%</td><td style="color:#fa8c16">-2.7pp</td><td><span class="tag tag-red">波动剧烈</span></td></tr>
+          <tr><td>22</td><td>赵国强</td><td>716</td><td>74</td><td class="down">89.66%</td><td class="down">-3.8pp</td><td><span class="tag tag-orange">波动</span></td></tr>
+          <tr><td>23</td><td>赵小龙</td><td>705</td><td>79</td><td class="down">89.50%</td><td class="down">-4.0pp</td><td><span class="tag tag-green">稳</span></td></tr>
+          <tr><td>24</td><td>杨志鸿</td><td>768</td><td>89</td><td class="down">88.93%</td><td class="down">-4.6pp</td><td><span class="tag tag-red">波动剧烈</span></td></tr>
+          <tr><td>25</td><td>贾建丽</td><td>781</td><td>98</td><td class="highlight down">87.58%</td><td class="down">-5.6pp</td><td><span class="tag tag-orange">波动</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
   </div>
+
+  <!-- 月报结论 -->
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>关键变化 vs 六月</div>
-    <div class="panel-body" style="font-size:12px;line-height:1.8">
-      • <span class="up">▲</span> <strong>贾建丽</strong> 87.58%→93.96% +6.4pp<br>
-      • <span class="up">▲</span> <strong>张玉如</strong> 93.67%→97.92% +4.3pp<br>
-      • <span class="up">▲</span> <strong>付忠文</strong> 93.28%→97.10% +3.8pp<br>
-      • <span class="down">▼</span> <strong>寇馨月</strong> 95.83%→90.00% -5.8pp<br>
-      • <span class="down">▼</span> <strong>赵小龙</strong> 89.86%→86.52% -3.3pp<br>
-      • 8位HC参与SFT质检（vs六月4人）
+    <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 六月质检综合结论 & 行动项</div>
+    <div class="panel-body no-padding">
+      <table class="suggestion-table" style="width:100%;table-layout:auto">
+        <thead><tr><th style="width:30px">#</th><th>结论 / 措施</th><th style="width:160px">数据支撑</th><th style="width:70px">负责人</th><th style="width:60px">截止</th></tr></thead>
+        <tbody>
+          <tr style="background:#fffbe6"><td>🔴</td><td><strong>贾建丽为六月最大 HC 风险</strong>：整月 87.33% 垫底，两周触发 2σ 异常。7 月首周安排专项回训 + 每日结果 review</td><td class="muted">唯一整月低于 88%，次品 93 条</td><td>yidun03</td><td>7/3</td></tr>
+          <tr style="background:#fffbe6"><td>🔴</td><td><strong>yidun01 判定标准需向 yidun03 对齐</strong>：44.3% 标注员申诉被通过，远高于 yidun03 的 14.5%。以 yidun03 为基准做 PIC 交叉校准</td><td class="muted">115 次申诉 51 次被通过</td><td>PIC全员</td><td>7/5</td></tr>
+          <tr style="background:#f6ffed"><td>🟢</td><td><strong>PIC 判断准确性整体向好</strong>：申诉通过率 50.6%→22.5%，判定与标注员预期差距缩小。维持当前质检节奏</td><td class="muted">四周申诉通过率持续下降</td><td>PIC全员</td><td>持续</td></tr>
+          <tr style="background:#fff7e6"><td>🟡</td><td><strong>武文凤、杨志鸿、赵国强趋势向好</strong>：W1 均异常，W4 已恢复至 91%+。7 月保持观察，不触发异常即可解除关注</td><td class="muted">三人 W1→W4 改善 +9~10pp</td><td>yidun03</td><td>7月</td></tr>
+          <tr style="background:#fff7e6"><td>🟡</td><td><strong>刘欣炎、付忠文为末期新风险</strong>：刘欣炎 94.5%→88.8%（-5.7pp）持续下滑，7 月初主动介入排查</td><td class="muted">刘欣炎连续两周垫底</td><td>yidun03</td><td>7/3</td></tr>
+          <tr><td>6</td><td><strong>高频次品专项治理</strong>：动作/交互（19.5%）+ 格式/节奏（16.1%）占 35.6%，建设 SOP 图示化指南，每周推送典型案例</td><td class="muted">"动作excellent" "慢放" 为最高频</td><td>yidun03</td><td>7/5</td></tr>
+          <tr><td>7</td><td><strong>AI 合理性模块首月宽松过渡</strong>：首周 93.48%，HC 标准差 8.1pp，明确常见误判场景后逐步收紧。赵鑫 76.19% 重点辅导</td><td class="muted">25 人标准差 8.1pp</td><td>yidun31</td><td>7/3</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
-<div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 七月重点关注 & 建议措施</div>
-  <div class="panel-body no-padding">
-    <table class="suggestion-table">
-      <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td><strong>曹未婷 SFT 首次大规模抽检关注</strong>：216条次品29条（86.57%），是六月视频质量HC首次参与SFT，需确认是否适应新模块标准</td><td class="muted">SFT 28人中倒数第二，抽检量却排前10</td><td>yidun03</td><td>7/10</td></tr>
-        <tr><td>2</td><td><strong>格式/节奏问题占比升至首位</strong>：22.2%（79条），较六月15.7%显著上升。"慢放/快进/跳帧"类误判需做专项标准对齐</td><td class="muted">七月最大次品类型，六月仅排第二</td><td>yidun01</td><td>7/10</td></tr>
-        <tr><td>3</td><td><strong>申诉数据尚未录入，暂无法评估 PIC 一致性</strong>：51次申诉等待结果，建议7/10前催促完成审核</td><td class="muted">六月yidun01申诉通过率44.3%需持续关注</td><td>PIC全员</td><td>7/10</td></tr>
-        <tr><td>4</td><td><strong>新增8位PIC参与SFT质检</strong>（yidun56/42/58/46/48等）：建议做一轮判定标准对齐，避免多PIC标准不一致</td><td class="muted">六月仅4位PIC，七月增至9位</td><td>yidun01</td><td>7/10</td></tr>
-        <tr><td>5</td><td><strong>寇馨月准确率下降需排查</strong>：六月95.83%→七月90.00%，抽检量仅20条（样本小），但仍需关注是不是角色切换导致</td><td class="muted">从SFT HC Top3 跌至 Bottom3</td><td>yidun01</td><td>7/10</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
+<!-- JUNE END -->
+
+<div style="margin:20px 0;padding:8px 16px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:10px;font-size:14px;font-weight:600">📅 七月数据（7.1-7.3 · 持续更新中）</div>
+<!-- JULY START -->
+
+<div class="footer-note">6月数据 · 来源: PIC质检汇总-6月 · <a href="./july.html" style="color:#667eea">七月看板 →</a></div>
 <div class="footer-note">
-  七月数据 · 统计截止 2026-07-07 · <a href="./">← 返回六月看板</a> · 申诉通过率↓越低PIC判断越准确
+  数据来源：AIGC PIC 质检汇总-6月 · SFT 全组 25 人 · 统计截止 2026-06-29 · 申诉通过率 = 标注员申诉成功被通过的比例，↓越低 PIC 判断越准确
 </div>
 
 <script>
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
 Chart.defaults.font.size = 11;
 
-new Chart(document.getElementById('defectChart'), {
-  type: 'bar', data: {
-    labels: ['格式/节奏问题', '清晰度判断', '动作/交互判断', '景深判断', '外观/稳定性'],
-    datasets: [{ data: [79, 63, 38, 31, 18], backgroundColor: ['#1677ff','#f5222d','#fa8c16','#52c41a','#722ed1'], borderRadius: 4, barThickness: 18 }]
-  },
-  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } }
+function barH(id, labels, data, colors) {
+  return new Chart(document.getElementById(id), {
+    type: 'bar', data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 3, barThickness: 14 }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#f0f0f0' } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } }
+  });
+}
+
+barH('defectW1', ['清晰度', '动作/交互', '景深', '格式/节奏', '其他'], [98, 97, 74, 67, 62], ['#f5222d','#fa8c16','#52c41a','#1677ff','#d9d9d9']);
+barH('defectW2', ['格式/节奏', '动作/交互', '清晰度', '其他', '景深'], [98, 94, 67, 59, 43], ['#1677ff','#fa8c16','#f5222d','#d9d9d9','#52c41a']);
+barH('defectW3', ['动作/交互', '格式/节奏', '景深', '清晰度', '其他'], [56, 46, 46, 44, 46], ['#fa8c16','#1677ff','#52c41a','#f5222d','#d9d9d9']);
+barH('defectW4', ['动作/交互', '其他', '格式/节奏', '清晰度', '美学/质量'], [64, 64, 47, 45, 15], ['#fa8c16','#d9d9d9','#1677ff','#f5222d','#52c41a']);
+barH('defectMonthly', ['动作/交互判断', '格式/节奏问题', '清晰度判断', '景深判断', '色彩/光影判断'], [331, 266, 266, 183, 98], ['#fa8c16','#1677ff','#f5222d','#52c41a','#722ed1']);
+
+new Chart(document.getElementById('analysisMonthly'), {
+  type: 'doughnut', data: { labels: ['个人仔细度','规则理解偏差','电脑问题','其他'], datasets: [{ data: [1140, 273, 15, 261], backgroundColor: ['#f5222d','#fa8c16','#1677ff','#d9d9d9'], borderWidth: 0 }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 8, usePointStyle: true, font: { size: 10 } } } } }
 });
 
-new Chart(document.getElementById('analysisChart'), {
-  type: 'doughnut', data: {
-    labels: ['个人仔细度 (74.6%)', '规则理解偏差 (25.0%)', '电脑问题 (0.4%)'],
-    datasets: [{ data: [203, 68, 1], backgroundColor: ['#f5222d','#fa8c16','#d9d9d9'], borderWidth: 0 }]
+new Chart(document.getElementById('trendMonthly'), {
+  type: 'line', data: {
+    labels: ['W1', 'W2', 'W3', 'W4', 'W5'],
+    datasets: [
+      { label: 'SFT后训练', data: [91.59, 92.89, 93.76, 94.04, 94.75], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 4, yAxisID: 'y' },
+      { label: '预训练', data: [95.52, 95.69, 94.40, 96.38, 99.14], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 4, yAxisID: 'y' },
+      { label: '整体准确率', data: [91.43, 93.15, 93.84, 94.14, 94.13], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5, yAxisID: 'y', borderWidth: 2.5 },
+      { label: '次品率', data: [8.58, 6.85, 6.16, 5.86, 5.87], borderColor: '#f5222d', borderDash: [3,3], tension: 0.4, fill: false, pointRadius: 4, yAxisID: 'y1', borderWidth: 2 }
+    ]
   },
-  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { padding: 12, usePointStyle: true } } } }
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 14, font: { size: 10 } } } },
+    scales: {
+      y: { type: 'linear', position: 'left', min: 88, max: 100, ticks: { callback: v => v+'%' }, grid: { color: '#f0f0f0' }, title: { display: true, text: '准确率', font: { size: 10 } } },
+      y1: { type: 'linear', position: 'right', min: 3, max: 11, ticks: { callback: v => v+'%' }, grid: { display: false }, title: { display: true, text: '次品率', font: { size: 10 } } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('appealTrend'), {
+  type: 'line', data: {
+    labels: ['W1', 'W2', 'W3', 'W4', 'W5'],
+    datasets: [
+      { label: 'yidun01 (需关注)', data: [57, 32, 47, 28], borderColor: '#f5222d', tension: 0.3, fill: false, pointRadius: 4, borderWidth: 2 },
+      { label: 'yidun31', data: [50, 18, 29, 25], borderColor: '#1677ff', tension: 0.3, fill: false, pointRadius: 4 },
+      { label: 'yidun03 (最佳)', data: [25, 6, 19, 10], borderColor: '#52c41a', tension: 0.3, fill: false, pointRadius: 4, borderWidth: 2 },
+      { label: '整体', data: [50.6, 21.5, 31.1, 25.0, 60.0], borderColor: '#fa8c16', borderDash: [5,3], tension: 0.3, fill: false, pointRadius: 5, borderWidth: 2.5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 14, font: { size: 10 } } } },
+    scales: { y: { max: 65, ticks: { callback: v => v+'%' }, grid: { color: '#f0f0f0' }, title: { display: true, text: '↓越低越好', font: { size: 10 } } }, x: { grid: { display: false } } }
+  }
+});
+
+// Month switching
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.content-tab').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('tab-' + this.dataset.week).classList.add('active');
+  });
 });
 </script>
 
