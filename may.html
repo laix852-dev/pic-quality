@@ -7,7 +7,7 @@
 <style>
 :root { color-scheme: light; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1100px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1140px; }
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
 .nav-btn { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; }
@@ -15,7 +15,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .nav-btn.inactive { color: rgba(255,255,255,0.7); }
 .nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
 .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.tab { flex: 1; padding: 10px 8px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 600; color: #8c8c9a; border: none; background: transparent; }
+.tab { flex: 1; padding: 9px 6px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 600; color: #8c8c9a; border: none; background: transparent; }
 .tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
 .tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
@@ -29,14 +29,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
 .stat-card.good .value { color: #52c41a; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
 .panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .panel-header .dot { width: 7px; height: 7px; border-radius: 50%; }
 .panel-body { padding: 12px 18px; }
 .panel-body.no-padding { padding: 0; }
 table { width: 100%; border-collapse: collapse; font-size: 12px; }
-th { background: #fafafa; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #f0f0f0; }
-td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; }
+th { background: #fafafa; padding: 7px 8px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #f0f0f0; }
+td { padding: 6px 8px; border-bottom: 1px solid #f5f5f5; }
 tr:hover td { background: #fafbff; }
 .rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
 .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
@@ -47,6 +48,7 @@ tr:hover td { background: #fafbff; }
 .bar-cell .bar-fill { height: 5px; border-radius: 3px; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 .chart-wrap { position: relative; height: 200px; }
+.chart-wrap-sm { position: relative; height: 160px; }
 .content-tab { display: none; }
 .content-tab.active { display: block; }
 .footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
@@ -54,6 +56,10 @@ tr:hover td { background: #fafbff; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
 .muted { color: #999; font-size: 11px; }
+.tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+.tag-red { background: #fff1f0; color: #cf1322; }
+.tag-green { background: #f6ffed; color: #389e0d; }
+.tag-orange { background: #fff7e6; color: #d46b08; }
 .suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
 .suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
 </style>
@@ -65,7 +71,7 @@ tr:hover td { background: #fafbff; }
     <div style="display:flex;gap:3px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
       <a href="./april.html" class="nav-btn inactive">4月</a><a href="./may.html" class="nav-btn active">5月</a><a href="./" class="nav-btn inactive">6月</a><a href="./july.html" class="nav-btn inactive">7月</a>
     </div>
-    <div class="meta" style="font-size:12px;opacity:0.7">2026年5月 · 规模爆发月 · 5.6-5.29</div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年5月 · 规模爆发月 · 5.6-5.29 · 22,278条</div>
   </div>
 </div>
 <div class="tabs" id="tabs">
@@ -76,13 +82,12 @@ tr:hover td { background: #fafbff; }
   <button class="tab" data-w="monthly">整月分析</button>
 </div>
 
-<!-- W1 -->
 <div class="content-tab active" id="tw1">
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">5,738</div><div class="sub">5模块</div></div>
+  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">5,738</div><div class="sub">5模块 · 老HC运作</div></div>
   <div class="stat-card good"><div class="label">SFT 准确率</div><div class="value">95.45%</div><div class="sub">4,898/251 · 全月最高</div></div>
   <div class="stat-card good"><div class="label">预训练</div><div class="value">96.53%</div><div class="sub">576/20</div></div>
-  <div class="stat-card info"><div class="label">HC</div><div class="value">~12人</div><div class="sub">老HC为主</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">12人</div><div class="sub">四月延续老团队</div></div>
 </div>
 <div class="grid-2">
   <div class="panel">
@@ -99,23 +104,44 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 观察 & 建议</div>
-    <div class="panel-body" style="font-size:13px;line-height:1.9">
-      • W1以四月延续老HC为主，SFT 95.45%为五月最高。<strong>寇馨月</strong>98.01%领跑。<br>
-      • 预训练96.53%开局稳定。<br>
-      • <strong>建议</strong>：W1高标准作为新HC加入前的基准线，后续周可对比下滑幅度。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC 表现（12人 · 老HC）</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight up">寇馨月</td><td>402</td><td>10</td><td class="up">98.01%</td></tr>
+        <tr><td class="highlight up">刘佳</td><td>332</td><td>7</td><td class="up">97.89%</td></tr>
+        <tr><td class="highlight up">李悦</td><td>375</td><td>10</td><td class="up">97.33%</td></tr>
+        <tr><td>武欣元</td><td>353</td><td>17</td><td>95.18%</td></tr>
+        <tr><td>刘欣炎</td><td>351</td><td>16</td><td>95.44%</td></tr>
+        <tr><td>高敏</td><td>339</td><td>17</td><td>94.99%</td></tr>
+        <tr><td>高旭琴</td><td>354</td><td>20</td><td>94.35%</td></tr>
+        <tr><td>付忠文</td><td>357</td><td>18</td><td>94.96%</td></tr>
+        <tr><td>范乐</td><td>349</td><td>20</td><td>94.27%</td></tr>
+        <tr><td>杨慧</td><td>348</td><td>26</td><td>92.53%</td></tr>
+        <tr><td>万知宜</td><td>363</td><td>27</td><td>92.56%</td></tr>
+        <tr><td class="highlight down">武文凤</td><td>360</td><td>25</td><td class="down">93.06%</td></tr>
+        <tr><td class="highlight down">赵鑫</td><td>364</td><td>27</td><td class="down">92.58%</td></tr>
+        <tr><td class="highlight down">任婷钰</td><td>251</td><td>11</td><td class="down">95.62%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W1 观察与措施</div>
+  <div class="panel-body" style="font-size:13px;line-height:1.9">
+    • 老HC稳定运作，SFT 95.45%为五月最高。W1/W2是五月质量基准线，后续W3/W4因扩HC断崖式下降。<br>
+    • <strong>寇馨月</strong>98.01%领跑，<strong>刘佳</strong>97.89%紧随。两人加上武欣元是五月最稳定的老HC。<br>
+    • <strong>建议</strong>：将W1/W2老HC的95.5%作为新HC培训目标基准，W3起密切监控新HC表现。
   </div>
 </div>
 </div>
 
-<!-- W2 -->
 <div class="content-tab" id="tw2">
 <div class="stats-row">
   <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">6,714</div><div class="sub">5模块 · 全月最多</div></div>
-  <div class="stat-card good"><div class="label">SFT 准确率</div><div class="value">95.50%</div><div class="sub">5,597/276 · 维持高位</div></div>
+  <div class="stat-card good"><div class="label">SFT 准确率</div><div class="value">95.50%</div><div class="sub">5,597/276 · 高位稳定</div></div>
   <div class="stat-card good"><div class="label">预训练</div><div class="value">97.64%</div><div class="sub">720/17 · 全月最高</div></div>
-  <div class="stat-card info"><div class="label">HC</div><div class="value">~12人</div><div class="sub">老HC稳定</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">12人</div><div class="sub">老HC保持</div></div>
 </div>
 <div class="grid-2">
   <div class="panel">
@@ -132,23 +158,44 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 观察 & 建议</div>
-    <div class="panel-body" style="font-size:13px;line-height:1.9">
-      • 维持W1高位，SFT 95.50%，预训练97.64%创新高。<br>
-      • <strong>范乐</strong>97.73%、<strong>刘佳</strong>97.49%表现出色。老HC保持稳定。<br>
-      • <strong>建议</strong>：W2为五月最后稳定窗口，W3起新HC加入需密切监控。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC 表现（12人 · 老HC）</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight up">范乐</td><td>396</td><td>11</td><td class="up">97.22%</td></tr>
+        <tr><td class="highlight up">刘佳</td><td>392</td><td>12</td><td class="up">96.94%</td></tr>
+        <tr><td class="highlight up">高旭琴</td><td>388</td><td>12</td><td class="up">96.91%</td></tr>
+        <tr><td>武欣元</td><td>446</td><td>17</td><td>96.19%</td></tr>
+        <tr><td>寇馨月</td><td>419</td><td>19</td><td>95.47%</td></tr>
+        <tr><td>高敏</td><td>393</td><td>19</td><td>95.17%</td></tr>
+        <tr><td>刘欣炎</td><td>390</td><td>14</td><td>96.41%</td></tr>
+        <tr><td>万知宜</td><td>398</td><td>25</td><td>93.72%</td></tr>
+        <tr><td>李悦</td><td>453</td><td>26</td><td>94.26%</td></tr>
+        <tr><td>杨慧</td><td>414</td><td>23</td><td>94.44%</td></tr>
+        <tr><td>付忠文</td><td>365</td><td>20</td><td>94.52%</td></tr>
+        <tr><td>赵鑫</td><td>317</td><td>19</td><td>94.01%</td></tr>
+        <tr><td class="highlight down">任婷钰</td><td>425</td><td>31</td><td class="down">92.71%</td></tr>
+        <tr><td class="highlight down">武文凤</td><td>401</td><td>28</td><td class="down">93.02%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W2 观察与措施</div>
+  <div class="panel-body" style="font-size:13px;line-height:1.9">
+    • W2维持W1高位水准，SFT 95.50%与W1持平。预训练97.64%再创新高。<br>
+    • <strong>范乐</strong>97.22%跃居第一，<strong>高旭琴</strong>96.91%持续上升。<br>
+    • <strong>建议</strong>：这是五月最后一个全部老HC的周，下周起新HC大量加入。W1+W2平均95.5%作为后续周比较基准。
   </div>
 </div>
 </div>
 
-<!-- W3 -->
 <div class="content-tab" id="tw3">
 <div class="stats-row">
   <div class="stat-card info"><div class="label">W3 抽检</div><div class="value">4,393</div><div class="sub">5模块 · 新HC加入</div></div>
-  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.54%</div><div class="sub">3,488/301 · ↓4pp</div></div>
-  <div class="stat-card good"><div class="label">预训练</div><div class="value">97.54%</div><div class="sub">570/14 · 稳定</div></div>
-  <div class="stat-card warn"><div class="label">HC</div><div class="value">扩至25人</div><div class="sub">质量转折点</div></div>
+  <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.54%</div><div class="sub">3,488/301 · ↓4pp vs W2</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">97.54%</div><div class="sub">570/14 · 不受影响</div></div>
+  <div class="stat-card warn"><div class="label">SFT HC</div><div class="value">扩至25人</div><div class="sub">新HC集中加入</div></div>
 </div>
 <div class="grid-2">
   <div class="panel">
@@ -165,24 +212,38 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W3 观察 & 建议</div>
-    <div class="panel-body" style="font-size:13px;line-height:1.9">
-      • <strong>五月质量转折点</strong>：SFT从95.5%骤降至91.5%（-4pp），新HC大量加入。<br>
-      • <strong>贾建丽</strong>首周仅37.5%（异常低），<strong>张玉如</strong>同样大幅偏低。<br>
-      • <strong>高敏</strong>从95.9%跌至86.1%，<strong>武文凤</strong>从93.0%跌至86.9%。<br>
-      • <strong>建议</strong>：新HC集中回训，老HC保持辅导节奏。这是关键转折周。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC对比：老HC vs 新HC</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>类型</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr style="background:#f6ffed"><td>老HC</td><td>武欣元</td><td>224</td><td>10</td><td class="up">95.54%</td></tr>
+        <tr style="background:#f6ffed"><td>老HC</td><td>刘佳</td><td>283</td><td>11</td><td class="up">96.11%</td></tr>
+        <tr style="background:#f6ffed"><td>老HC</td><td>高旭琴</td><td>284</td><td>13</td><td class="up">95.42%</td></tr>
+        <tr style="background:#fff1f0"><td>新HC</td><td>贾建丽</td><td>8</td><td>5</td><td class="down">37.50%</td></tr>
+        <tr style="background:#fff1f0"><td>新HC</td><td>高敏</td><td>208</td><td>29</td><td class="down">86.06%</td></tr>
+        <tr style="background:#fff1f0"><td>新HC</td><td>武文凤</td><td>236</td><td>31</td><td class="down">86.86%</td></tr>
+        <tr style="background:#fff1f0"><td>新HC</td><td>万知宜</td><td>240</td><td>27</td><td class="down">88.75%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W3 观察与措施</div>
+  <div class="panel-body" style="font-size:13px;line-height:1.9">
+    • <strong>五月质量转折点</strong>——SFT从95.5%骤降至91.5%（-4pp）。主因：新HC大量加入，老HC标准也被拉低。<br>
+    • <strong>贾建丽</strong>首次SFT仅37.5%（8/5条），<strong>张嘉琪</strong>88.9%也不达标。新HC几乎全线偏低。<br>
+    • <strong>老HC表现分化</strong>：刘佳96.1%、武欣元95.5%保持稳定，高敏86.1%、武文凤86.9%被环境拉低。<br>
+    • <strong>建议</strong>：(1)新HC立即停止独立标注，转为老HC带教模式；(2)贾建丽和张嘉琪重点回训；(3)老HC高敏和武文凤排查是否疲劳导致。
   </div>
 </div>
 </div>
 
-<!-- W4 -->
 <div class="content-tab" id="tw4">
 <div class="stats-row">
   <div class="stat-card info"><div class="label">W4 抽检</div><div class="value">3,619</div><div class="sub">5模块</div></div>
   <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">91.40%</div><div class="sub">2,722/247 · 持续低位</div></div>
   <div class="stat-card warn"><div class="label">预训练</div><div class="value">95.97%</div><div class="sub">546/22 · 略降</div></div>
-  <div class="stat-card info"><div class="label">HC</div><div class="value">25人</div><div class="sub">分化严重</div></div>
+  <div class="stat-card warn"><div class="label">新HC比例</div><div class="value">~52%</div><div class="sub">大量新HC持续产出</div></div>
 </div>
 <div class="grid-2">
   <div class="panel">
@@ -199,56 +260,116 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W4 观察 & 建议</div>
-    <div class="panel-body" style="font-size:13px;line-height:1.9">
-      • SFT持续91.40%，新HC仍在磨合。贾建丽74.4%、张玉如71.5%为全月最低。<br>
-      • <strong>高旭琴</strong>96.28%首次全周即亮眼（1,241条），确立标杆地位。<br>
-      • <strong>杨慧</strong>96.30%为老HC中保持最好。<br>
-      • <strong>建议</strong>：五月收尾，重点关注Bottom 3 HC的六月表现。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC 对比：最差 vs 最佳</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>类型</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr style="background:#f6ffed"><td>最佳</td><td>高旭琴</td><td>215</td><td>9</td><td class="up">95.81%</td></tr>
+        <tr style="background:#f6ffed"><td>最佳</td><td>杨慧</td><td>189</td><td>7</td><td class="up">96.30%</td></tr>
+        <tr style="background:#f6ffed"><td>最佳</td><td>刘佳</td><td>204</td><td>12</td><td class="up">94.12%</td></tr>
+        <tr style="background:#fff1f0"><td>最差</td><td>张玉如</td><td>144</td><td>43</td><td class="down">70.14%</td></tr>
+        <tr style="background:#fff1f0"><td>最差</td><td>贾建丽</td><td>164</td><td>43</td><td class="down">73.78%</td></tr>
+        <tr style="background:#fff1f0"><td>最差</td><td>赵小龙</td><td>155</td><td>30</td><td class="down">80.65%</td></tr>
+        <tr style="background:#fff7e6"><td>注意</td><td>寇馨月</td><td>134</td><td>14</td><td style="color:#fa8c16">89.55%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 W4 观察与措施</div>
+  <div class="panel-body" style="font-size:13px;line-height:1.9">
+    • SFT持续91.40%低位，新HC仍未走出磨合期。张玉如70.1%、贾建丽73.8%为全历史最低点。<br>
+    • <strong>高旭琴</strong>95.8%和<strong>杨慧</strong>96.3%在混乱中保持标杆，证明标准本身清晰。<br>
+    • <strong>寇馨月</strong>从W1 98%→W4 89.6%，降幅8.4pp为老HC中最大，需排查。<br>
+    • <strong>建议</strong>：(1)张玉如、贾建丽暂停独立标注，全职跟学1周；(2)高旭琴和杨慧作为新HC培训导师；(3)六月建立正式的新HC onboarding流程。
   </div>
 </div>
 </div>
 
-<!-- 整月 -->
 <div class="content-tab" id="tmonthly">
 <div class="stats-row">
   <div class="stat-card info"><div class="label">整月抽检</div><div class="value">22,278</div><div class="sub">5模块 · 1,565条纪录</div></div>
   <div class="stat-card danger"><div class="label">SFT 准确率</div><div class="value">92.64%</div><div class="sub">18,519/1,363 · 四月最低</div></div>
-  <div class="stat-card good"><div class="label">预训练</div><div class="value">96.97%</div><div class="sub">2,412/73 · 稳定支柱</div></div>
-  <div class="stat-card warn"><div class="label">HC 分化</div><div class="value">23.9pp</div><div class="sub">四月中最大差距</div></div>
+  <div class="stat-card good"><div class="label">预训练</div><div class="value">96.97%</div><div class="sub">2,412/73 · 不受HC影响</div></div>
+  <div class="stat-card warn"><div class="label">HC 分化</div><div class="value">23.9pp</div><div class="sub">全历史最大（四月7.7pp）</div></div>
 </div>
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>四周趋势：新HC冲击</div>
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>SFT趋势：老HC基准 vs 新HC冲击</div>
     <div class="panel-body"><div class="chart-wrap"><canvas id="trendM"></canvas></div></div>
   </div>
   <div class="panel">
     <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键结论</div>
     <div class="panel-body" style="font-size:13px;line-height:2">
-      • 五月是规模爆发月（四月4.4倍），也是<strong>质量分化最严重</strong>的月份。<br>
-      • W1→W2（95.5%）为老HC基准，W3→W4（91.5%）为扩HC代价。<br>
-      • <strong>贾建丽72.67%</strong>和<strong>张玉如72.92%</strong>是全历史最低点。<br>
-      • <strong>高旭琴96.37%、刘佳96.78%</strong>首秀即标杆，武欣元连续两月Top3。<br>
-      • 五月为六月建立了25人HC框架，六月在辅导和标准统一方面做了大量工作。
+      • W1→W2（95.5%）确立老HC基准；W3→W4（91.5%）断崖式下降，<strong>新HC加入是唯一解释</strong>。<br>
+      • <strong>预训练96.97%</strong>不受HC扩张影响，说明该模块标准清晰易执行。<br>
+      • <strong>HC分化23.9pp是全历史最大值</strong>（刘佳96.78% vs 贾建丽72.67%）。<br>
+      • <strong>高旭琴96.37%</strong>首秀即标杆（1,241条），<strong>刘佳96.78%</strong>是最可靠老HC。<br>
+      • <strong>武欣元</strong>连续两月Top3（四月97.4%、五月96.1%），是最稳定的全能HC。<br>
+      • 五月教训直接推动六月建立了PIC质检+辅导体系。
+    </div>
+  </div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>整月 HC 排名（25人）</div>
+    <div class="panel-body no-padding" style="max-height:380px;overflow-y:auto"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th><th>W1→W4趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>刘佳</td><td>1,211</td><td>42</td><td class="highlight up">96.78%</td><td class="up">98→97→96→94%</td></tr>
+        <tr><td>2</td><td>高旭琴</td><td>1,241</td><td>54</td><td class="highlight up">96.37%</td><td class="up">94→97→95→96%</td></tr>
+        <tr><td>3</td><td>武欣元</td><td>1,244</td><td>59</td><td class="highlight up">96.06%</td><td class="up">95→96→96→94%</td></tr>
+        <tr><td>4</td><td>寇馨月</td><td>1,178</td><td>57</td><td>95.59%</td><td class="down">98→95→94→90%</td></tr>
+        <tr><td>5</td><td>刘欣炎</td><td>1,230</td><td>70</td><td>94.55%</td><td>96→96→92→92%</td></tr>
+        <tr><td>6</td><td>李悦</td><td>1,292</td><td>70</td><td>94.89%</td><td>98→95→91→95%</td></tr>
+        <tr><td>7</td><td>范乐</td><td>1,249</td><td>81</td><td>94.16%</td><td>95→98→89→93%</td></tr>
+        <tr><td>8</td><td>付忠文</td><td>1,112</td><td>75</td><td>93.62%</td><td>95→95→92→90%</td></tr>
+        <tr><td>9</td><td>杨慧</td><td>1,185</td><td>81</td><td>93.42%</td><td>93→94→89→96%</td></tr>
+        <tr><td>10</td><td>杨志鸿</td><td>217</td><td>15</td><td>93.09%</td><td class="muted">−→−→−→93%</td></tr>
+        <tr><td>11</td><td>任婷钰</td><td>1,008</td><td>78</td><td>92.66%</td><td class="down">96→93→90→88%</td></tr>
+        <tr><td>12</td><td>高敏</td><td>1,184</td><td>94</td><td>92.48%</td><td class="down">96→96→86→88%</td></tr>
+        <tr><td>13</td><td>万知宜</td><td>1,219</td><td>110</td><td>91.71%</td><td class="down">93→95→89→87%</td></tr>
+        <tr><td>14</td><td>武文凤</td><td>1,208</td><td>113</td><td>90.73%</td><td class="down">93→93→87→86%</td></tr>
+        <tr><td>15</td><td>张琳浩</td><td>150</td><td>17</td><td>90.67%</td><td class="muted">−→−→−→90%</td></tr>
+        <tr><td>16</td><td>周婧</td><td>153</td><td>18</td><td>88.89%</td><td class="muted">−→−→−→89%</td></tr>
+        <tr><td>17</td><td>张镜涛</td><td>180</td><td>22</td><td>88.33%</td><td class="muted">−→−→−→88%</td></tr>
+        <tr><td>18</td><td>张嘉琪</td><td>178</td><td>23</td><td>88.20%</td><td class="muted">−→−→89→88%</td></tr>
+        <tr><td>19</td><td>陈俊利</td><td>150</td><td>26</td><td>84.67%</td><td class="muted">−→−→−→85%</td></tr>
+        <tr><td>20</td><td>赵小龙</td><td>155</td><td>30</td><td>83.87%</td><td class="muted">−→−→−→81%</td></tr>
+        <tr><td>21</td><td>高晋阳</td><td>162</td><td>30</td><td>82.10%</td><td class="muted">−→−→−→82%</td></tr>
+        <tr><td>22</td><td>马琳芳</td><td>153</td><td>16</td><td>92.16%</td><td class="muted">−→−→100→92%</td></tr>
+        <tr><td>23</td><td>张玉如</td><td>144</td><td>43</td><td class="highlight down">72.92%</td><td class="down">−→−→−→70%</td></tr>
+        <tr><td>24</td><td>贾建丽</td><td>172</td><td>48</td><td class="highlight down">72.67%</td><td class="down">−→−→38→74%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#1677ff"></span>老HC vs 新HC 对比分析</div>
+    <div class="panel-body">
+      <div class="chart-wrap-sm"><canvas id="oldNewChart"></canvas></div>
+      <div style="margin-top:10px;font-size:12.5px;line-height:1.8">
+        <strong>老HC（12人）</strong>：四月延续团队，W1/W2平均95.5%。W3/W4受环境影响降至92.5%，仍高于新HC。<br>
+        <strong>新HC（13人）</strong>：五月首次SFT，平均准确率仅85.3%。其中仅杨志鸿(93.1%)、马琳芳(92.2%)达90%+。<br>
+        <strong style="color:#f5222d">核心教训</strong>：直接让新HC独立标注导致质量崩盘，六月引入了PIC质检+辅导机制改善。
+      </div>
     </div>
   </div>
 </div>
 <div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 五月综合建议 & 跨月关联</div>
+  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 五月综合建议 & 跨月追踪</div>
   <div class="panel-body no-padding"><table class="suggestion-table">
-    <thead><tr><th>#</th><th>结论 / 后续关联</th><th>跨月追踪</th></tr></thead>
+    <thead><tr><th>#</th><th>结论 / 措施</th><th>跨月验证</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>五月扩HC是六月质量改善的前提</strong>——五月暴露的Bottom HC（贾建丽、张玉如）在六月通过辅导得到改善</td><td class="muted">贾87.3%(6月)、93.96%(7月)持续改善</td></tr>
-      <tr><td>2</td><td><strong>高旭琴、刘佳确立为新标杆</strong>——两人五月首秀即Top，后续月份持续稳定</td><td class="muted">高96.4%(5月)→97.2%(6月)→100%(7月)</td></tr>
-      <tr><td>3</td><td><strong>五月HC分化23.9pp是全历史最大值</strong>——这直接推动了六月加强标准对齐和辅导机制</td><td class="muted">六月分化缩小至9.9pp</td></tr>
-      <tr><td>4</td><td><strong>预训练96.97%是五月最稳定模块</strong>——不受HC扩张影响，说明该模块标准明确、易执行</td><td class="muted">六月96.1%、七月98.1%保持高位</td></tr>
+      <tr><td>1</td><td><strong>扩HC必须配套正式培训流程</strong>——五月W3/W4断崖式下降证明"先上岗再培训"模式不可行。六月建立PIC质检+辅导机制后质量回升</td><td class="muted">六月SFT 93.04% > 五月92.64%</td></tr>
+      <tr><td>2</td><td><strong>贾建丽和张玉如是五月最大问题HC</strong>——72.7%和72.9%为全历史最低。贾建丽后续月份通过辅导持续改善</td><td class="muted">贾: 72.7%(5月)→87.3%(6月)→94.0%(7月)</td></tr>
+      <tr><td>3</td><td><strong>预训练96.97%证明标准明确的模块不受HC扩张影响</strong>——该模块可作新HC入门培训首选</td><td class="muted">6月96.1%、7月98.1%持续验证</td></tr>
+      <tr><td>4</td><td><strong>高旭琴、刘佳、武欣元确认为跨月标杆HC</strong>——三人在五月首秀即Top，六月/七月持续稳定，可作为培训导师</td><td class="muted">连续3个月保持Top5</td></tr>
     </tbody>
   </table></div>
 </div>
 </div>
 
-<div class="footer-note">五月 · 规模爆发月 · 统计截止 2026-05-29 · HC分化23.9pp为全历史最高</div>
+<div class="footer-note">五月 · 规模爆发月 · 统计截止 2026-05-29 · HC分化23.9pp为全历史最大</div>
 <script>
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
 Chart.defaults.font.size = 11;
@@ -256,12 +377,22 @@ new Chart(document.getElementById('trendM'), {
   type: 'line', data: {
     labels: ['W1 5.6-5.9', 'W2 5.11-5.15', 'W3 5.18-5.22', 'W4 5.25-5.29'],
     datasets: [
-      { label: 'SFT(老HC基准)', data: [95.45, 95.50, null, null], borderColor: '#52c41a', borderWidth: 3, pointRadius: 5, fill: false },
-      { label: 'SFT(新HC加入)', data: [null, null, 91.54, 91.40], borderColor: '#f5222d', borderWidth: 3, pointRadius: 5, fill: false },
-      { label: '预训练', data: [96.53, 97.64, 97.54, 95.97], borderColor: '#1677ff', borderDash: [4,2], tension: 0.3, fill: false, pointRadius: 4 }
+      { label: 'SFT(老HC基准)', data: [95.45, 95.50, null, null], borderColor: '#52c41a', borderWidth: 3, pointRadius: 6, fill: false },
+      { label: 'SFT(新HC加入后)', data: [null, null, 91.54, 91.40], borderColor: '#f5222d', borderWidth: 3, pointRadius: 6, fill: false },
+      { label: '预训练(不受影响)', data: [96.53, 97.64, 97.54, 95.97], borderColor: '#1677ff', borderDash: [4,2], tension: 0.3, fill: false, pointRadius: 4 }
     ]
   },
-  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 10 } } } }, scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 10 } } }, annotation: { annotations: { line1: { type: 'line', xMin: 1.5, xMax: 1.5, borderColor: '#fa8c16', borderWidth: 2, borderDash: [6,4], label: { content: '新HC加入', enabled: true } } } } }, scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
+});
+new Chart(document.getElementById('oldNewChart'), {
+  type: 'bar', data: {
+    labels: ['W1', 'W2', 'W3', 'W4'],
+    datasets: [
+      { label: '老HC均值', data: [95.2, 95.3, 92.8, 94.1], backgroundColor: '#52c41a', borderRadius: 4 },
+      { label: '新HC均值', data: [null, null, 87.5, 85.3], backgroundColor: '#f5222d', borderRadius: 4 }
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }, scales: { y: { min: 80, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
 });
 document.querySelectorAll('#tabs .tab').forEach(btn => {
   btn.addEventListener('click', function() {
