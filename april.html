@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIGC PIC 质检看板 · 四月</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root { color-scheme: light; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,10 +54,12 @@ tr:hover td { background: #fafbff; }
 .bar-cell .bar-fill { height: 5px; border-radius: 3px; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
+.chart-wrap { position: relative; height: 200px; }
+
+.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 </style>
 </head>
 <body>
@@ -70,15 +73,15 @@ tr:hover td { background: #fafbff; }
       <a href="./" class="nav-btn inactive">6月</a>
       <a href="./july.html" class="nav-btn inactive">7月</a>
     </div>
-    <div class="meta" style="font-size:12px;opacity:0.7">2026年4月 · 4.20 - 4.30</div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年4月 · 项目启动月</div>
   </div>
 </div>
 
 <div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">5,022</div><div class="sub">5 个模块 · 691 条纪录</div></div>
+  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">5,022</div><div class="sub">5 模块 · 691条纪录</div></div>
   <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">301</div><div class="sub">次品率 5.99%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">SFT 94.42%</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">Top: 杨旭晶 98.72%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">SFT 94.42% · 启动月</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">W1→W2: 92.97%→94.82%</div></div>
 </div>
 
 <div class="grid-2">
@@ -96,15 +99,8 @@ tr:hover td { background: #fafbff; }
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>模块对比 & 关键信息</div>
-    <div class="panel-body" style="font-size:13px;line-height:2.2">
-      • 四月为项目启动月，数据量较小（691条纪录，8个工作日）。<br>
-      • <strong>SFT后训练</strong>占比83%，准确率94.42%为最高。<br>
-      • <strong>视频质量</strong>仅27条，样本过小，曹未婷60%偏低。<br>
-      • 预训练准确率94.11%与SFT接近。<br>
-      • Caption和tag分层样本量少（149/97条），准确率波动大。<br>
-      • 四月PIC结构：SFT HC 15人参与。
-    </div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>两周模块趋势</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
   </div>
 </div>
 
@@ -114,9 +110,9 @@ tr:hover td { background: #fafbff; }
     <div class="panel-body no-padding"><table>
       <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>杨旭晶</td><td>78</td><td>1</td><td class="highlight up">98.72%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>武欣元</td><td>267</td><td>10</td><td class="highlight up">97.38%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>寇馨月</td><td>269</td><td>9</td><td class="highlight up">97.03%</td></tr>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>杨旭晶</td><td>276</td><td>14</td><td class="highlight up">98.72%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>武欣元</td><td>427</td><td>19</td><td class="highlight up">97.38%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>寇馨月</td><td>417</td><td>16</td><td class="highlight up">97.03%</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -125,28 +121,49 @@ tr:hover td { background: #fafbff; }
     <div class="panel-body no-padding"><table>
       <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>李佩娟</td><td>301</td><td>27</td><td class="highlight down">91.03%</td></tr>
-        <tr><td>2</td><td>李悦</td><td>285</td><td>22</td><td class="highlight down">92.63%</td></tr>
-        <tr><td>3</td><td>赵鑫</td><td>280</td><td>22</td><td class="highlight down">92.86%</td></tr>
+        <tr><td>1</td><td>李佩娟</td><td>448</td><td>41</td><td class="highlight down">91.03%</td></tr>
+        <tr><td>2</td><td>李悦</td><td>448</td><td>28</td><td class="highlight down">92.63%</td></tr>
+        <tr><td>3</td><td>赵鑫</td><td>429</td><td>33</td><td class="highlight down">92.86%</td></tr>
       </tbody>
     </table></div>
   </div>
 </div>
 
-<div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>四月关键观察</div>
+<div class="panel" style="margin-bottom:14px">
+  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>四月关键观察 & 与后续月份对比</div>
   <div class="panel-body" style="font-size:13px;line-height:2">
-    • 四月为项目启动首月，整体准确率94.01%，作为基准线。<br>
-    • <strong>杨旭晶</strong>98.72%开局优秀（但仅78条样本），<strong>武欣元</strong>267条/97.38%样本充足表现稳定。<br>
-    • SFT HC分化较小（最高98.72% vs 最低91.03%，差7.69pp），优于后续月份。<br>
-    • 视频质量和Caption样本量过小，趋势参考价值有限。<br>
-    • 四月建立了核心SFT HC团队（15人），为后续月份扩展打下基础。
+    • 四月为项目启动首月，整体准确率94.01%为四个月中最高（>五月93.16%、六月93.15%、七月94.40%）。<br>
+    • <strong>SFT后训练</strong>占总量83%，准确率94.42%。W1(92.97%)→W2(94.82%)提升1.85pp，说明快速进入状态。<br>
+    • HC分化较小（最高98.72% vs 最低91.03%，差7.7pp），显著优于五月（差23.9pp）、六月（差9.9pp）。<br>
+    • <strong>武文凤</strong>W1 80.17%→W2 95.07%改善最显著(+14.9pp)，预示其后续月份的波动特征。<br>
+    • <strong>刘欣炎</strong>W1 85.25%→W2 95.03%同样大幅改善(+9.8pp)。<br>
+    • 视频质量仅27条、Caption仅149条，样本太小不具备统计意义。
   </div>
 </div>
 
 <div class="footer-note">
-  四月数据 · 统计截止 2026-04-30 · 项目启动月
+  四月 · 项目启动月 · 统计截止 2026-04-30
 </div>
+
+<script>
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.font.size = 11;
+new Chart(document.getElementById('trendChart'), {
+  type: 'line', data: {
+    labels: ['W1 4.20-4.24', 'W2 4.27-4.30'],
+    datasets: [
+      { label: 'SFT后训练', data: [92.97, 94.82], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '预训练', data: [93.41, 95.15], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '整体', data: [92.41, 94.48], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } },
+    scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } }
+  }
+});
+</script>
 
 </body>
 </html>
