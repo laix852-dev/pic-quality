@@ -17,6 +17,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .nav-btn.inactive { color: rgba(255,255,255,0.7); }
 .nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
+.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
+.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
+
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
 .stat-card.info { border-left-color: #1677ff; }
@@ -27,9 +32,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .stat-card .value { font-size: 24px; font-weight: 700; }
 .stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
 .stat-card.good .value { color: #52c41a; }
-.stat-card.warn .value { color: #fa8c16; }
-.stat-card.info .value { color: #1677ff; }
-.stat-card.danger .value { color: #f5222d; }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 
@@ -55,7 +57,8 @@ tr:hover td { background: #fafbff; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
 .chart-wrap { position: relative; height: 200px; }
-
+.content-tab { display: none; }
+.content-tab.active { display: block; }
 .footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
@@ -77,93 +80,131 @@ tr:hover td { background: #fafbff; }
   </div>
 </div>
 
-<div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">5,022</div><div class="sub">5 模块 · 691条纪录</div></div>
-  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">301</div><div class="sub">次品率 5.99%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">SFT 94.42% · 启动月</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">W1→W2: 92.97%→94.82%</div></div>
+<div class="tabs" id="aprilTabs">
+  <button class="tab active" data-w="w1">W1 · 4.20 - 4.24</button>
+  <button class="tab" data-w="w2">W2 · 4.27 - 4.30</button>
+  <button class="tab" data-w="monthly">整月 · 4月分析</button>
 </div>
 
+<!-- W1 -->
+<div class="content-tab active" id="aw1">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">3,498</div><div class="sub">5 模块</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">8.45%</div><div class="sub">SFT 92.97%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">92.41%</div><div class="sub">项目首周</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">17人</div><div class="sub">参差不齐</div></div>
+</div>
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>预训练</td><td>698</td><td>54</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#52c41a"></div></div><span class="pct-text">92.26%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>2,519</td><td>203</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.0%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.94%</span></div></td></tr>
+        <tr><td>tag分层</td><td>119</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:86.6%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">85.71%</span></div></td></tr>
+        <tr><td>Caption</td><td>162</td><td>29</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:82.1%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">82.10%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • 项目首周，整体准确率92.41%，处于磨合期。<br>
+      • <strong>武文凤</strong>80.17%为全组最低，但W2大幅改善至95.07%。<br>
+      • <strong>刘欣炎</strong>85.25%同样偏低，W2改善至95.03%。<br>
+      • Caption和tag分层样本少但准确率偏低（82%/86%）。<br>
+      • <strong>李悦</strong>96.93% W1表现最佳（163/6）。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- W2 -->
+<div class="content-tab" id="aw2">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">5,022</div><div class="sub">5 模块 · 增加视频质量</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">SFT 94.42%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">↑ +1.6pp</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">稳定改善</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
         <tr><td style="font-weight:700">SFT后训练</td><td>4,172</td><td>233</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#52c41a"></div></div><span class="pct-text">94.42%</span></div></td></tr>
         <tr><td>预训练</td><td>577</td><td>34</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.1%;background:#52c41a"></div></div><span class="pct-text">94.11%</span></div></td></tr>
         <tr><td>tag分层</td><td>97</td><td>9</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90.7%;background:#fa8c16"></div></div><span class="pct-text">90.72%</span></div></td></tr>
-        <tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">88.59%</span></div></td></tr>
+        <tr><td>Caption</td><td>149</td><td>17</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:88.6%;background:#fa8c16"></div></div><span class="pct-text">88.59%</span></div></td></tr>
         <tr><td>视频质量</td><td>27</td><td>8</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:70.4%;background:#f5222d"></div></div><span class="pct-text" style="color:#f5222d">70.37%</span></div></td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>两周模块趋势</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • SFT准确率从92.0%提升至94.4%（+2.5pp），团队快速进入状态。<br>
+      • <strong>武文凤</strong>80.2%→95.1%（+14.9pp）改善最显著。<br>
+      • <strong>刘欣炎</strong>85.3%→95.0%（+9.8pp）同样大幅提升。<br>
+      • 视频质量首次加入，仅27条，曹未婷60%最低。<br>
+      • 新HC杨旭晶98.72%表现突出（276条）。
+    </div>
   </div>
 </div>
+</div>
 
+<!-- 整月 -->
+<div class="content-tab" id="amonthly">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">整月抽检</div><div class="value">5,022</div><div class="sub">5模块 · 691条纪录</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.99%</div><div class="sub">SFT 94.42%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.01%</div><div class="sub">四月最高</div></div>
+  <div class="stat-card info"><div class="label">SFT HC</div><div class="value">15人</div><div class="sub">差7.7pp · 分化最小</div></div>
+</div>
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>SFT HC Top 3</div>
-    <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
-      <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>杨旭晶</td><td>276</td><td>14</td><td class="highlight up">98.72%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>武欣元</td><td>427</td><td>19</td><td class="highlight up">97.38%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>寇馨月</td><td>417</td><td>16</td><td class="highlight up">97.03%</td></tr>
-      </tbody>
-    </table></div>
+    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>两周趋势</div>
+    <div class="panel-body"><div class="chart-wrap"><canvas id="trendApril"></canvas></div></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>SFT HC Bottom 3</div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>李佩娟</td><td>448</td><td>41</td><td class="highlight down">91.03%</td></tr>
-        <tr><td>2</td><td>李悦</td><td>448</td><td>28</td><td class="highlight down">92.63%</td></tr>
-        <tr><td>3</td><td>赵鑫</td><td>429</td><td>33</td><td class="highlight down">92.86%</td></tr>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>杨旭晶</td><td>276</td><td class="highlight up">98.72%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>武欣元</td><td>427</td><td class="highlight up">97.38%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>寇馨月</td><td>417</td><td class="highlight up">97.03%</td></tr>
       </tbody>
     </table></div>
   </div>
 </div>
-
-<div class="panel" style="margin-bottom:14px">
-  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>四月关键观察 & 与后续月份对比</div>
-  <div class="panel-body" style="font-size:13px;line-height:2">
-    • 四月为项目启动首月，整体准确率94.01%为四个月中最高（>五月93.16%、六月93.15%、七月94.40%）。<br>
-    • <strong>SFT后训练</strong>占总量83%，准确率94.42%。W1(92.97%)→W2(94.82%)提升1.85pp，说明快速进入状态。<br>
-    • HC分化较小（最高98.72% vs 最低91.03%，差7.7pp），显著优于五月（差23.9pp）、六月（差9.9pp）。<br>
-    • <strong>武文凤</strong>W1 80.17%→W2 95.07%改善最显著(+14.9pp)，预示其后续月份的波动特征。<br>
-    • <strong>刘欣炎</strong>W1 85.25%→W2 95.03%同样大幅改善(+9.8pp)。<br>
-    • 视频质量仅27条、Caption仅149条，样本太小不具备统计意义。
-  </div>
 </div>
 
-<div class="footer-note">
-  四月 · 项目启动月 · 统计截止 2026-04-30
-</div>
-
+<div class="footer-note">四月 · 项目启动月 · 统计截止 2026-04-30</div>
 <script>
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
 Chart.defaults.font.size = 11;
-new Chart(document.getElementById('trendChart'), {
+new Chart(document.getElementById('trendApril'), {
   type: 'line', data: {
     labels: ['W1 4.20-4.24', 'W2 4.27-4.30'],
     datasets: [
-      { label: 'SFT后训练', data: [92.97, 94.82], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
-      { label: '预训练', data: [93.41, 95.15], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
-      { label: '整体', data: [92.41, 94.48], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
+      { label: 'SFT', data: [91.94, 94.42], borderColor: '#667eea', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '预训练', data: [92.26, 94.11], borderColor: '#52c41a', tension: 0.4, fill: false, pointRadius: 5 },
+      { label: '整体', data: [92.41, 94.01], borderColor: '#fa8c16', borderDash: [6,3], tension: 0.4, fill: false, pointRadius: 5 }
     ]
   },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } },
-    scales: { y: { min: 88, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } }
-  }
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } }, scales: { y: { min: 80, max: 100, ticks: { callback: v => v+'%' } }, x: { grid: { display: false } } } }
+});
+document.querySelectorAll('#aprilTabs .tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#aprilTabs .tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#aw1,#aw2,#amonthly').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('a'+this.dataset.w).classList.add('active');
+  });
 });
 </script>
-
 </body>
 </html>
