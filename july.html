@@ -54,23 +54,7 @@ tr:hover td{background:#fafbff}
 <button id="login-btn" style="width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">确 认</button>
 <p id="pe" style="color:#f5222d;font-size:12px;margin-top:10px;display:none">密码错误，请重试</p>
 </div></div>
-<script>
-(function(){
-  var ov=document.getElementById("login-overlay");
-  if(localStorage.getItem("pa")==="1"){ov.style.display="none";return}
-  document.getElementById("login-btn").onclick=function(){
-    if(document.getElementById("pi").value==="888888"){
-      localStorage.setItem("pa","1");
-      ov.style.display="none";
-    }else{
-      document.getElementById("pe").style.display="block";
-    }
-  };
-  document.getElementById("pi").onkeydown=function(e){
-    if(e.key==="Enter")document.getElementById("login-btn").click();
-  };
-})();
-</script>
+
 
 
 <div class="header"><h1>AIGC PIC 质检看板 · 七月</h1><div style="display:flex;align-items:center;gap:12px"><div style="display:flex;gap:3px;background:rgba(255,255,255,.1);border-radius:8px;padding:3px"><a href="./april.html" class="nav-btn inactive">4月</a><a href="./may.html" class="nav-btn inactive">5月</a><a href="./" class="nav-btn inactive">6月</a><a href="./july.html" class="nav-btn active">7月</a></div><div class="meta" style="font-size:12px;opacity:.7">2026年7月 · 7.1-7.7 · 5个工作日</div></div></div>
@@ -218,4 +202,15 @@ barH('dm',['格式/节奏','清晰度','动作/交互','景深','外观/稳定']
 new Chart(document.getElementById('err'),{type:'doughnut',data:{labels:['个人仔细度 74.6%','规则理解偏差 25.0%','电脑问题 0.4%'],datasets:[{data:[203,68,1],backgroundColor:['#f5222d','#fa8c16','#d9d9d9'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:8,usePointStyle:true,font:{size:10}}}}}});
 new Chart(document.getElementById('trend'),{type:'line',data:{labels:['W1 7.1-7.3','W2 7.6-7.7'],datasets:[{label:'SFT',data:[94.45,93.59],borderColor:'#667eea',tension:0.4,fill:false,pointRadius:5},{label:'预训练',data:[98.28,97.90],borderColor:'#52c41a',tension:0.4,fill:false,pointRadius:5},{label:'整体',data:[94.82,94.20],borderColor:'#fa8c16',borderDash:[6,3],tension:0.4,fill:false,pointRadius:5},{label:'六月SFT(基准)',data:[93.04,93.04],borderColor:'#d9d9d9',borderDash:[3,3],tension:0,fill:false,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:10}}}},scales:{y:{min:88,max:100,ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
 document.querySelectorAll('#tb .tab').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#tb .tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('#jw1,#jw2,#jm').forEach(x=>x.classList.remove('active'));this.classList.add('active');document.getElementById('j'+this.dataset.w).classList.add('active')})});
-</script></body></html>
+</script>
+<script>
+(function(){
+  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
+  document.getElementById("login-btn").addEventListener("click",function(){
+    if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
+    else{document.getElementById("pe").style.display="block"}
+  });
+  document.getElementById("pi").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("login-btn").click()});
+})();
+</script>
+</body></html>
