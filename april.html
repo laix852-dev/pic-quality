@@ -131,19 +131,11 @@ else{document.getElementById("pe").style.display="block"}
 };
 document.getElementById("pi").onkeydown=function(e){if(e.key==="Enter")document.getElementById("login-btn").click()}
 }
-}catch(e){console.log(e)}
-</script>
+}catch(e){}
+<\/script>
 
-<script>
-(function(){
-  if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
-  document.getElementById("login-btn").addEventListener("click",function(){
-    if(document.getElementById("pi").value==="888888"){localStorage.setItem("pa","1");document.getElementById("login-overlay").style.display="none"}
-    else{document.getElementById("pe").style.display="block"}
-  });
-  document.getElementById("pi").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("login-btn").click()});
-})();
-</script>
+
+
 <script>
 (function(){
   if(localStorage.getItem("pa")==="1"){document.getElementById("login-overlay").style.display="none";return}
