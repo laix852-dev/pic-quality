@@ -8,15 +8,19 @@
 <style>
 :root { color-scheme: light; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1140px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1100px; }
 
 .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
 .header h1 { font-size: 22px; font-weight: 700; }
-.header .meta { text-align: right; font-size: 12px; opacity: 0.7; }
-.nav-btn { padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-btn { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
 .nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
 .nav-btn.inactive { color: rgba(255,255,255,0.7); }
 .nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.tab { flex: 1; padding: 10px 12px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; color: #8c8c9a; transition: all 0.2s; border: none; background: transparent; }
+.tab:hover { color: #667eea; background: rgba(102,126,234,0.06); }
+.tab.active { color: #fff; background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 2px 8px rgba(102,126,234,0.3); }
 
 .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
 .stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
@@ -24,15 +28,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .stat-card.warn { border-left-color: #fa8c16; }
 .stat-card.good { border-left-color: #52c41a; }
 .stat-card.danger { border-left-color: #f5222d; }
-.stat-card.purple { border-left-color: #722ed1; }
 .stat-card .label { font-size: 11px; color: #8c8c9a; margin-bottom: 4px; }
 .stat-card .value { font-size: 24px; font-weight: 700; }
 .stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
 .stat-card.good .value { color: #52c41a; }
-.stat-card.warn .value { color: #fa8c16; }
-.stat-card.info .value { color: #1677ff; }
-.stat-card.danger .value { color: #f5222d; }
-.stat-card.purple .value { color: #722ed1; }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
@@ -50,9 +49,8 @@ tr:hover td { background: #fafbff; }
 
 .tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; }
 .tag-red { background: #fff1f0; color: #cf1322; }
-.tag-orange { background: #fff7e6; color: #d46b08; }
 .tag-green { background: #f6ffed; color: #389e0d; }
-.tag-blue { background: #e6f4ff; color: #1677ff; }
+.tag-orange { background: #fff7e6; color: #d46b08; }
 
 .rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
 .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
@@ -64,156 +62,193 @@ tr:hover td { background: #fafbff; }
 .bar-cell .bar-fill { height: 5px; border-radius: 3px; }
 .bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
 
-.chart-wrap { position: relative; height: 220px; }
-.chart-wrap-sm { position: relative; height: 180px; }
-
+.chart-wrap { position: relative; height: 200px; }
+.content-tab { display: none; }
+.content-tab.active { display: block; }
+.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
 .highlight { font-weight: 700; }
 .up { color: #52c41a; }
 .down { color: #f5222d; }
-.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
-
-.suggestion-table td { font-size: 12.5px; padding: 9px 12px; }
-.suggestion-table td:first-child { width: 32px; text-align: center; font-weight: 700; color: #667eea; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>AIGC PIC 质检看板 · 七月</h1>
-  <div style="display:flex;align-items:center;gap:16px">
-    <div style="display:flex;gap:4px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;gap:3px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
       <a href="./april.html" class="nav-btn inactive">4月</a>
       <a href="./may.html" class="nav-btn inactive">5月</a>
       <a href="./" class="nav-btn inactive">6月</a>
       <a href="./july.html" class="nav-btn active">7月</a>
     </div>
-    <div class="meta">2026年7月 · 7.1 - 7.7（5个工作日）</div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年7月 · 持续更新中</div>
   </div>
 </div>
 
-<div class="stats-row">
-  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">6,344</div><div class="sub">6 个模块 · 5个工作日</div></div>
-  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">355</div><div class="sub">次品率 5.60%</div></div>
-  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.40%</div><div class="sub">SFT 93.75%</div></div>
-  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">51次申诉 · 暂无结果</div></div>
-  <div class="stat-card purple"><div class="label">SFT HC 人数</div><div class="value">28人</div><div class="sub">3人零次品 · 8人参与SFT</div></div>
+<div class="tabs" id="julyTabs">
+  <button class="tab active" data-w="w1">W1 · 7.1 - 7.3</button>
+  <button class="tab" data-w="w2">W2 · 7.6 - 7.7</button>
+  <button class="tab" data-w="monthly">整月汇总</button>
 </div>
 
+<!-- W1 -->
+<div class="content-tab active" id="jw1">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W1 抽检</div><div class="value">2,066</div><div class="sub">6 模块 · 3天</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.18%</div><div class="sub">SFT 94.71%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.82%</div><div class="sub">开局良好</div></div>
+  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">暂无申诉</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">28人</div><div class="sub">9人零次品</div></div>
+</div>
 <div class="grid-2">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>tag分层</td><td>130</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99.2%;background:#52c41a"></div></div><span class="pct-text">99.23%</span></div></td></tr>
-        <tr><td>预训练</td><td>825</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.1%;background:#52c41a"></div></div><span class="pct-text">98.06%</span></div></td></tr>
-        <tr><td>Caption</td><td>216</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.37%</span></div></td></tr>
-        <tr><td style="font-weight:700">SFT后训练</td><td>4,271</td><td>267</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.75%</span></div></td></tr>
-        <tr><td>AI合理性</td><td>882</td><td>59</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.3%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.31%</span></div></td></tr>
-        <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">90.00%</span></div></td></tr>
+        <tr><td>tag分层</td><td>50</td><td>0</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#52c41a"></div></div><span class="pct-text">100.0%</span></div></td></tr>
+        <tr><td>预训练</td><td>349</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.3%;background:#52c41a"></div></div><span class="pct-text">98.28%</span></div></td></tr>
+        <tr><td>Caption</td><td>90</td><td>3</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:96.7%;background:#52c41a"></div></div><span class="pct-text">96.67%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>775</td><td>43</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.5%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">94.45%</span></div></td></tr>
+        <tr><td>AI合理性</td><td>782</td><td>53</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.2%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.22%</span></div></td></tr>
+        <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text">90.00%</span></div></td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#f5222d"></span>次品类型分布</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="defectChart"></canvas></div></div>
-  </div>
-</div>
-
-<div class="grid-2">
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#13c2c2"></span>六月 vs 七月对比</div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>六月 vs 七月对比</div>
     <div class="panel-body">
       <div style="display:flex;justify-content:space-around;text-align:center;padding:20px 0">
         <div><div style="font-size:11px;color:#8c8c9a">六月 SFT</div><div style="font-size:36px;font-weight:700;color:#fa8c16">93.04%</div><div style="font-size:11px;color:#8c8c9a">19,686条</div></div>
         <div style="font-size:28px;color:#52c41a;line-height:100px">→</div>
         <div><div style="font-size:11px;color:#8c8c9a">七月 SFT</div><div style="font-size:36px;font-weight:700;color:#52c41a">93.75%</div><div style="font-size:11px;color:#8c8c9a">4,271条</div></div>
       </div>
-      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +0.71pp</div>
+      <div style="text-align:center;font-size:12px;color:#52c41a">▲ +0.71pp · 开局改善</div>
     </div>
   </div>
-  <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#1677ff"></span>错误根因分析</div>
-    <div class="panel-body"><div class="chart-wrap"><canvas id="analysisChart"></canvas></div></div>
-  </div>
 </div>
-
 <div class="grid-3">
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3（SFT后训练）</div>
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>HC Top 3</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>姓名</th><th>抽检</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td><span class="rank-badge rank-1">1</span></td><td>武欣元</td><td>31</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-2">2</span></td><td>刘佳</td><td>23</td><td>0</td><td class="highlight up">100.0%</td></tr>
-        <tr><td><span class="rank-badge rank-3">3</span></td><td>高旭琴</td><td>27</td><td>0</td><td class="highlight up">100.0%</td></tr>
+        <tr><td>张玉如</td><td>33</td><td class="highlight up">100.0%</td></tr>
+        <tr><td>高旭琴</td><td>26</td><td class="highlight up">100.0%</td></tr>
+        <tr><td>武欣元</td><td>31</td><td class="highlight up">100.0%</td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3（SFT后训练）</div>
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>HC Bottom 3</div>
     <div class="panel-body no-padding"><table>
-      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <thead><tr><th>姓名</th><th>抽检</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>赵小龙</td><td>89</td><td>12</td><td class="highlight down">86.52%</td></tr>
-        <tr><td>2</td><td>曹未婷</td><td>216</td><td>29</td><td class="highlight down">86.57%</td></tr>
-        <tr><td>3</td><td>寇馨月</td><td>20</td><td>2</td><td class="highlight down">90.00%</td></tr>
+        <tr><td>曹未婷</td><td>13</td><td class="highlight down">69.23%</td></tr>
+        <tr><td>张明敏</td><td>19</td><td class="highlight down">78.95%</td></tr>
+        <tr><td>万知宜</td><td>29</td><td class="highlight down">86.21%</td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="panel">
-    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>关键变化 vs 六月</div>
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W1 关键观察</div>
     <div class="panel-body" style="font-size:12px;line-height:1.8">
-      • <span class="up">▲</span> <strong>贾建丽</strong> 87.58%→93.96% +6.4pp<br>
-      • <span class="up">▲</span> <strong>张玉如</strong> 93.67%→97.92% +4.3pp<br>
-      • <span class="up">▲</span> <strong>付忠文</strong> 93.28%→97.10% +3.8pp<br>
-      • <span class="down">▼</span> <strong>寇馨月</strong> 95.83%→90.00% -5.8pp<br>
-      • <span class="down">▼</span> <strong>赵小龙</strong> 89.86%→86.52% -3.3pp<br>
-      • 8位HC参与SFT质检（vs六月4人）
+      • 8位PIC参与SFT质检（六月仅4人）。<br>
+      • 9人零次品开局优秀。<br>
+      • <strong>贾建丽</strong>93.33%较六月改善。<br>
+      • 曹未婷、张明敏首次SFT需关注。<br>
+      • 新增3位SFT质检PIC。
     </div>
   </div>
 </div>
+</div>
 
-<div class="panel">
-  <div class="panel-header"><span class="dot" style="background:#eb2f96"></span>📋 七月重点关注 & 建议措施</div>
-  <div class="panel-body no-padding">
-    <table class="suggestion-table">
-      <thead><tr><th>#</th><th>措施</th><th>依据</th><th style="width:68px">负责人</th><th style="width:64px">截止</th></tr></thead>
+<!-- W2 -->
+<div class="content-tab" id="jw2">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">W2 抽检</div><div class="value">4,278</div><div class="sub">6 模块 · 2天</div></div>
+  <div class="stat-card warn"><div class="label">次品率</div><div class="value">5.80%</div><div class="sub">SFT 93.42%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.20%</div><div class="sub">样本增大后略降</div></div>
+  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">暂无申诉</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">28人</div><div class="sub">3,496条 SFT</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td><strong>曹未婷 SFT 首次大规模抽检关注</strong>：216条次品29条（86.57%），是六月视频质量HC首次参与SFT，需确认是否适应新模块标准</td><td class="muted">SFT 28人中倒数第二，抽检量却排前10</td><td>yidun03</td><td>7/10</td></tr>
-        <tr><td>2</td><td><strong>格式/节奏问题占比升至首位</strong>：22.2%（79条），较六月15.7%显著上升。"慢放/快进/跳帧"类误判需做专项标准对齐</td><td class="muted">七月最大次品类型，六月仅排第二</td><td>yidun03</td><td>7/10</td></tr>
-        <tr><td>3</td><td><strong>申诉数据尚未录入，暂无法评估 PIC 一致性</strong>：51次申诉等待结果，建议7/10前催促完成审核</td><td class="muted">六月yidun01申诉通过率44.3%需持续关注</td><td>PIC全员</td><td>7/10</td></tr>
-        <tr><td>4</td><td><strong>新增8位PIC参与SFT质检</strong>（yidun56/42/58/46/48等）：建议做一轮判定标准对齐，避免多PIC标准不一致</td><td class="muted">六月仅4位PIC，七月增至9位</td><td>yidun03</td><td>7/10</td></tr>
-        <tr><td>5</td><td><strong>寇馨月准确率下降需排查</strong>：六月95.83%→七月90.00%，抽检量仅20条（样本小），但仍需关注是不是角色切换导致</td><td class="muted">从SFT HC Top3 跌至 Bottom3</td><td>yidun03</td><td>7/10</td></tr>
+        <tr><td>tag分层</td><td>80</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.8%;background:#52c41a"></div></div><span class="pct-text">98.75%</span></div></td></tr>
+        <tr><td>预训练</td><td>476</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.9%;background:#52c41a"></div></div><span class="pct-text">97.90%</span></div></td></tr>
+        <tr><td>Caption</td><td>126</td><td>7</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.4%;background:#fa8c16"></div></div><span class="pct-text">94.44%</span></div></td></tr>
+        <tr><td>AI合理性</td><td>100</td><td>6</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.0%;background:#fa8c16"></div></div><span class="pct-text">94.00%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>3,496</td><td>224</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.6%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.59%</span></div></td></tr>
       </tbody>
-    </table>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>W2 关键观察</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • W2抽检量扩大至4,278条（W1的2倍），SFT占3,496条。<br>
+      • SFT准确率93.42%较W1（94.45%）下降约1pp。<br>
+      • <strong>贾建丽</strong>265/16（93.96%）持续改善。<br>
+      • <strong>赵鑫</strong>278/24（91.37%）和<strong>史康祥</strong>120/9（92.50%）偏低。<br>
+      • 预训练和tag分层保持高位稳定。
+    </div>
   </div>
 </div>
-
-<div class="footer-note">
-  七月数据 · 统计截止 2026-07-07 · <a href="./">← 返回六月看板</a> · 申诉通过率↓越低PIC判断越准确
 </div>
 
+<!-- 整月 -->
+<div class="content-tab" id="jmonthly">
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">整月抽检</div><div class="value">6,344</div><div class="sub">6模块 · 5工作日</div></div>
+  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">355</div><div class="sub">5.60%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">94.40%</div><div class="sub">SFT 93.75%</div></div>
+  <div class="stat-card good"><div class="label">申诉通过率</div><div class="value">0%</div><div class="sub">暂无申诉</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">28人</div><div class="sub">3人零次品</div></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>tag分层</td><td>130</td><td>1</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:99.2%;background:#52c41a"></div></div><span class="pct-text">99.23%</span></div></td></tr>
+        <tr><td>预训练</td><td>825</td><td>16</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:98.1%;background:#52c41a"></div></div><span class="pct-text">98.06%</span></div></td></tr>
+        <tr><td>Caption</td><td>216</td><td>10</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:95.4%;background:#52c41a"></div></div><span class="pct-text">95.37%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>4,271</td><td>267</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.8%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.75%</span></div></td></tr>
+        <tr><td>AI合理性</td><td>882</td><td>59</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.3%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">93.31%</span></div></td></tr>
+        <tr><td>视频质量</td><td>20</td><td>2</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:#fa8c16"></div></div><span class="pct-text">90.00%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#722ed1"></span>七月关键结论</div>
+    <div class="panel-body" style="font-size:13px;line-height:2">
+      • 整体94.40%为四个月中第二高（>四月94.01%、五月93.16%、六月93.15%）。<br>
+      • <strong>高旭琴</strong>延续六月榜首，SFT保持零次品。<strong>贾建丽</strong>93.96%较六月87.58%改善6.4pp。<br>
+      • <strong>曹未婷</strong>216条/86.57%为当前最大风险点。<br>
+      • <strong>赵小龙</strong>86.52%延续五月以来偏低趋势。<br>
+      • 申诉数据尚未录入，预计7/10前完成。
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="footer-note">七月 · 统计截止 2026-07-07 · 申诉通过率↓越低PIC判断越准确</div>
 <script>
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif";
 Chart.defaults.font.size = 11;
-
-new Chart(document.getElementById('defectChart'), {
-  type: 'bar', data: {
-    labels: ['格式/节奏问题', '清晰度判断', '动作/交互判断', '景深判断', '外观/稳定性'],
-    datasets: [{ data: [79, 63, 38, 31, 18], backgroundColor: ['#1677ff','#f5222d','#fa8c16','#52c41a','#722ed1'], borderRadius: 4, barThickness: 18 }]
-  },
-  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#f0f0f0' } }, y: { grid: { display: false } } } }
-});
-
-new Chart(document.getElementById('analysisChart'), {
-  type: 'doughnut', data: {
-    labels: ['个人仔细度 (74.6%)', '规则理解偏差 (25.0%)', '电脑问题 (0.4%)'],
-    datasets: [{ data: [203, 68, 1], backgroundColor: ['#f5222d','#fa8c16','#d9d9d9'], borderWidth: 0 }]
-  },
-  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { padding: 12, usePointStyle: true } } } }
+document.querySelectorAll('#julyTabs .tab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#julyTabs .tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#jw1,#jw2,#jmonthly').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('j'+this.dataset.w).classList.add('active');
+  });
 });
 </script>
-
 </body>
 </html>
