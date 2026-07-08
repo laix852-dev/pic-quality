@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIGC PIC 质检看板 · 五月</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; min-width: 1100px; }
+
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 22px 28px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center; }
+.header h1 { font-size: 22px; font-weight: 700; }
+.nav-btn { padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+.nav-btn.inactive { color: rgba(255,255,255,0.7); }
+.nav-btn.inactive:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.stat-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border-left: 3px solid transparent; }
+.stat-card.info { border-left-color: #1677ff; }
+.stat-card.warn { border-left-color: #fa8c16; }
+.stat-card.good { border-left-color: #52c41a; }
+.stat-card.danger { border-left-color: #f5222d; }
+.stat-card .label { font-size: 11px; color: #8c8c9a; margin-bottom: 4px; }
+.stat-card .value { font-size: 24px; font-weight: 700; }
+.stat-card .sub { font-size: 10px; color: #8c8c9a; margin-top: 2px; }
+.stat-card.good .value { color: #52c41a; }
+.stat-card.warn .value { color: #fa8c16; }
+.stat-card.info .value { color: #1677ff; }
+.stat-card.danger .value { color: #f5222d; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+.panel { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); overflow: hidden; }
+.panel-header { padding: 12px 18px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.panel-header .dot { width: 7px; height: 7px; border-radius: 50%; }
+.panel-body { padding: 12px 18px; }
+.panel-body.no-padding { padding: 0; }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { background: #fafafa; padding: 8px 10px; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #f0f0f0; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+tr:hover td { background: #fafbff; }
+
+.rank-badge { display: inline-block; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 10px; font-weight: 700; color: #fff; }
+.rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
+.rank-2 { background: linear-gradient(135deg, #9e9e9e, #424242); }
+.rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); }
+
+.bar-cell { display: flex; align-items: center; gap: 8px; }
+.bar-cell .bar-bg { flex: 1; height: 5px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+.bar-cell .bar-fill { height: 5px; border-radius: 3px; }
+.bar-cell .pct-text { font-weight: 600; min-width: 44px; text-align: right; font-size: 11px; }
+
+.highlight { font-weight: 700; }
+.up { color: #52c41a; }
+.down { color: #f5222d; }
+.footer-note { text-align: center; color: #999; font-size: 11px; padding: 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AIGC PIC 质检看板 · 五月</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;gap:3px;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px">
+      <a href="./april.html" class="nav-btn inactive">4月</a>
+      <a href="./may.html" class="nav-btn active">5月</a>
+      <a href="./" class="nav-btn inactive">6月</a>
+      <a href="./july.html" class="nav-btn inactive">7月</a>
+    </div>
+    <div class="meta" style="font-size:12px;opacity:0.7">2026年5月 · 5.6 - 5.29</div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card info"><div class="label">抽检总量</div><div class="value">22,278</div><div class="sub">5 模块 · 1,565 条纪录</div></div>
+  <div class="stat-card warn"><div class="label">次品 / 次品率</div><div class="value">1,523</div><div class="sub">次品率 6.84%</div></div>
+  <div class="stat-card good"><div class="label">整体准确率</div><div class="value">93.16%</div><div class="sub">SFT 92.64%</div></div>
+  <div class="stat-card purple"><div class="label">SFT HC</div><div class="value">25人</div><div class="sub">Top: 刘佳 96.78%</div></div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#667eea"></span>PIC 模块准确率</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>模块</th><th>抽检量</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>预训练</td><td>2,412</td><td>73</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:97.0%;background:#52c41a"></div></div><span class="pct-text">96.97%</span></div></td></tr>
+        <tr><td>Caption</td><td>618</td><td>32</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:94.8%;background:#52c41a"></div></div><span class="pct-text">94.82%</span></div></td></tr>
+        <tr><td>tag分层</td><td>411</td><td>27</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:93.4%;background:#fa8c16"></div></div><span class="pct-text">93.43%</span></div></td></tr>
+        <tr><td style="font-weight:700">SFT后训练</td><td>18,519</td><td>1,363</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:92.6%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">92.64%</span></div></td></tr>
+        <tr><td>视频质量</td><td>318</td><td>28</td><td><div class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:91.2%;background:#fa8c16"></div></div><span class="pct-text" style="color:#fa8c16">91.19%</span></div></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>模块对比 & 关键信息</div>
+    <div class="panel-body" style="font-size:13px;line-height:2.2">
+      • 五月是规模爆发月：<strong>22,278条</strong>（四月的4.4倍），25人SFT HC。<br>
+      • <strong>预训练</strong>96.97%表现最佳；<strong>SFT后训练</strong>占83%体量，准确率92.64%。<br>
+      • HC分化严重：刘佳96.78% vs 张玉如72.92%，差23.9pp（远超四月7.7pp）。<br>
+      • <strong>高旭琴</strong>首次登场即96.37%表现亮眼（1,241条大样本）。<br>
+      • 贾建丽72.67%、张玉如72.92%为早期明显偏低的HC。
+    </div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#52c41a"></span>SFT HC Top 3</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td><span class="rank-badge rank-1">1</span></td><td>刘佳</td><td>1,211</td><td>42</td><td class="highlight up">96.78%</td></tr>
+        <tr><td><span class="rank-badge rank-2">2</span></td><td>高旭琴</td><td>1,241</td><td>54</td><td class="highlight up">96.37%</td></tr>
+        <tr><td><span class="rank-badge rank-3">3</span></td><td>武欣元</td><td>1,244</td><td>59</td><td class="highlight up">96.06%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span class="dot" style="background:#cf1322"></span>SFT HC Bottom 3</div>
+    <div class="panel-body no-padding"><table>
+      <thead><tr><th>#</th><th>姓名</th><th>抽检</th><th>次品</th><th>准确率</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>贾建丽</td><td>172</td><td>48</td><td class="highlight down">72.67%</td></tr>
+        <tr><td>2</td><td>张玉如</td><td>144</td><td>43</td><td class="highlight down">72.92%</td></tr>
+        <tr><td>3</td><td>高晋阳</td><td>162</td><td>30</td><td class="highlight down">82.10%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header"><span class="dot" style="background:#722ed1"></span>五月关键观察</div>
+  <div class="panel-body" style="font-size:13px;line-height:2">
+    • 五月规模激增至22,278条，SFT HC从15人扩至25人。<br>
+    • <strong>贾建丽</strong>（72.67%）和<strong>张玉如</strong>（72.92%）为五月最突出问题，两人合计次品91条。<br>
+    • <strong>刘佳</strong>96.78%和<strong>高旭琴</strong>96.37%表现出色，且样本量充足（1,200+条），是可靠的标杆HC。<br>
+    • HC间标准差大幅增加：四月7.7pp → 五月23.9pp，反映出扩招带来的质量分化。<br>
+    • 新HC（张嘉琪88%、张镜涛88%、赵小龙84%等）普遍偏低，培训效果待验证。
+  </div>
+</div>
+
+<div class="footer-note">
+  五月数据 · 统计截止 2026-05-29 · 规模爆发月
+</div>
+
+</body>
+</html>
